@@ -1,0 +1,19 @@
+[user]
+    name = Peter Zalewski
+    email = peter@zalewski.com
+[core]
+    autocrlf = input
+    safecrlf = true
+    autocorrect = 1
+[alias]
+    co = checkout
+    ci = commit
+    st = status -sb
+    br = branch
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    type = cat-file -t
+    dump = cat-file -p
+[color]
+	ui = true
+[push]
+	default = simple
