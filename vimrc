@@ -2,6 +2,7 @@ set nocompatible                " Turn off unnecessary vi compatibility
 set encoding=utf-8              " Sane encoding standard
 syntax enable
 
+runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 filetype plugin indent on
 
