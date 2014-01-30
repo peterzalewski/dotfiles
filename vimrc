@@ -4,6 +4,7 @@ syntax enable
 
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
+call pathogen#helptags()
 filetype plugin indent on
 
 " Color scheme
