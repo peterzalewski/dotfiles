@@ -6,6 +6,10 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 filetype plugin indent on
 
+" Color scheme
+let g:rehash256 = 1
+colorscheme molokai
+
 " General options
 set modelines=0                 " Who uses modelines?
 set scrolloff=2                 " 2 lines of context for jumping to search results
@@ -70,10 +74,6 @@ nnoremap <C-l> <C-w>l
 " Switch buffers
 nnoremap <C-Tab> :bnext<cr>
 nnoremap <C-S-Tab> :bprevious<cr>
-
-" Color scheme
-set background=dark
-colorscheme solarized
 
 if has("gui_running" )
     set guifont=Inconsolata-dz_for_Powerline:h10
