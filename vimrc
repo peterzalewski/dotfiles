@@ -72,8 +72,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Switch buffers
-nnoremap <C-Tab> :bnext<cr>
-nnoremap <C-S-Tab> :bprevious<cr>
+nnoremap <leader><Tab> :bnext<cr>
+nnoremap <leader><S-Tab> :bprevious<cr>
 
 if has("gui_running" )
     set guifont=Inconsolata-dz_for_Powerline:h10
