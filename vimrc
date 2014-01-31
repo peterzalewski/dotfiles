@@ -28,6 +28,7 @@ set backspace=eol,indent,start  " Backspace over every goddamn thing
 set laststatus=2                " Additional status line
 set nostartofline               " Don't always jump to start of line
 set wildignore+=node_modules/*  " Don't let command-t search node modules
+set fillchars=vert:\│           " Handsome vertical split character
 
 " Sane tab/space handling
 set tabstop=4
