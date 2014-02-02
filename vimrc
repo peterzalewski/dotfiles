@@ -27,7 +27,8 @@ set relativenumber              " Line numbers are relative to current line
 set backspace=eol,indent,start  " Backspace over every goddamn thing
 set laststatus=2                " Additional status line
 set nostartofline               " Don't always jump to start of line
-set wildignore+=node_modules/*  " Don't let command-t search node modules
+set wildignore+=node_modules/*  " Don't let CtrlP search node modules
+set wildignore+=.git/*          " Or git directories
 set fillchars=vert:\│           " Handsome vertical split character
 
 " Sane tab/space handling
@@ -56,6 +57,7 @@ let mapleader=","
 nnoremap <leader>b :!exec %<cr>
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>w <C-w>v<C-w>l
+let g:ctrlp_map = "<leader>t"
 
 " Be a MAN
 nnoremap <up> <nop>
