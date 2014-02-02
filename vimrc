@@ -1,5 +1,5 @@
 set nocompatible                " Turn off unnecessary vi compatibility
-set encoding=utf-8              " Sane encoding standard
+set encoding=utf8               " Sane encoding standard
 syntax enable
 
 runtime bundle/vim-pathogen/autoload/pathogen.vim
@@ -78,9 +78,10 @@ inoremap jj <Esc>
 nnoremap <leader><Tab> :bnext<cr>
 nnoremap <leader><S-Tab> :bprevious<cr>
 
+let g:airline_powerline_fonts = 1
+
 if has("gui_running" )
     set guifont=Inconsolata-dz_for_Powerline:h10
-    let g:Powerline_symbols = 'fancy'
     set antialias
 end
 
