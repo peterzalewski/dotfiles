@@ -1,5 +1,4 @@
 set nocompatible                " Turn off unnecessary vi compatibility
-set encoding=utf8               " Sane encoding standard
 syntax enable
 
 runtime bundle/vim-pathogen/autoload/pathogen.vim
@@ -12,45 +11,43 @@ let g:rehash256 = 1
 colorscheme molokai
 
 " General options
-set modelines=0                 " Who uses modelines?
+set autoindent
+set autoread
+set backspace=eol,indent,start
+set encoding=utf8
+set expandtab
+set fileformats=unix,mac,dos
+set fillchars=vert:\│           " Handsome vertical split character
+set gdefault
+set hidden
+set hlsearch
+set ignorecase
+set incsearch
+set laststatus=2                " Additional status line
+set lazyredraw                  " Do not redraw unnecessarily
+set nobackup
+set nostartofline               " Don't always jump to start of line
+set noswapfile
+set nowritebackup
+set relativenumber              " Line numbers are relative to current line
+set ruler                       " X,Y in file
 set scrolloff=2                 " 2 lines of context for jumping to search results
-set autoindent                  " Love autoindent
+set shiftwidth=4
+set showcmd
+set showmatch
 set showmode                    " Indicates if in insert mode 
-set showcmd                     " Displays size of current selection
-set hidden                      " Hides buffers instead of closing them
+set smartcase
+set softtabstop=4
+set tabstop=4
+set ttyfast                     " Yes, this is a fast terminal connection
+set visualbell                  " Flash screen instead of annoying me
+set wildignore+=node_modules,.git
 set wildmenu                    " Tab-completion for commands
 set wildmode=list:full,longest  " List possible commands by length first
-set visualbell                  " Flash screen instead of annoying me
-set ttyfast                     " Yes, this is a fast terminal connection
-set ruler                       " X,Y in file
-set relativenumber              " Line numbers are relative to current line
-set backspace=eol,indent,start  " Backspace over every goddamn thing
-set laststatus=2                " Additional status line
-set nostartofline               " Don't always jump to start of line
-set wildignore+=node_modules/*  " Don't let CtrlP search node modules
-set wildignore+=.git/*          " Or git directories
-set fillchars=vert:\│           " Handsome vertical split character
-
-" Sane tab/space handling
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-
-" Stop leaving little files everywhere
-set nobackup
-set nowritebackup
-set noswapfile
 
 " Search and replace options
 nnoremap / /\v
 vnoremap / /\v
-set ignorecase
-set smartcase
-set gdefault
-set incsearch
-set showmatch
-set hlsearch
 
 " Leader commands
 let mapleader=","
