@@ -52,14 +52,14 @@ set incsearch
 set showmatch
 set hlsearch
 
-" LEADER commands
+" Leader commands
 let mapleader=","
 nnoremap <leader>b :!exec %<cr>
 nnoremap <leader><space> :noh<cr>
 nnoremap <leader>w <C-w>v<C-w>l
 let g:ctrlp_map = "<leader>t"
 
-" Be a MAN
+" Forbid navigation by arrows
 nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
@@ -69,12 +69,6 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 inoremap jj <Esc>
-
-" Split windows
-"nnoremap <C-h> <C-w>h
-"nnoremap <C-j> <C-w>j
-"nnoremap <C-k> <C-w>k
-"nnoremap <C-l> <C-w>l
 
 " Switch buffers
 nnoremap <leader><Tab> :bnext<cr>
