@@ -81,3 +81,20 @@ end
 if has("gui_macvim")
     set fuoptions=maxhorz,maxvert
 end
+
+nnoremap <silent> <leader>e :call JSFormat()<cr>
+
+function! JSFormat()
+    let l:win_view = winsaveview()
+    let l:last_search = getreg('/')
+
+    execute ":%!esformatter"
+    if v:shell_error
+        echoerr "'esformatter' not installed or not in PATH!"
+        undo
+        return 0
+    endif
+
+    call winrestview(l:win_view)
+    call setreg('/', l:last_search)
+endfunction
