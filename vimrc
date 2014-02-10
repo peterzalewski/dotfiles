@@ -26,17 +26,20 @@ set incsearch
 set laststatus=2                " Additional status line
 set lazyredraw                  " Do not redraw unnecessarily
 set nobackup
+set nojoinspaces
 set nostartofline               " Don't always jump to start of line
 set noswapfile
 set nowritebackup
 set relativenumber              " Line numbers are relative to current line
 set ruler                       " X,Y in file
 set scrolloff=2                 " 2 lines of context for jumping to search results
+set shiftround
 set shiftwidth=4
 set showcmd
 set showmatch
 set showmode                    " Indicates if in insert mode 
 set smartcase
+set smarttab
 set softtabstop=4
 set tabstop=4
 set ttyfast                     " Yes, this is a fast terminal connection
