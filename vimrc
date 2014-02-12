@@ -91,9 +91,9 @@ function! JSFormat()
     let l:win_view = winsaveview()
     let l:last_search = getreg('/')
 
-    execute ":%!esformatter"
+    execute ":%!esformatter --indent.value=\"    \""
     if v:shell_error
-        echoerr "'esformatter' not installed or not in PATH!"
+        echoerr "esformatter error!"
         undo
         return 0
     endif
