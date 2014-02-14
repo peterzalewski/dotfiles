@@ -44,7 +44,7 @@ set softtabstop=4
 set tabstop=4
 set ttyfast                     " Yes, this is a fast terminal connection
 set visualbell                  " Flash screen instead of annoying me
-set wildignore+=node_modules,.git,apidoc
+set wildignore+=node_modules,.git,apidoc,bower_components
 set wildmenu                    " Tab-completion for commands
 set wildmode=list:full,longest  " List possible commands by length first
 
