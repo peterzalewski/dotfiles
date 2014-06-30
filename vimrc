@@ -34,14 +34,14 @@ set relativenumber              " Line numbers are relative to current line
 set ruler                       " X,Y in file
 set scrolloff=2                 " 2 lines of context for jumping to search results
 set shiftround
-set shiftwidth=4
+set shiftwidth=2
 set showcmd
 set showmatch
 set showmode                    " Indicates if in insert mode 
 set smartcase
 set smarttab
-set softtabstop=4
-set tabstop=4
+set softtabstop=2
+set tabstop=2
 set ttyfast                     " Yes, this is a fast terminal connection
 set visualbell                  " Flash screen instead of annoying me
 set wildignore+=node_modules,.git,apidoc,bower_components
