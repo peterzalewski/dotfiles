@@ -101,3 +101,8 @@ function! JSFormat()
     call winrestview(l:win_view)
     call setreg('/', l:last_search)
 endfunction
+
+augroup configgroup
+    autocmd!
+    autocmd BufEnter *.sls setlocal filetype=yaml
+augroup END
