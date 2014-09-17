@@ -5,6 +5,7 @@ all: submodules
 	@ln -nsf $(CURDIR)/vim/bundle ~/.vim/bundle
 	@ln -nsf $(CURDIR)/vimrc ~/.vimrc
 	@ln -nsf $(CURDIR)/tmux.conf ~/.tmux.conf
+	@ln -nsf $(CURDIR)/ackrc ~/.ackrc
 
 submodules:
 	@echo "Cloning submodules..."
