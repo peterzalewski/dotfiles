@@ -8,7 +8,12 @@ alias get='git '
 export EDITOR="vim"
 export GREP_OPTIONS="--color=auto"
 
-alias ls="ls --group-directories-first --color -h"
+_os=$(uname)
+
+case $_os in
+  Darwin) alias ls="ls -h" ;;
+  *) alias ls="ls --group-directories-first --color -h" ;;
+esac
 
 if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
     source /usr/local/etc/bash_completion.d/git-prompt.sh
