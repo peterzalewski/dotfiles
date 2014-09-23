@@ -8,6 +8,11 @@ alias get='git '
 export EDITOR="vim"
 export GREP_OPTIONS="--color=auto"
 
+if [[ -n $(type -ap ruby) ]]; then
+  export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+  export PATH="$GEM_HOME/bin:$PATH"
+fi
+
 _os=$(uname)
 
 case $_os in
