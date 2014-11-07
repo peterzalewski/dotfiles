@@ -59,6 +59,8 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <leader>w <C-w>v<C-w>l
 let g:ctrlp_map = "<leader>t"
 
+let g:ctrlp_custom_ignore = '\v.pyc$'
+
 " Forbid navigation by arrows
 nnoremap <up> <nop>
 nnoremap <down> <nop>
