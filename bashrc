@@ -106,3 +106,5 @@ export PS1='['$BIWhite'\u'$Color_Off'@'$BIWhite'\h'$Color_Off'|'$BIWhite'\w'$Col
             echo "'$IRed'"$(__git_ps1 " {%s}"); \
         fi)'$Color_Off'"; \
     fi)]\$ '
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
