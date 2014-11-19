@@ -8,7 +8,11 @@ filetype plugin indent on
 
 " Color scheme
 let g:rehash256 = 1
+set t_Co=256
+let base16colorspace=256
 colorscheme molokai
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
 
 " General options
 set autoindent
