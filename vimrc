@@ -112,3 +112,6 @@ augroup configgroup
     autocmd!
     autocmd BufEnter *.sls setlocal filetype=yaml
 augroup END
+
+autocmd FileType * setlocal shiftwidth=2 tabstop=2
+autocmd FileType javascript setlocal shiftwidth=4 tabstop=4
