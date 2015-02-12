@@ -6,6 +6,7 @@ all: submodules
 	@ln -nsf $(CURDIR)/vimrc ~/.vimrc
 	@ln -nsf $(CURDIR)/tmux.conf ~/.tmux.conf
 	@ln -nsf $(CURDIR)/ackrc ~/.ackrc
+	@ln -nsf $(CURDIR)/psqlrc ~/.psqlrc
 
 submodules:
 	@echo "Cloning submodules..."

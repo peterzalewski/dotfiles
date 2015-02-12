@@ -1,0 +1,11 @@
+\set QUIET 1
+\pset null '(NULL)'
+\pset linestyle unicode
+\pset border 0
+\set HISTCONTROL ignoredups
+\set COMP_KEYWORD_CASE upper
+\x auto
+\timing
+\set PROMPT1 '%[%033[0;37m%][%[%033[1;97m%]%n%[%033[0;37m%]@%[%033[1;96m%]%m:%>%[%033[0;37m%]/%[%033[1;92m%]%/%[%033[0;37m%]] '
+\set PROMPT2 '%[%033[0;97m%]#>%[%033[0;37m%] '
+\unset QUIET
