@@ -109,3 +109,5 @@ export PS1='['$BIWhite'\u'$Color_Off'@'$BIWhite'\h'$Color_Off'|'$BIWhite'\w'$Col
     fi)]\$ '
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
