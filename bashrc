@@ -7,6 +7,7 @@ alias get='git '
 alias grep='grep --color=auto'
 
 export EDITOR="vim"
+export PAGER="less"
 
 if [[ -n $(type -ap ruby) ]]; then
   export GEM_HOME=$(ruby -e 'print Gem.user_dir')
