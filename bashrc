@@ -9,11 +9,6 @@ alias grep='grep --color=auto'
 export EDITOR="vim"
 export PAGER="less"
 
-if [[ -n $(type -ap ruby) ]]; then
-  export GEM_HOME=$(ruby -e 'print Gem.user_dir')
-  export PATH="$GEM_HOME/bin:$PATH"
-fi
-
 _os=$(uname)
 
 case $_os in
@@ -108,6 +103,7 @@ export PS1='['$BIWhite'\u'$Color_Off'@'$BIWhite'\h'$Color_Off'|'$BIWhite'\w'$Col
         fi)'$Color_Off'"; \
     fi)]\$ '
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export NVM_DIR="/home/peterz/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 [[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
