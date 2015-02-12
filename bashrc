@@ -4,9 +4,9 @@ fi
 
 alias got='git '
 alias get='git '
+alias grep='grep --color=auto'
 
 export EDITOR="vim"
-export GREP_OPTIONS="--color=auto"
 
 if [[ -n $(type -ap ruby) ]]; then
   export GEM_HOME=$(ruby -e 'print Gem.user_dir')
