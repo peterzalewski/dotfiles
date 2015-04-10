@@ -6,7 +6,7 @@
 	url = https://github.com/tomasr/molokai
 [submodule "vim/bundle/vim-javascript"]
 	path = vim/bundle/vim-javascript
-	url = https://github.com/pangloss/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
 	url = git://git.wincent.com/command-t.git
@@ -37,6 +37,6 @@
 [submodule "vim/bundle/vim-unimpaired"]
 	path = vim/bundle/vim-unimpaired
 	url = https://github.com/tpope/vim-unimpaired
-[submodule "vim/bundle/syntastic"]
-	path = vim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic
+[submodule "vim/bundle/vim-jsx"]
+	path = vim/bundle/vim-jsx
+	url = https://github.com/mxw/vim-jsx.git

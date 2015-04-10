@@ -22,6 +22,8 @@ set encoding=utf8
 set expandtab
 set fileformats=unix,mac,dos
 set fillchars=vert:\│           " Handsome vertical split character
+set foldmethod=syntax
+set foldlevelstart=20
 set gdefault
 set hidden
 set hlsearch
@@ -116,3 +118,6 @@ augroup END
 autocmd FileType * setlocal shiftwidth=2 tabstop=2
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
+
+" vim-jsx
+let g:jsx_ext_required = 0
