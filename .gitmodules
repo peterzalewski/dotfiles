@@ -37,3 +37,12 @@
 [submodule "vim/bundle/vim-jsx"]
 	path = vim/bundle/vim-jsx
 	url = https://github.com/mxw/vim-jsx.git
+[submodule "vim/bundle/vim-fugitive"]
+	path = vim/bundle/vim-fugitive
+	url = git@github.com:tpope/vim-fugitive.git
+[submodule "vim/bundle/vim-peekaboo"]
+	path = vim/bundle/vim-peekaboo
+	url = https://github.com/junegunn/vim-peekaboo
+[submodule "vim/bundle/vim-coffee-script"]
+	path = vim/bundle/vim-coffee-script
+	url = https://github.com/kchmck/vim-coffee-script

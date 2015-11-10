@@ -76,7 +76,6 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-inoremap jj <Esc>
 
 " Switch buffers
 nnoremap <leader><Tab> :bnext<cr>
