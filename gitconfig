@@ -11,7 +11,7 @@
     ci = commit
     st = status -sb
     br = branch
-    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    hist = log --pretty=format:\"%C(auto) %h %ad | %s%d [%an]\" --graph --date=short
     type = cat-file -t
     dump = cat-file -p
     d = diff --color-words
