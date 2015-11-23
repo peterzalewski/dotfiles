@@ -5,6 +5,7 @@ fi
 alias got='git '
 alias get='git '
 alias grep='grep --color=auto'
+alias shit='sudo $(fc -ln -1)'
 
 export EDITOR="vim"
 export PAGER="less"
