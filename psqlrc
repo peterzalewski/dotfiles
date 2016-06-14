@@ -1,5 +1,5 @@
 \set QUIET 1
-\pset null '(NULL)'
+\pset null '∅'
 \pset linestyle unicode
 \pset border 0
 \set HISTCONTROL ignoredups
