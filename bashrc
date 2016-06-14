@@ -10,6 +10,16 @@ alias shit='sudo $(fc -ln -1)'
 export EDITOR="vim"
 export PAGER="less"
 
+# Better history courtesy of https://sanctum.geek.nz/arabesque/better-bash-history/
+
+shopt -s histappend                   # Shells append to history rather than overwrite
+HISTFILESIZE=1000000                  # Let's keep lots of history
+HISTSIZE=1000000                      # "
+HISTCONTROL=ignoreboth                # Do not log duplicate commands or those that start with a space
+HISTIGNORE='ls:bg:fg:history:clear'   # Ignore common drudgery
+HISTTIMEFORMAT='%F %T '               # Use a sensible timestamp
+shopt -s cmdhist                      # Append to history immediately, rather than on exit
+
 _os=$(uname)
 
 case $_os in
@@ -108,3 +118,5 @@ export NVM_DIR="/home/peterz/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 [[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
+
+[[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
