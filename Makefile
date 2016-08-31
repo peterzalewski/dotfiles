@@ -4,18 +4,21 @@ SHELL := bash
 .DEFAULT_GOAL := all
 
 vim_dir := $(HOME)/.vim
-plug_plugin := $(vim_dir)/autoload/plug.vim
+vim_plug := $(vim_dir)/autoload/plug.vim
 vimrc := $(HOME)/.vimrc
 bashrc := $(HOME)/.bashrc
 gitconfig := $(HOME)/.gitconfig
 ackrc := $(HOME)/.ackrc
 tmuxconf := $(HOME)/.tmux.conf
+nvim_dir := $(HOME)/.config/nvim
+nviminit := $(nvim_dir)/init.vim
+nvim_plug := $(nvim_dir)/autoload/plug.vim
 
-$(plug_plugin):
+$(vim_plug):
 	@mkdir -p $(dir $@)
 	@curl --insecure -sfLo $@ https://raw.github.com/junegunn/vim-plug/master/plug.vim
 
-$(vimrc): $(plug_plugin)
+$(vimrc): | $(vim_plug)
 	@ln -nsf $(CURDIR)/vimrc $@
 
 $(bashrc):
@@ -33,5 +36,13 @@ $(tmuxconf):
 $(psqlrc):
 	@ln -nsf $(CURDIR)/psqlrc $@
 
+$(nvim_plug): $(vim_plug)
+	@mkdir -p $(dir $@)
+	@ln -nsf $< $@
+
+$(nviminit): | $(nvim_plug)
+	@mkdir -p $(dir $@)
+	@ln -nsf $(CURDIR)/vimrc $@
+
 .PHONY: all
-all: $(bashrc) $(vimrc) $(gitconfig) $(ackrc) $(tmuxconf) $(psqlrc)
+all: $(bashrc) $(vimrc) $(gitconfig) $(ackrc) $(tmuxconf) $(psqlrc) $(nviminit)
