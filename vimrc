@@ -1,10 +1,29 @@
 set nocompatible                " Turn off unnecessary vi compatibility
 syntax enable
 
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
 filetype plugin indent on
+
+call plug#begin()
+
+Plug 'mileszs/ack.vim'
+Plug 'tomasr/molokai'
+Plug 'kien/ctrlp.vim'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-abolish'
+Plug 'vim-airline/vim-airline'
+Plug 'kchmck/vim-coffee-script'
+Plug 'tpope/vim-fugitive'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'junegunn/vim-peekaboo'
+Plug 'tpope/vim-repeat'
+Plug 'mhinz/vim-sayonara'
+Plug 'tpope/vim-surround'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-unimpaired'
+
+call plug#end()
 
 " Color scheme
 let g:rehash256 = 1
@@ -115,7 +134,7 @@ augroup configgroup
 augroup END
 
 autocmd FileType * setlocal shiftwidth=2 tabstop=2
-autocmd FileType javascript setlocal shiftwidth=4 tabstop=4
+autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 colorcolumn=100
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 
 " vim-jsx
