@@ -13,7 +13,7 @@ Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
 Plug 'kchmck/vim-coffee-script'
 Plug 'tpope/vim-fugitive'
-Plug 'pangloss/vim-javascript'
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'junegunn/vim-peekaboo'
