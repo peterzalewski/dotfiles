@@ -56,6 +56,7 @@ set nostartofline               " Don't always jump to start of line
 set noswapfile
 set nowritebackup
 set relativenumber              " Line numbers are relative to current line
+set number                      " But also show absolute line no
 set ruler                       " X,Y in file
 set scrolloff=2                 " 2 lines of context for jumping to search results
 set shiftround
