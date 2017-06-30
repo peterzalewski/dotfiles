@@ -6,6 +6,7 @@ alias got='git '
 alias get='git '
 alias grep='grep --color=auto'
 alias shit='sudo $(fc -ln -1)'
+alias mux='tmuxinator'
 
 export EDITOR="vim"
 export PAGER="less"
