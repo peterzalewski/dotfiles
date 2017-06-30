@@ -15,6 +15,7 @@
   type = cat-file -t
   dump = cat-file -p
   d = diff --color-words
+  praise = blame
 [color]
   ui = true
 [push]
