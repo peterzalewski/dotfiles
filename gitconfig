@@ -1,21 +1,21 @@
 [user]
-    name = Peter Zalewski
-    email = peter@zalewski.com
+  name = Peter Zalewski
+  email = peter@zalewski.com
 [core]
-    autocrlf = input
-    safecrlf = true
-    autocorrect = 1
-    pager = less -r
+  autocrlf = input
+  safecrlf = true
+  autocorrect = 1
+  pager = less -r
 [alias]
-    co = checkout
-    ci = commit
-    st = status -sb
-    br = branch
-    hist = log --pretty=format:\"%C(auto) %h %ad | %s%d [%an]\" --graph --date=short
-    type = cat-file -t
-    dump = cat-file -p
-    d = diff --color-words
+  co = checkout
+  ci = commit
+  st = status -sb
+  br = branch
+  hist = log --pretty=format:\"%C(auto) %h %ad | %s%d [%an]\" --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p
+  d = diff --color-words
 [color]
-	ui = true
+  ui = true
 [push]
-	default = simple
+  default = simple
