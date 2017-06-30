@@ -1,4 +1,4 @@
-if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
+if [[ -n "${DISPLAY}" && "${TERM}" == "xterm" ]]; then
   export TERM="xterm-256color"
 fi
 
@@ -20,16 +20,14 @@ HISTIGNORE='ls:bg:fg:history:clear'   # Ignore common drudgery
 HISTTIMEFORMAT='%F %T '               # Use a sensible timestamp
 shopt -s cmdhist                      # Append to history immediately, rather than on exit
 
-_os=$(uname)
+readonly OS=$(uname)
 
-case $_os in
-  Darwin) alias ls="ls -h" ;;
+case "${OS}" in
+  Darwin) alias ls="ls -hG" ;;
   *) alias ls="ls --group-directories-first --color -h" ;;
 esac
 
-if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
-    source /usr/local/etc/bash_completion.d/git-prompt.sh
-fi
+[[ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]] && . /usr/local/etc/bash_completion.d/git-prompt.sh
 
 # Reset
 Color_Off="\[\033[0m\]"       # Text Reset
@@ -115,8 +113,10 @@ export PS1='['$BIWhite'\u'$Color_Off'@'$BIWhite'\h'$Color_Off'|'$BIWhite'\w'$Col
     fi)]\$ '
 
 export NVM_DIR="/home/peterz/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[[ -s "${NVM_DIR}/nvm.sh" ]] && . "${NVM_DIR}/nvm.sh"  # This loads nvm
 
 [[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
 
-[[ -s "${HOME}/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+[[ -s "${HOME}/.rvm/scripts/rvm" ]] && . "${HOME}/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+[[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
