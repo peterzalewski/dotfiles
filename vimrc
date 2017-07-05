@@ -40,7 +40,7 @@ set encoding=utf8
 set expandtab
 set fileformats=unix,mac,dos
 set fillchars=vert:\│           " Handsome vertical split character
-set foldmethod=syntax
+set foldmethod=indent
 set foldlevelstart=20
 set gdefault
 set hidden
