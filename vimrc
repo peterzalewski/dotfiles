@@ -20,6 +20,7 @@ Plug 'mhinz/vim-sayonara'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-unimpaired'
+Plug 'digitaltoad/vim-pug'
 
 call plug#end()
 
