@@ -11,7 +11,6 @@ Plug 'kien/ctrlp.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
-Plug 'kchmck/vim-coffee-script'
 Plug 'tpope/vim-fugitive'
 Plug 'pangloss/vim-javascript'
 Plug 'junegunn/vim-peekaboo'
@@ -111,23 +110,6 @@ if has("gui_macvim")
     set fuoptions=maxhorz,maxvert
 end
 
-nnoremap <silent> <leader>e :call JSFormat()<cr>
-
-function! JSFormat()
-    let l:win_view = winsaveview()
-    let l:last_search = getreg('/')
-
-    execute ":%!esformatter --indent.value=\"    \""
-    if v:shell_error
-        echoerr "esformatter error!"
-        undo
-        return 0
-    endif
-
-    call winrestview(l:win_view)
-    call setreg('/', l:last_search)
-endfunction
-
 augroup configgroup
     autocmd!
     autocmd BufEnter *.sls setlocal filetype=yaml
@@ -137,5 +119,3 @@ autocmd FileType * setlocal shiftwidth=2 tabstop=2
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 colorcolumn=100
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 
-" vim-jsx
-let g:jsx_ext_required = 0
