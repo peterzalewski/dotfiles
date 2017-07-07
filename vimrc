@@ -20,6 +20,7 @@ Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-unimpaired'
 Plug 'digitaltoad/vim-pug'
+Plug 'w0rp/ale'
 
 call plug#end()
 
@@ -119,3 +120,5 @@ autocmd FileType * setlocal shiftwidth=2 tabstop=2
 autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 colorcolumn=100
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 
+" ale
+let g:ale_linters = {'javascript': ['eslint']}
