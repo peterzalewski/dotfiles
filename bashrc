@@ -5,8 +5,12 @@ fi
 alias got='git '
 alias get='git '
 alias grep='grep --color=auto'
-alias shit='sudo $(fc -ln -1)'
 alias mux='tmuxinator'
+
+declare -a fun_words=(shit damnit fuck please)
+for word in "${fun_words[@]}"; do
+  alias "${word}"='sudo $(fc -ln -1)'
+done
 
 export EDITOR="vim"
 export PAGER="less"
