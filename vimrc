@@ -7,7 +7,7 @@ call plug#begin()
 
 Plug 'mileszs/ack.vim'
 Plug 'tomasr/molokai'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
