@@ -19,8 +19,9 @@ Plug 'mhinz/vim-sayonara'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-unimpaired'
-Plug 'digitaltoad/vim-pug'
 Plug 'w0rp/ale'
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'flowtype/vim-flow'
 
 call plug#end()
 
