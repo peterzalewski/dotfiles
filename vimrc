@@ -22,6 +22,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'w0rp/ale'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'flowtype/vim-flow'
+Plug 'junegunn/vim-easy-align'
 
 call plug#end()
 
@@ -125,3 +126,7 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4
 
 " ale
 let g:ale_linters = {'javascript': ['eslint']}
+
+" EasyAlign
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
