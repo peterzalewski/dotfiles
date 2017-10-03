@@ -103,6 +103,10 @@ inoremap <right> <nop>
 nnoremap <leader><Tab> :bnext<cr>
 nnoremap <leader><S-Tab> :bprevious<cr>
 
+" 'n' should always search FORWARD and 'N' BACKWARD
+nnoremap <expr> n 'Nn'[v:searchforward]
+nnoremap <expr> N 'nN'[v:searchforward]
+
 let g:airline_powerline_fonts = 1
 
 if has("gui_running" )
