@@ -1,13 +1,10 @@
-if [[ -n "${DISPLAY}" && "${TERM}" == "xterm" ]]; then
-  export TERM="xterm-256color"
-fi
-
 alias got='git '
 alias get='git '
 alias grep='grep --color=auto'
-alias mux='tmuxinator'
+alias ...='cd ../..'
+alias nvm='. ~/.load_nvm.sh'
 
-declare -a fun_words=(shit damnit fuck please)
+declare -ar fun_words=(shit damnit fuck please)
 for word in "${fun_words[@]}"; do
   alias "${word}"='sudo $(fc -ln -1)'
 done
@@ -25,14 +22,12 @@ HISTIGNORE='ls:bg:fg:history:clear'   # Ignore common drudgery
 HISTTIMEFORMAT='%F %T '               # Use a sensible timestamp
 shopt -s cmdhist                      # Append to history immediately, rather than on exit
 
-readonly OS=$(uname)
+declare -r platform=$(uname)
 
-case "${OS}" in
+case "${platform}" in
   Darwin) alias ls="ls -hG" ;;
   *) alias ls="ls --group-directories-first --color -h" ;;
 esac
-
-[[ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]] && . /usr/local/etc/bash_completion.d/git-prompt.sh
 
 # Reset
 Color_Off="\[\033[0m\]"       # Text Reset
@@ -107,25 +102,18 @@ On_IPurple="\[\033[10;95m\]"  # Purple
 On_ICyan="\[\033[0;106m\]"    # Cyan
 On_IWhite="\[\033[0;107m\]"   # White
 
-export PS1='['$BIWhite'\u'$Color_Off'@'$BIWhite'\h'$Color_Off'|'$BIWhite'\w'$Color_Off'$(git branch &>/dev/null;\
-    if [ $? -eq 0 ]; then \
-        echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
-        if [ "$?" -eq "0" ]; then \
-            echo "'$Green'"$(__git_ps1 " (%s)"); \
-        else \
-            echo "'$IRed'"$(__git_ps1 " {%s}"); \
-        fi)'$Color_Off'"; \
-    fi)]\$ '
+_try_load() {
+  local -r file="${1:-}"
+  [[ -s "${file}" ]] && . "${file}"
+}
 
-export NVM_DIR="${HOME}/.nvm"
-if [[ -s "${NVM_DIR}/nvm.sh" ]]; then
-  . "${NVM_DIR}/nvm.sh" 
-elif [[ -s "/usr/local/opt/nvm/nvm.sh" ]]; then
-  . "/usr/local/opt/nvm/nvm.sh"
-fi
+_try_load /usr/local/etc/bash_completion.d/git-prompt.sh
+_try_load "${HOME}/.rvm/scripts/rvm" 
+_try_load /usr/local/etc/profile.d/autojump.sh
+_try_load "${HOME}/.load_virtualenvwrapper.sh"
 
-[[ -f ~/.bashrc.local ]] && . ~/.bashrc.local
+for config_file in "${HOME}"/.bash.d/*; do
+  [[ -s "${config_file}" ]] && . "${config_file}"
+done
 
-[[ -s "${HOME}/.rvm/scripts/rvm" ]] && . "${HOME}/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-[[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
+export PS1='['$BIWhite'\u'$Color_Off'@'$BIWhite'\h'$Color_Off'|'$BIWhite'\w'$Color_Off$BIPurple'$(__git_ps1 " (%s)")'$Color_Off']\$ '
