@@ -3,3 +3,6 @@
 --ignore-dir=bower_components
 --ignore-dir=dist
 --ignore-dir=client/requires
+--ignore-file=is:webpack-assets.json
+--type-set=jsx:ext:jsx
+--type-set=aurora:ext:aurora

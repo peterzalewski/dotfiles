@@ -11,7 +11,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
-Plug 'tpope/vim-fugitive'
 Plug 'pangloss/vim-javascript'
 Plug 'junegunn/vim-peekaboo'
 Plug 'tpope/vim-repeat'
@@ -21,8 +20,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-unimpaired'
 Plug 'w0rp/ale'
 Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'flowtype/vim-flow'
 Plug 'junegunn/vim-easy-align'
+Plug 'mxw/vim-jsx'
 
 call plug#end()
 
@@ -118,6 +117,7 @@ end
 augroup configgroup
     autocmd!
     autocmd BufEnter *.sls setlocal filetype=yaml
+    autocmd BufEnter *.aurora setlocal filetype=python
 augroup END
 
 autocmd FileType * setlocal shiftwidth=2 tabstop=2
@@ -125,7 +125,11 @@ autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 colorcolumn=100
 autocmd FileType python setlocal shiftwidth=4 tabstop=4
 
 " ale
-let g:ale_linters = {'javascript': ['eslint']}
+let g:ale_python_pylint_options = '--rcfile=/Users/pzalewski/Code/data/.arc/.pylintrc'
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['pylint']
+\}
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
