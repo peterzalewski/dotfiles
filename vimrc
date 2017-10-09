@@ -86,7 +86,6 @@ nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <leader>h <C-w>s<C-w>j
 nnoremap <leader>q :Sayonara!<cr>
 let g:ctrlp_map = "<leader>t"
-
 let g:ctrlp_custom_ignore = '\v.pyc$'
 
 " Forbid navigation by arrows
@@ -138,3 +137,7 @@ let g:ale_linters = {
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+if filereadable(glob("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
