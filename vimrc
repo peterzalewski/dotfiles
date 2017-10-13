@@ -138,6 +138,8 @@ let g:ale_linters = {
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
+hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
+
 if filereadable(glob("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
