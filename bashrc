@@ -14,6 +14,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias nvm='. ~/.load_nvm.sh'
+alias rpy='rg -tpy'
+alias rjs='rg -tjs'
+alias rbuild='rg --type-add "build:BUILD" -tbuild'
+alias raurora='rg --type-add "aurora:*.aurora" -taurora'
 
 declare -a fun_words=(shit damnit fuck please)
 for word in "${fun_words[@]}"; do

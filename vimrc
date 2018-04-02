@@ -5,23 +5,19 @@ filetype plugin indent on
 
 call plug#begin()
 
-Plug 'mileszs/ack.vim'
 Plug 'tomasr/molokai'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tomtom/tcomment_vim'
-Plug 'tpope/vim-abolish'
 Plug 'vim-airline/vim-airline'
 Plug 'pangloss/vim-javascript'
-Plug 'junegunn/vim-peekaboo'
-Plug 'tpope/vim-repeat'
 Plug 'mhinz/vim-sayonara'
 Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-unimpaired'
 Plug 'w0rp/ale'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'junegunn/vim-easy-align'
 Plug 'mxw/vim-jsx'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -33,6 +29,9 @@ colorscheme molokai
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
 
+" FZF
+let g:fzf_layout = { 'down': '8' }
+
 " General options
 set autoindent
 set autoread
@@ -43,6 +42,7 @@ set fileformats=unix,mac,dos
 set fillchars=vert:\│           " Handsome vertical split character
 set foldmethod=indent
 set foldlevelstart=20
+set formatoptions=qcj           " Auto-wrap comments, allow q in comments, remove comment leaders on join
 set gdefault
 set hidden
 set hlsearch
@@ -61,12 +61,15 @@ set ruler                       " X,Y in file
 set scrolloff=2                 " 2 lines of context for jumping to search results
 set shiftround
 set shiftwidth=2
+set shortmess+=I
 set showcmd
 set showmatch
-set showmode                    " Indicates if in insert mode 
+set showmode                    " Indicates if in insert mode
 set smartcase
 set smarttab
 set softtabstop=2
+set splitright
+set splitbelow
 set tabstop=2
 set ttyfast                     " Yes, this is a fast terminal connection
 set visualbell                  " Flash screen instead of annoying me
@@ -77,6 +80,8 @@ set wildmode=list:full,longest  " List possible commands by length first
 " Search and replace options
 nnoremap / /\v
 vnoremap / /\v
+nnoremap ? ?\v
+vnoremap ? ?\v
 
 " Leader commands
 let mapleader=","
@@ -85,8 +90,7 @@ nnoremap <leader><space> :noh<cr>
 nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <leader>h <C-w>s<C-w>j
 nnoremap <leader>q :Sayonara!<cr>
-let g:ctrlp_map = "<leader>t"
-let g:ctrlp_custom_ignore = '\v.pyc$'
+nnoremap <leader>t :Files<cr>
 
 " Forbid navigation by arrows
 nnoremap <up> <nop>
@@ -98,13 +102,27 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-" Switch buffers
-nnoremap <leader><Tab> :bnext<cr>
-nnoremap <leader><S-Tab> :bprevious<cr>
+" Navigations inspired by unimpaired.vim
+nnoremap <silent> ]b :bnext<cr>
+nnoremap <silent> [b :bprevious<cr>
+nnoremap <silent> ]q :cnext<cr>
+nnoremap <silent> [q :cprev<cr>
+nnoremap <silent> ]<space> o<esc>k
+nnoremap <silent> [<space> O<esc>j
+nmap <silent> ]e <Plug>(ale_next_wrap)
+nmap <silent> [e <Plug>(ale_previous_wrap)
 
 " 'n' should always search FORWARD and 'N' BACKWARD
 nnoremap <expr> n 'Nn'[v:searchforward]
 nnoremap <expr> N 'nN'[v:searchforward]
+
+" Unmap ex-mode key bind
+nnoremap Q <nop>
+
+vnoremap <leader>s :sort<cr>
+nnoremap <leader>s vip:sort<cr>
+nnoremap Y y$
+nmap gV `[v`]
 
 let g:airline_powerline_fonts = 1
 
@@ -113,26 +131,27 @@ if has("gui_running" )
     set antialias
 end
 
-if has("gui_macvim")
-    set fuoptions=maxhorz,maxvert
-end
-
-augroup configgroup
-    autocmd!
-    autocmd BufEnter *.sls setlocal filetype=yaml
-    autocmd BufEnter *.aurora setlocal filetype=python
+augroup filetypes
+    au!
+    au BufEnter *.sls setlocal filetype=yaml
+    au BufEnter *.aurora setlocal filetype=python
 augroup END
 
-autocmd FileType * setlocal shiftwidth=2 tabstop=2
-autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 colorcolumn=100
-autocmd FileType python setlocal shiftwidth=4 tabstop=4
+augroup spacing
+    au!
+    au FileType sh         setlocal sw=2 ts=2 tw=80 colorcolumn=+1 comments=:#!,b:#/,b:#
+    au FileType javascript setlocal sw=4 ts=4 tw=120 colorcolumn=+1
+    au FileType python     setlocal sw=4 ts=4 tw=120 colorcolumn=+1
+augroup END
 
-" ale
-let g:ale_python_pylint_options = '--rcfile=/Users/pzalewski/Code/data/.arc/.pylintrc'
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'python': ['pylint']
-\}
+" vim-javascript
+let g:javascript_plugin_jsdoc = 1
+
+" ALE
+let g:ale_sign_column_always = 1
+let g:ale_echo_msg_error_str = 'Error'
+let g:ale_echo_msg_warning_str = 'Warning'
+let g:ale_echo_msg_format = '[%severity%/%linter%] %s'
 
 " EasyAlign
 xmap ga <Plug>(EasyAlign)
