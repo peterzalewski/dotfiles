@@ -15,13 +15,16 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias nvm='. ~/.load_nvm.sh'
 
-declare -ar fun_words=(shit damnit fuck please)
+declare -a fun_words=(shit damnit fuck please)
 for word in "${fun_words[@]}"; do
   alias "${word}"='sudo $(fc -ln -1)'
 done
+unset fun_words
 
 export EDITOR="vim"
 export PAGER="less"
+export LESS="-igMRFX"
+export FZF_DEFAULT_COMMAND="rg --files"
 
 # Better history courtesy of https://sanctum.geek.nz/arabesque/better-bash-history/
 
@@ -33,11 +36,19 @@ HISTIGNORE='ls:bg:fg:history:clear'   # Ignore common drudgery
 HISTTIMEFORMAT='%F %T '               # Use a sensible timestamp
 shopt -s cmdhist                      # Append to history immediately, rather than on exit
 
-declare -r platform=$(uname)
-
-case "${platform}" in
-  Darwin) alias ls="ls -hG" ;;
-  *) alias ls="ls --group-directories-first --color -h" ;;
+case "$(uname)" in
+  Darwin)
+    alias ls="ls -hG"
+    export LESS_TERMCAP_md=$'\e[01;34m'
+    export LESS_TERMCAP_me=$'\e[0m'
+    export LESS_TERMCAP_se=$'\e[0m'
+    export LESS_TERMCAP_so=$'\e[01;45;37m'
+    export LESS_TERMCAP_ue=$'\e[0m'
+    export LESS_TERMCAP_us=$'\e[01;32m'
+    ;;
+  *)
+    alias ls="ls --group-directories-first --color -h"
+    ;;
 esac
 
 # Reset
@@ -119,12 +130,18 @@ _try_load() {
 }
 
 _try_load /usr/local/etc/bash_completion.d/git-prompt.sh
-_try_load "${HOME}/.rvm/scripts/rvm" 
+_try_load "${HOME}/.rvm/scripts/rvm"
 _try_load /usr/local/etc/profile.d/autojump.sh
 _try_load "${HOME}/.load_virtualenvwrapper.sh"
+
+unset _try_load
 
 for config_file in "${HOME}"/.bash.d/*; do
   [[ -s "${config_file}" ]] && . "${config_file}"
 done
+
+vimc() {
+  [[ "$#" == 1 ]] && vim $(command -v "$1")
+}
 
 export PS1='['$BIWhite'\u'$Color_Off'@'$BIWhite'\h'$Color_Off'|'$BIWhite'\w'$Color_Off$BIPurple'$(__git_ps1 " (%s)")'$Color_Off']\$ '
