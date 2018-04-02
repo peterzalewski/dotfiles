@@ -1,7 +1,18 @@
+# Git
+alias g='git'
 alias got='git '
 alias get='git '
+alias gs='git st'
+alias gb='git branch -vv'
+alias gd='git d'
+alias gc='git co'
+alias gh5='git hist -5'
+alias gh10='git hist -10'
 alias grep='grep --color=auto'
+
+alias ..='cd ..'
 alias ...='cd ../..'
+alias ....='cd ../../..'
 alias nvm='. ~/.load_nvm.sh'
 
 declare -ar fun_words=(shit damnit fuck please)
