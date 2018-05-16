@@ -1,0 +1,5 @@
+set colored-stats on
+set completion-ignore-case On
+set completion-prefix-display-length on
+set expand-tilde on
+set show-all-if-ambiguous on
