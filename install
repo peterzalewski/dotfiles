@@ -9,10 +9,9 @@ declare -r COLOR_OFF="\e[0m"
 declare -r GREEN="\e[0;32m"
 declare -r TEMP_DIR=$(mktemp -d -q -t $(basename ${BASH_SOURCE[0]}))
 declare -r RED="\e[0;31m"
-
-declare -r pwd=$(pwd)
+declare -r PWD=$(PWD)
 declare -r CURL=$(command -v curl)
-declare -ar linked_configs=(vimrc bashrc ackrc tmux.conf psqlrc load_virtualenvwrapper.sh load_nvm.sh)
+declare -ar LINKED_CONFIGS=(vimrc bashrc ackrc tmux.conf psqlrc load_virtualenvwrapper.sh load_nvm.sh)
 
 ################################################################################
 # Deletes the temp directory. Intended to be called automatically on script exit.
@@ -66,7 +65,7 @@ function install_vim_plugins {
 
   local -r vim_plugin_loader="${vim_dir}/autoload/plug.vim"
   if [[ ! -s "${vim_plugin_loader}" ]]; then
-    curl --insecure --create-dirs -sfLo "${vim_plugin_loader}" https://raw.github.com/junegunn/vim-plug/master/plug.vim
+    "${CURL}" --insecure --create-dirs -sfLo "${vim_plugin_loader}" https://raw.github.com/junegunn/vim-plug/master/plug.vim
     message "Installed ${BLUE}vim-plug${COLOR_OFF} at ${BLUE}%s${COLOR_OFF}" "${vim_plugin_loader}"
   else
     message "Found ${BLUE}vim-plug${COLOR_OFF} at ${BLUE}%s${COLOR_OFF}" "${vim_plugin_loader}"
@@ -99,10 +98,10 @@ function copy_gitconfig {
   local merge_strategy=
   local -r git_version=$(git --version)
   if [[ "${git_version##git version }" =~ ^1 ]]; then
-    sed '/default = simple/s/simple/matching/' "${pwd}/gitconfig" >| "${gitconfig}"
+    sed '/default = simple/s/simple/matching/' "${PWD}/gitconfig" >| "${gitconfig}"
     merge_strategy="matching"
   else
-    cp "${pwd}/gitconfig" "${gitconfig}"
+    cp "${PWD}/gitconfig" "${gitconfig}"
     merge_strategy="simple"
   fi
 
@@ -110,11 +109,11 @@ function copy_gitconfig {
 }
 
 function link_configs {
-
   local source_file= dest_file=
-  for file in "${linked_configs[@]}"; do
+
+  for file in "${LINKED_CONFIGS[@]}"; do
     if [[ -f "${file}" && -s "${file}" ]]; then
-      source_file="${pwd}/${file}"
+      source_file="${PWD}/${file}"
       dest_file="${HOME}/.${file}"
       if ln -nsf "${source_file}" "${dest_file}"; then
         message "Linked ${BLUE}%s${COLOR_OFF} to ${BLUE}%s${COLOR_OFF}" "${source_file}" "${dest_file}"
@@ -130,7 +129,7 @@ function link_configs {
     error "Unable to create bash.d directory at ${BLUE}%s${COLOR_OFF}" "${bashrc_dir}"
   fi
 
-  for file in ${pwd}/bash.d/*; do
+  for file in ${PWD}/bash.d/*; do
     if [[ -f "${file}" && -s "${file}" ]]; then
       dest_file="${bashrc_dir}/${file##*/}"
       if ln -nsf "${file}" "${dest_file}"; then
