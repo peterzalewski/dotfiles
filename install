@@ -80,7 +80,7 @@ function install_vim_plugins {
 
   local -r temp_vimrc="${TEMP_DIR}/vimrc"
   awk '/plug#begin/,/plug#end/' ~/.vimrc >| "${temp_vimrc}"
-  if "${vim}" -u "${temp_vimrc}" +"PlugInstall!" +qall >/dev/null 2>&1; then
+  if "${vim}" -e -i NONE -u "${temp_vimrc}" -U NONE +"PlugInstall!" +qall >/dev/null 2>&1; then
     message "Installed vim plugins"
   else
     error "Unable to install vim plugins"

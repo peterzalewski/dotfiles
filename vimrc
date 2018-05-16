@@ -142,6 +142,7 @@ augroup spacing
     au FileType sh         setlocal sw=2 ts=2 tw=80 colorcolumn=+1 comments=:#!,b:#/,b:#
     au FileType javascript setlocal sw=4 ts=4 tw=120 colorcolumn=+1
     au FileType python     setlocal sw=4 ts=4 tw=120 colorcolumn=+1
+    au FileType markdown   setlocal sw=4 ts=4
 augroup END
 
 " vim-javascript

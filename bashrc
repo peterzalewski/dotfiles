@@ -25,6 +25,7 @@ done
 unset fun_words
 
 export EDITOR="vim"
+export VISUAL="vim"
 export PAGER="less"
 export LESS="-igMRFX"
 export FZF_DEFAULT_COMMAND="rg --files"
