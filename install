@@ -108,20 +108,25 @@ function copy_gitconfig {
   message "Installed gitconfig with ${BLUE}%s${COLOR_OFF} default merge strategy" "${merge_strategy}"
 }
 
-function link_configs {
-  local source_file= dest_file=
+function _try_link_or_exit {
+  local -r source_file="${1}"
+  local -r dest_file="${2}"
 
+  if [[ ! -f "${source_file}" || ! -s "${source_file}" ]]; then
+    return
+  fi
+
+  if ln -nsf "${source_file}" "${dest_file}" >/dev/null 2>&1; then
+    message "Linked ${BLUE}%s${COLOR_OFF} to ${BLUE}%s${COLOR_OFF}" "${source_file}" "${dest_file}"
+  else
+    error "Unable to link ${BLUE}%s${COLOR_OFF} to ${BLUE}%s${COLOR_OFF}" "${source_file}" "${dest_file}"
+    exit 1
+  fi
+}
+
+function link_configs {
   for file in "${LINKED_CONFIGS[@]}"; do
-    if [[ -f "${file}" && -s "${file}" ]]; then
-      source_file="${PWD}/${file}"
-      dest_file="${HOME}/.${file}"
-      if ln -nsf "${source_file}" "${dest_file}"; then
-        message "Linked ${BLUE}%s${COLOR_OFF} to ${BLUE}%s${COLOR_OFF}" "${source_file}" "${dest_file}"
-      else
-        error "Unable to link ${BLUE}%s${COLOR_OFF} to ${BLUE}%s${COLOR_OFF}" "${source_file}" "${dest_file}"
-        exit 1
-      fi
-    fi
+    _try_link_or_exit "${PWD}/${file}" "${HOME}/.${file}"
   done || true
 
   local -r bashrc_dir="${HOME}/.bash.d"
@@ -130,15 +135,7 @@ function link_configs {
   fi
 
   for file in ${PWD}/bash.d/*; do
-    if [[ -f "${file}" && -s "${file}" ]]; then
-      dest_file="${bashrc_dir}/${file##*/}"
-      if ln -nsf "${file}" "${dest_file}"; then
-        message "Linked ${BLUE}%s${COLOR_OFF} to ${BLUE}%s${COLOR_OFF}" "${file}" "${dest_file}"
-      else
-        error "Unable to link ${BLUE}%s${COLOR_OFF} to ${BLUE}%s${COLOR_OFF}" "${file}" "${dest_file}"
-        exit 1
-      fi
-    fi
+    _try_link_or_exit "${file}" "${bashrc_dir}/${file##*/}"
   done || true
 }
 
