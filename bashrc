@@ -28,7 +28,7 @@ export EDITOR="vim"
 export VISUAL="vim"
 export PAGER="less"
 export LESS="-igMRFX"
-export FZF_DEFAULT_COMMAND="rg --files"
+export FZF_DEFAULT_COMMAND="rg --files -L"
 
 # Better history courtesy of https://sanctum.geek.nz/arabesque/better-bash-history/
 
