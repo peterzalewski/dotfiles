@@ -7,7 +7,7 @@ function _lazy_load_nvm {
   unset -f _lazy_load_nvm nvm npm node
   export NVM_DIR="${HOME}/.nvm"
   if [[ -s "${NVM_DIR}/nvm.sh" ]]; then
-    . "${NVM_DIR}/nvm.sh" 
+    . "${NVM_DIR}/nvm.sh"
   fi
 }
 

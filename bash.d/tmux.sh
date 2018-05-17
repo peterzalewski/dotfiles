@@ -4,13 +4,13 @@ alias tx="tmux"
 alias txkill="tmux kill-session -t "
 alias mux='tmuxinator'
 
-txopen() {
+function txopen {
   local -r target="${1:-}"
   local -r tmux=$(command -v tmux)
   local -r tmuxinator=$(command -v tmuxinator)
 
   if [[ -z "${tmux}" ]]; then
-    printf "ERROR: tmux not installed\n" 1>&2
+    printf "ERROR: tmux not installed\n" >&2
     return 1
   fi
 
@@ -35,7 +35,7 @@ txopen() {
   fi
 
   # Open the matching open session
-  local -r current_session=$("${tmux}" ls -F "#{session_name}" | grep -m 1 "${target}")
+  local -r current_session=$("${tmux}" ls -F "#{session_name}" 2>/dev/null | grep -m 1 "${target}")
   if [[ -n "${current_session}" ]]; then
     "${tmux}" attach -t "${current_session}"
     return 0
