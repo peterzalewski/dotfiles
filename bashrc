@@ -134,15 +134,14 @@ _try_load() {
 }
 
 _try_load /usr/local/etc/bash_completion.d/git-prompt.sh
-_try_load "${HOME}/.rvm/scripts/rvm"
 _try_load /usr/local/etc/profile.d/autojump.sh
 _try_load "${HOME}/.load_virtualenvwrapper.sh"
 
-unset _try_load
-
 for config_file in "${HOME}"/.bash.d/*; do
-  [[ -s "${config_file}" ]] && . "${config_file}"
+  _try_load "${config_file}"
 done
+
+unset _try_load
 
 vimc() {
   [[ "$#" == 1 ]] && vim $(command -v "$1")
