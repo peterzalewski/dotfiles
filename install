@@ -137,6 +137,19 @@ function link_configs {
   for file in ${PWD}/bash.d/*; do
     _try_link_or_exit "${file}" "${bashrc_dir}/${file##*/}"
   done || true
+
+  local dest_dir=
+  local -ar config_dirs=($(find "${PWD}/config" -maxdepth 1 -mindepth 1 -type d -print0 | xargs -0 -n 1 basename))
+  for source_dir in "${config_dirs[@]}"; do
+    dest_dir="${HOME}/.config/${source_dir}"
+    if ! mkdir -p "${dest_dir}"; then
+      error "Unable to create .config directory at ${BLUE}%s${COLOR_OFF}" "${dest_dir}"
+      exit 1
+    fi
+    for file in "${PWD}/config/${source_dir}"/*; do
+      _try_link_or_exit "${file}" "${dest_dir}/$(basename ${file})"
+    done
+  done
 }
 
 function main {
