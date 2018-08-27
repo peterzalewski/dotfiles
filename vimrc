@@ -121,6 +121,7 @@ nnoremap Q <nop>
 
 vnoremap <leader>s :sort<cr>
 nnoremap <leader>s vip:sort<cr>
+vnoremap <silent> <leader>f :<C-U>silent exec '%!yapf -l '.getpos("'<")[1].'-'.getpos("'>")[1].' %:p'<cr><cr>
 nnoremap Y y$
 nmap gV `[v`]
 
