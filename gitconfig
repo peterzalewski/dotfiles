@@ -19,6 +19,7 @@
   hide = update-index --assume-unchanged
   hidden = !git ls-files -v | awk '$1 ~ \"^[[:lower:]]\" { print $2 }'
   unhide = update-index --no-assume-unchanged
+  whoopsie = commit --amend --no-edit
 [color]
   ui = true
 [push]

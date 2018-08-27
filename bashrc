@@ -9,6 +9,7 @@ alias gc='git co'
 alias gh5='git hist -5'
 alias gh10='git hist -10'
 alias grep='grep --color=auto'
+alias t='txopen'
 
 alias ..='cd ..'
 alias ...='cd ../..'
