@@ -45,6 +45,9 @@ Plug 'junegunn/fzf.vim'
 " Repeat vim-surround commands with .
 Plug 'tpope/vim-repeat'
 
+" Smartly manage tags
+Plug 'ludovicchabant/vim-gutentags'
+
 call plug#end()
 
 " Color scheme
@@ -103,6 +106,8 @@ set ttyfast                    " Yes, this is a fast terminal connection
 set visualbell                 " Flash screen instead of annoying me
 set wildignore+=node_modules   " Ignore node_modules when expanding wildcards and completing filenames
 set wildignore+=.git           " Ignore .git when expanding wildcards and completing filenames
+set wildignore+=.pants.d       " Ignore .pants.d when expanding wildcards and completing filenames
+set wildignore+=.cache         " Ignore .cache when expanding wildcards and completing filenames
 set wildmenu                   " Tab-completion for commands
 set wildmode=list:full,longest " List possible commands by length first
 
