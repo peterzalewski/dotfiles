@@ -34,51 +34,51 @@ highlight nonText ctermbg=NONE
 let g:fzf_layout = { 'down': '8' }
 
 " General options
-set autoindent
-set autoread
-set backspace=eol,indent,start
-set encoding=utf8
-set expandtab
-set clipboard=unnamed           " Yank to system clipboard
-set fileformats=unix,mac,dos
-set fillchars=vert:\│           " Handsome vertical split character
-set foldmethod=indent
-set foldlevelstart=20
-set formatoptions=qcj           " Auto-wrap comments, allow q in comments, remove comment leaders on join
-set gdefault
-set hidden
-set hlsearch
-set ignorecase
-set incsearch
-set laststatus=2                " Additional status line
-set lazyredraw                  " Do not redraw unnecessarily
-set nobackup
-set nojoinspaces
-set nostartofline               " Don't always jump to start of line
-set noswapfile
-set nowritebackup
-set relativenumber              " Line numbers are relative to current line
-set number                      " But also show absolute line no
-set ruler                       " X,Y in file
-set scrolloff=2                 " 2 lines of context for jumping to search results
-set shiftround
-set shiftwidth=2
-set shortmess+=I
-set showcmd
-set showmatch
-set showmode                    " Indicates if in insert mode
-set smartcase
-set smarttab
-set softtabstop=2
-set splitright
-set splitbelow
-set tabstop=2
-set ttyfast                     " Yes, this is a fast terminal connection
-set visualbell                  " Flash screen instead of annoying me
-set wildignore+=node_modules,.git,apidoc,bower_components,dist
-set wildmenu                    " Tab-completion for commands
-set wildmode=list:full,longest  " List possible commands by length first
-
+set autoindent                                                 " Copy indent from current line when starting new line
+set autoread                                                   " Re-read files changed outside of vim
+set backspace=eol,indent,start                                 " Backspace over EOL, indents, and start of line in insert mode
+set clipboard=unnamed                                          " Yank to system clipboard
+set encoding=utf8                                              " Default to UTF-8 everywhere, including registers
+set expandtab                                                  " Convert tabs to spaces in insert mode
+set fileformats=unix,mac,dos                                   " Set EOL preferences and default to Unix line endings
+set fillchars=vert:\│                                          " Handsome vertical split character
+set foldlevelstart=20                                          " Edit files with first 20 levels of folds open
+set foldmethod=indent                                          " Fold lines with equal indent levels
+set formatoptions=qcj                                          " Auto-wrap comments, allow q in comments, remove comment leaders on join
+set gdefault                                                   " Substitutes are global on the current line by default
+set hidden                                                     " Abandoning hides buffers rather than unloads them
+set hlsearch                                                   " Highlight search results
+set ignorecase                                                 " Ignore case in search patterns
+set incsearch                                                  " Show first match as you type pattern
+set laststatus=2                                               " Additional status line
+set lazyredraw                                                 " Do not redraw unnecessarily
+set nobackup                                                   " Do not keep backups after overwriting files
+set nojoinspaces                                               " Only insert one space when joining lines
+set nostartofline                                              " Don't always jump to start of line
+set noswapfile                                                 " Do not create swap files
+set nowritebackup                                              " Do not create backups when writing files
+set number                                                     " Show absolute line number on current line
+set relativenumber                                             " Line numbers are relative to current line
+set ruler                                                      " Display row and column in file
+set scrolloff=2                                                " 2 lines of context for jumping to search results
+set shiftround                                                 " Round indents to multiple of 'shiftwidth'
+set shiftwidth=2                                               " Indent by 2 spaces
+set shortmess+=I                                               " Do not display the vim intro message on start
+set showcmd                                                    " Show last command below status line
+set showmatch                                                  " Briefly jump to matching bracket after inserting one
+set showmode                                                   " Indicates if in insert mode
+set smartcase                                                  " Default to case-insensitive search pattern until typing a capital letter
+set smarttab                                                   " Use 'shiftwidth' spaces when typing tab at beginning of line
+set softtabstop=2                                              " Use 2 spaces when typing tab anywhere
+set splitbelow                                                 " Default to opening new horizontal split BELOW current one
+set splitright                                                 " Default to opening new vertical split to RIGHT of current one
+set tabstop=2                                                  " Display tabs with 2 spaces
+set ttyfast                                                    " Yes, this is a fast terminal connection
+set visualbell                                                 " Flash screen instead of annoying me
+set wildignore+=node_modules,.git,apidoc,bower_components,dist " Ignore these patterns when expanding wildcards and completing filenames
+set wildmenu                                                   " Tab-completion for commands
+set wildmode=list:full,longest                                 " List possible commands by length first
+"
 " Search and replace options
 nnoremap / /\v
 vnoremap / /\v
