@@ -18,6 +18,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'mxw/vim-jsx'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-repeat'
 
 call plug#end()
 
@@ -38,6 +39,7 @@ set autoread
 set backspace=eol,indent,start
 set encoding=utf8
 set expandtab
+set clipboard=unnamed           " Yank to system clipboard
 set fileformats=unix,mac,dos
 set fillchars=vert:\│           " Handsome vertical split character
 set foldmethod=indent
