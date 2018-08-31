@@ -1,0 +1,7 @@
+# Pants BUILD definitions and dependencies
+--type-add
+build:BUILD
+
+# Aurora service configuration
+--type-add
+aurora:*.aurora
