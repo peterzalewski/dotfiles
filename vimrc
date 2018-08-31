@@ -223,6 +223,9 @@ let g:ale_echo_msg_format      = '[%severity%/%linter%] %s'
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
+" ludovicchabant/vim-gutentags 
+let g:gutentags_cache_dir = '.git/ctags'
+
 if filereadable(glob("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
