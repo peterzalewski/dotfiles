@@ -1,4 +1,5 @@
-# Git
+set -o vi
+
 alias g='git'
 alias got='git '
 alias get='git '
