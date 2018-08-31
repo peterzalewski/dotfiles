@@ -106,8 +106,6 @@ set ttyfast                    " Yes, this is a fast terminal connection
 set visualbell                 " Flash screen instead of annoying me
 set wildignore+=node_modules   " Ignore node_modules when expanding wildcards and completing filenames
 set wildignore+=.git           " Ignore .git when expanding wildcards and completing filenames
-set wildignore+=.pants.d       " Ignore .pants.d when expanding wildcards and completing filenames
-set wildignore+=.cache         " Ignore .cache when expanding wildcards and completing filenames
 set wildmenu                   " Tab-completion for commands
 set wildmode=list:full,longest " List possible commands by length first
 
@@ -167,7 +165,7 @@ nnoremap <silent> ]q :cnext<cr>
 " Move to previous entry in quickfix list
 nnoremap <silent> [q :cprev<cr>
 
-" Insert a blank line below the current line 
+" Insert a blank line below the current line
 nnoremap <silent> ]<space> o<esc>k
 
 " Insert a blank line above the current line
@@ -191,6 +189,10 @@ nnoremap Y y$
 
 " Visually select entire buffer
 nmap gV `[v`]
+
+" junegunn/vim-easy-align
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 augroup filetypes
     au!
@@ -219,13 +221,14 @@ let g:ale_echo_msg_error_str   = 'Error'
 let g:ale_echo_msg_warning_str = 'Warning'
 let g:ale_echo_msg_format      = '[%severity%/%linter%] %s'
 
-" junegunn/vim-easy-align
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+" ludovicchabant/vim-gutentags
+let g:gutentags_enabled                   = 1
+let g:gutentags_add_default_project_roots = 1
+let g:gutentags_cache_dir                 = glob("~/.ctags")
+let g:gutentags_file_list_command         = 'rg --files'
+let g:gutentags_generate_on_empty_buffer  = 1
 
-" ludovicchabant/vim-gutentags 
-let g:gutentags_cache_dir = '.git/ctags'
-
+" Load local settings, if defined
 if filereadable(glob("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
