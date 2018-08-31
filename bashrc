@@ -11,7 +11,7 @@ alias gh5='git hist -5'
 alias gh10='git hist -10'
 alias grep='grep --color=auto'
 alias t='txopen'
-
+alias view='view -M'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
