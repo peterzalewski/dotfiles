@@ -15,10 +15,6 @@ alias view='view -M'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias rpy='rg -tpy'
-alias rjs='rg -tjs'
-alias rbuild='rg --type-add "build:BUILD" -tbuild'
-alias raurora='rg --type-add "aurora:*.aurora" -taurora'
 
 declare -a fun_words=(shit damnit fuck please)
 for word in "${fun_words[@]}"; do
@@ -31,6 +27,7 @@ export VISUAL="vim"
 export PAGER="less"
 export LESS="-igMRFX"
 export FZF_DEFAULT_COMMAND="rg --files -L"
+export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 
 # Better history courtesy of https://sanctum.geek.nz/arabesque/better-bash-history/
 
