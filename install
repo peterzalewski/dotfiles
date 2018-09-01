@@ -101,11 +101,16 @@ function install_vim_plugins {
 
   local -r temp_vimrc="${TEMP_DIR}/vimrc"
   awk '/plug#begin/,/plug#end/' ~/.vimrc >| "${temp_vimrc}"
-  # [31 Aug 2018] TODO:  Print list of installed plugins
+  message "Installing vim plugins..."
+
+  # Match all lines in the temp .vimrc with this regex:
+  # ^Plug '([^].*?)'.*$
+  printf '%s\n' "$(sed -En 's!^Plug '"'"'([^/].*?)'"'"'.*$!'"${BLUE}"'INFO'"${COLOR_OFF}"'  \1!p' < "${temp_vimrc}" | sort -f)"
   if "${vim}" -e -i NONE -u "${temp_vimrc}" -U NONE +"PlugInstall!" +qall >/dev/null 2>&1; then
-    message "Installed vim plugins"
+    message "...done!"
   else
     error "Unable to install vim plugins"
+    # [01 Sep 2018] TODO:  Dump output of +PlugInstall! to stderr
     exit 1
   fi
 }
