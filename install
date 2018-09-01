@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -eu
+set -o errexit
+set -o nounset
 set -o pipefail
 set -o noclobber
 
@@ -144,7 +145,7 @@ function _try_link_or_exit {
   fi
 
   if ln -nsf "${source_file}" "${dest_file}" >/dev/null 2>&1; then
-    message "Linked %s to %s" "$(hi "${source_file}" "$(hi "${dest_file}")")"
+    message "Linked %s to %s" "$(hi "${source_file}")" "$(hi "${dest_file}")"
   else
     error "Unable to link %s to %s" "${source_file}" "$(hi "${dest_file}")"
     exit 1
@@ -184,6 +185,7 @@ function main {
   trap 'cleanup' EXIT
 
   # [31 Aug 2018] TODO:  Accept verbosity flag and email for .gitconfig
+  # [31 Aug 2018] TODO:  Add pre commit hook to update README.md
 
   link_configs
   copy_gitconfig
