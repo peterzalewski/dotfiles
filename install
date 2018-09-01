@@ -4,14 +4,24 @@ set -eu
 set -o pipefail
 set -o noclobber
 
-declare -r BLUE="\e[0;36m"
-declare -r COLOR_OFF="\e[0m"
-declare -r GREEN="\e[0;32m"
-declare -r TEMP_DIR=$(mktemp -d -q -t $(basename ${BASH_SOURCE[0]}))
-declare -r RED="\e[0;31m"
-declare -r PWD=$(PWD)
-declare -r CURL=$(command -v curl)
-declare -ar LINKED_CONFIGS=(vimrc bashrc tmux.conf psqlrc load_virtualenvwrapper.sh inputrc ripgreprc)
+declare BLUE COLOR_OFF RED
+BLUE="$(tput setaf 6)" && readonly BLUE
+COLOR_OFF="$(tput sgr0)" && readonly COLOR_OFF
+RED="$(tput setaf 1)" && readonly RED
+
+declare PWD CURL TEMP_DIR
+TEMP_DIR="$(mktemp -d -q -t "$(basename "${BASH_SOURCE[0]}")")" && readonly TEMP_DIR
+PWD="$(pwd)" && readonly PWD
+CURL="$(command -v curl)" && readonly CURL
+declare -ar LINKED_CONFIGS=(
+  vimrc
+  bashrc
+  tmux.conf
+  psqlrc
+  load_virtualenvwrapper.sh
+  inputrc
+  ripgreprc
+)
 
 ################################################################################
 # Deletes the temp directory. Intended to be called automatically on script exit.
@@ -33,7 +43,7 @@ function cleanup {
 ################################################################################
 function message {
   local -r msg="$1"; shift
-  printf "${BLUE}INFO${COLOR_OFF} ${msg}\n" "$@"
+  printf '%b '"${msg}"'\n' "${BLUE}INFO${COLOR_OFF}" "$@"
 }
 
 ################################################################################
@@ -47,34 +57,45 @@ function message {
 ################################################################################
 function error {
   local -r msg="$1"; shift
-  printf "${RED}ERROR${COLOR_OFF} ${msg}\n" "$@" >&2
+  printf '%b '"${msg}"'\n' "${RED}ERROR${COLOR_OFF}" "$@" >&2
+}
+
+function hi {
+  printf '%b' "${BLUE}$*${COLOR_OFF}"
 }
 
 function install_vim_plugins {
-  local -r vim=$(command -v vim)
+  local -r vim="$(command -v vim)"
   local -r vim_dir="${HOME}/.vim"
 
   if [[ ! -d "${vim_dir}" ]]; then
     if mkdir -p "${vim_dir}"; then
-      message "Created vim directory at ${BLUE}%s${COLOR_OFF}" "${vim_dir}"
+      message "Created vim directory at %s" "$(hi "${vim_dir}")"
     else
-      error "Unable to create vim directory at ${BLUE}%s${COLOR_OFF}" "${vim_dir}"
+      error "Unable to create vim directory at %s" "$(hi "${vim_dir}")"
       exit 1
     fi
   fi
 
   local -r vim_plugin_loader="${vim_dir}/autoload/plug.vim"
   if [[ ! -s "${vim_plugin_loader}" ]]; then
-    "${CURL}" --insecure --create-dirs -sfLo "${vim_plugin_loader}" https://raw.github.com/junegunn/vim-plug/master/plug.vim
-    message "Installed ${BLUE}vim-plug${COLOR_OFF} at ${BLUE}%s${COLOR_OFF}" "${vim_plugin_loader}"
+    "${CURL}" \
+      --insecure \
+      --create-dirs \
+      --silent \
+      --fail \
+      --location \
+      --output "${vim_plugin_loader}" \
+      https://raw.github.com/junegunn/vim-plug/master/plug.vim
+    message "Installed %s at %s" "$(hi "${vim_plugin_loader}")"
   else
-    message "Found ${BLUE}vim-plug${COLOR_OFF} at ${BLUE}%s${COLOR_OFF}" "${vim_plugin_loader}"
+    message "Found %s at %s" "$(hi "${vim_plugin_loader}")"
   fi
 
   if rm -rf "${vim_dir}/plugged"; then
-    message "Cleared installed vim plugins from ${BLUE}%s${COLOR_OFF}" "${vim_dir}"
+    message "Cleared installed vim plugins from %s" "$(hi "${vim_dir}")"
   else
-    error "Unable to clear vim plugin directory ${BLUE}%s${COLOR_OFF}" "${vim_dir}"
+    error "Unable to clear vim plugin directory %s" "$(hi "${vim_dir}")"
     exit 1
   fi
 
@@ -92,11 +113,11 @@ function install_vim_plugins {
 function copy_gitconfig {
   local -r gitconfig="${HOME}/.gitconfig"
   if [[ -f "${gitconfig}" ]]; then
-    message "Found ${BLUE}%s${COLOR_OFF}" "${HOME}/.gitconfig"
+    message "Found %s" "$(hi "${HOME}/.gitconfig")"
     return
   fi
 
-  local merge_strategy=
+  local merge_strategy
   local -r git_version=$(git --version)
   if [[ "${git_version##git version }" =~ ^1 ]]; then
     sed '/default = simple/s/simple/matching/' "${PWD}/gitconfig" >| "${gitconfig}"
@@ -106,7 +127,7 @@ function copy_gitconfig {
     merge_strategy="simple"
   fi
 
-  message "Installed gitconfig with ${BLUE}%s${COLOR_OFF} default merge strategy" "${merge_strategy}"
+  message "Installed gitconfig with %s default merge strategy" "$(hi "${merge_strategy}")"
 }
 
 function _try_link_or_exit {
@@ -118,9 +139,9 @@ function _try_link_or_exit {
   fi
 
   if ln -nsf "${source_file}" "${dest_file}" >/dev/null 2>&1; then
-    message "Linked ${BLUE}%s${COLOR_OFF} to ${BLUE}%s${COLOR_OFF}" "${source_file}" "${dest_file}"
+    message "Linked %s to %s" "$(hi "${source_file}" "$(hi "${dest_file}")")"
   else
-    error "Unable to link ${BLUE}%s${COLOR_OFF} to ${BLUE}%s${COLOR_OFF}" "${source_file}" "${dest_file}"
+    error "Unable to link %s to %s" "${source_file}" "$(hi "${dest_file}")"
     exit 1
   fi
 }
@@ -132,23 +153,24 @@ function link_configs {
 
   local -r bashrc_dir="${HOME}/.bash.d"
   if ! mkdir -p "${bashrc_dir}"; then
-    error "Unable to create bash.d directory at ${BLUE}%s${COLOR_OFF}" "${bashrc_dir}"
+    error "Unable to create bash.d directory at %s" "$(hi "${bashrc_dir}")"
   fi
 
-  for file in ${PWD}/bash.d/*; do
+  for file in "${PWD}"/bash.d/*; do
     _try_link_or_exit "${file}" "${bashrc_dir}/${file##*/}"
   done || true
 
-  local dest_dir=
-  local -ar config_dirs=($(find "${PWD}/config" -maxdepth 1 -mindepth 1 -type d -print0 | xargs -0 -n 1 basename))
+  local config_dirs dest_dir
+  read -ar config_dirs < <(find "${PWD}/config" -maxdepth 1 -mindepth 1 -type d -print0 | xargs -0 -n 1 basename)
+  readonly config_dirs
   for source_dir in "${config_dirs[@]}"; do
     dest_dir="${HOME}/.config/${source_dir}"
     if ! mkdir -p "${dest_dir}"; then
-      error "Unable to create .config directory at ${BLUE}%s${COLOR_OFF}" "${dest_dir}"
+      error "Unable to create .config directory at %s" "$(hi "${dest_dir}")"
       exit 1
     fi
     for file in "${PWD}/config/${source_dir}"/*; do
-      _try_link_or_exit "${file}" "${dest_dir}/$(basename ${file})"
+      _try_link_or_exit "${file}" "${dest_dir}/$(basename "${file}")"
     done
   done
 }
