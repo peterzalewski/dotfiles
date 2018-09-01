@@ -46,7 +46,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-repeat'
 
 " Smartly manage tags
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags', { 'do': 'mkdir -p ${HOME}/.ctags' }
 
 call plug#end()
 

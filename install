@@ -105,8 +105,8 @@ function install_vim_plugins {
   message "Installing vim plugins..."
 
   # Match all lines in the temp .vimrc with this regex:
-  # ^Plug '([^].*?)'.*$
-  printf '%s\n' "$(sed -En 's!^Plug '"'"'([^/].*?)'"'"'.*$!'"${BLUE}"'INFO'"${COLOR_OFF}"'  \1!p' < "${temp_vimrc}" | sort -f)"
+  # ^Plug '([^/]\S*)'.*$
+  printf '%s\n' "$(sed -En 's!^Plug '"'"'([^/]\S*)'"'"'.*$!'"${BLUE}"'INFO'"${COLOR_OFF}"'  \1!p' < "${temp_vimrc}" | sort -f)"
   if "${vim}" -e -i NONE -u "${temp_vimrc}" -U NONE +"PlugInstall!" +qall >/dev/null 2>&1; then
     message "...done!"
   else
