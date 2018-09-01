@@ -110,7 +110,8 @@ set wildmenu                   " Tab-completion for commands
 set wildmode=list:full,longest " List possible commands by length first
 
 " Remind myself to do something
-iabbrev <expr> todo strftime("# [%d %b %Y] TODO:")
+" 2018-09-01 TODO: Use right comment char by filetype
+iabbrev <expr> todo strftime("# %Y-%m-%d TODO:")
 
 " Search and replace options
 nnoremap / /\v

@@ -111,7 +111,7 @@ function install_vim_plugins {
     message "...done!"
   else
     error "Unable to install vim plugins"
-    # [01 Sep 2018] TODO:  Dump output of +PlugInstall! to stderr
+    # 2018-09-01 TODO: Dump output of +PlugInstall! to stderr
     exit 1
   fi
 }
@@ -183,9 +183,6 @@ function link_configs {
 
 function main {
   trap 'cleanup' EXIT
-
-  # [31 Aug 2018] TODO:  Accept verbosity flag and email for .gitconfig
-  # [31 Aug 2018] TODO:  Add pre commit hook to update README.md
 
   link_configs
   copy_gitconfig
