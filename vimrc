@@ -109,6 +109,9 @@ set wildignore+=.git           " Ignore .git when expanding wildcards and comple
 set wildmenu                   " Tab-completion for commands
 set wildmode=list:full,longest " List possible commands by length first
 
+" Remind myself to do something
+iabbrev <expr> todo strftime("# [%d %b %Y] TODO:")
+
 " Search and replace options
 nnoremap / /\v
 vnoremap / /\v

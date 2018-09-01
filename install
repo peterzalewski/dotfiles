@@ -80,6 +80,7 @@ function install_vim_plugins {
 
   local -r temp_vimrc="${TEMP_DIR}/vimrc"
   awk '/plug#begin/,/plug#end/' ~/.vimrc >| "${temp_vimrc}"
+  # [31 Aug 2018] TODO:  Print list of installed plugins
   if "${vim}" -e -i NONE -u "${temp_vimrc}" -U NONE +"PlugInstall!" +qall >/dev/null 2>&1; then
     message "Installed vim plugins"
   else
@@ -154,6 +155,8 @@ function link_configs {
 
 function main {
   trap 'cleanup' EXIT
+
+  # [31 Aug 2018] TODO:  Accept verbosity flag and email for .gitconfig
 
   link_configs
   copy_gitconfig

@@ -74,18 +74,19 @@ vimc() {
   [[ "$#" == 1 ]] && vim $(command -v "$1")
 }
 
-# TODO(pzalewski): Switch to manual escape sequences for speed?
+# [31 Aug 2018] TODO: Switch to manual escape sequences for speed?
 declare PROMPT_BG_COLOR="$(tput bold)"
 declare PROMPT_COLOR_OFF="$(tput sgr0)"
 declare PROMPT_DIR_COLOR="$(tput bold)$(tput setaf 4)"
 declare PROMPT_HOST_COLOR="$(tput bold)$(tput setaf 1)"
 declare PROMPT_RCS_COLOR="$(tput bold)$(tput setaf 5)"
-# TODO(pzalewski): Does this work <bash 4.2?
+# [31 Aug 2018] TODO: Does this work <bash 4.2?
 declare PROMPT_SYMBOL=$'\u276F\u276F'
 declare PROMPT_SYMBOL_COLOR="$(tput bold)$(tput setaf 7)"
 declare PROMPT_USER_COLOR="$(tput bold)$(tput setaf 2)"
 
-# TODO(pzalewski): Check for __git_ps1 before referencing
+# [31 Aug 2018] TODO: Check for __git_ps1 before referencing
+# [31 Aug 2018] TODO: Replace ~ with 🏠
 export PS1="\
 \[${PROMPT_USER_COLOR}\]\u\[${PROMPT_COLOR_OFF}\] \
 \[${PROMPT_BG_COLOR}\]at\[${PROMPT_COLOR_OFF}\] \
