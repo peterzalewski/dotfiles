@@ -11,7 +11,7 @@ declare -r TEMP_DIR=$(mktemp -d -q -t $(basename ${BASH_SOURCE[0]}))
 declare -r RED="\e[0;31m"
 declare -r PWD=$(PWD)
 declare -r CURL=$(command -v curl)
-declare -ar LINKED_CONFIGS=(vimrc bashrc ackrc tmux.conf psqlrc load_virtualenvwrapper.sh inputrc ripgreprc)
+declare -ar LINKED_CONFIGS=(vimrc bashrc tmux.conf psqlrc load_virtualenvwrapper.sh inputrc ripgreprc)
 
 ################################################################################
 # Deletes the temp directory. Intended to be called automatically on script exit.
