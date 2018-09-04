@@ -52,7 +52,6 @@ call plug#end()
 
 " Color scheme
 let g:rehash256 = 1
-set t_Co=256
 let base16colorspace=256
 colorscheme molokai
 highlight Normal ctermbg=NONE
@@ -112,6 +111,9 @@ set wildmode=list:full,longest " List possible commands by length first
 " Remind myself to do something
 " 2018-09-01 TODO: Use right comment char by filetype
 iabbrev <expr> todo strftime("# %Y-%m-%d TODO:")
+
+" Edit the previously edited file
+nmap <C-e> :e#<CR>
 
 " Search and replace options
 nnoremap / /\v
@@ -199,17 +201,44 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 augroup filetypes
-    au!
-    au BufEnter *.sls    setlocal filetype=yaml
-    au BufEnter *.aurora setlocal filetype=python
+    autocmd!
+    autocmd BufEnter *.sls    setlocal filetype=yaml
+    autocmd BufEnter *.aurora setlocal filetype=python
 augroup END
 
-augroup spacing
-    au!
-    au FileType javascript setlocal sw=4 ts=4 tw=120 colorcolumn=+1
-    au FileType markdown   setlocal sw=4 ts=4
-    au FileType python     setlocal sw=4 ts=4 tw=120 colorcolumn=+1
-    au FileType sh         setlocal sw=2 ts=2 tw=80  colorcolumn=+1 comments=:#!,b:#/,b:#
+" Set options for JavaScript
+augroup filetype_javascript
+    autocmd!
+    autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 textwidth=120 colorcolumn=+1
+augroup END
+
+" Set options for Markdown
+augroup filetype_markdown
+    autocmd!
+    autocmd FileType markdown   setlocal shiftwidth=4 tabstop=4
+augroup END
+
+" Set options for Python
+augroup filetype_python
+    autocmd!
+    autocmd FileType python     setlocal shiftwidth=4 tabstop=4 textwidth=120 colorcolumn=+1
+augroup END
+
+" Set options for shell scripts
+augroup filetype_shell
+    autocmd!
+    autocmd FileType sh setlocal shiftwidth=2 tabstop=2 textwidth=80  colorcolumn=+1 comments=:#!,b:#/,b:#
+augroup END
+
+augroup filetype_todotxt
+    autocmd!
+    autocmd BufEnter todo.txt iabbrev <buffer> <expr> todo strftime("%Y-%m-%d")
+augroup END
+
+" Equally resize panes when vim resizes
+augroup window_resized
+    autocmd!
+    autocmd VimResized * :wincmd =
 augroup END
 
 " vim-airline/vim-airline
