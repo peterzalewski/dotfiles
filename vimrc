@@ -46,7 +46,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-repeat'
 
 " Smartly manage tags
-Plug 'ludovicchabant/vim-gutentags', { 'do': 'mkdir -p ${HOME}/.ctags' }
+Plug 'peterzalewski/vim-gutentags', { 'branch': 'language_specific', 'do': 'mkdir -p ${HOME}/.ctags' }
 
 call plug#end()
 
@@ -226,11 +226,21 @@ let g:ale_echo_msg_warning_str = 'Warning'
 let g:ale_echo_msg_format      = '[%severity%/%linter%] %s'
 
 " ludovicchabant/vim-gutentags
+
+function! PeteZalewskiTagFilePerFiletype(path)
+  if strlen(&l:filetype) ># 0
+    let b:gutentags_ctags_tagfile = &l:filetype . '.tags'
+    return 1
+  endif
+  return 0
+endfunction
+
 let g:gutentags_enabled                   = 1
 let g:gutentags_add_default_project_roots = 1
 let g:gutentags_cache_dir                 = glob("~/.ctags")
+let g:gutentags_ctags_language_specific   = 1
 let g:gutentags_file_list_command         = 'rg --files'
-let g:gutentags_generate_on_empty_buffer  = 1
+let g:gutentags_init_user_func            = 'PeteZalewskiTagFilePerFiletype'
 
 " Load local settings, if defined
 if filereadable(glob("~/.vimrc.local"))
