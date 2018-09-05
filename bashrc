@@ -15,6 +15,7 @@ alias view='view -M'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias bc='bc -l'
 
 declare -a fun_words=(shit damnit fuck please)
 for word in "${fun_words[@]}"; do
@@ -76,8 +77,9 @@ done
 
 unset _try_load
 
-vimc() {
-  [[ "$#" == 1 ]] && vim $(command -v "$1")
+# Open an executable by name in vim
+function vimc {
+  [[ "$#" == 1 ]] && vim "$(command -v "$1")"
 }
 
 # 2018-09-01 TODO: Switch to manual escape sequences for speed?

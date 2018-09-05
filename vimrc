@@ -1,6 +1,11 @@
-set nocompatible                " Turn off unnecessary vi compatibility
+" Disable vi compatibility to enable full vim functionality
+set nocompatible
+
+" Support for syntax highlighting is disabled by default
 syntax enable
 
+" Enable filetype detection, plugin support, and autoindent 
+" These plugins come standard but disabled
 filetype plugin indent on
 
 call plug#begin()
@@ -50,16 +55,14 @@ Plug 'peterzalewski/vim-gutentags', { 'branch': 'language_specific', 'do': 'mkdi
 
 call plug#end()
 
-" Color scheme
+" Enable Molokai's 256-color alternative
 let g:rehash256 = 1
-let base16colorspace=256
-colorscheme molokai
-highlight Normal ctermbg=NONE
-highlight nonText ctermbg=NONE
-hi MatchParen      ctermfg=208  ctermbg=233 cterm=bold
 
-" FZF
-let g:fzf_layout = { 'down': '8' }
+" Use this color scheme
+colorscheme molokai
+
+" Highlight the paren under the cursor, not the matching paren
+hi MatchParen ctermfg=208 ctermbg=233 cterm=bold
 
 " General options
 set autoindent                 " Copy indent from current line when starting new line
@@ -109,13 +112,12 @@ set wildmenu                   " Tab-completion for commands
 set wildmode=list:full,longest " List possible commands by length first
 
 " Remind myself to do something
-" 2018-09-01 TODO: Use right comment char by filetype
-iabbrev <expr> todo strftime("# %Y-%m-%d TODO:")
+iabbrev <expr> \t printf(&l:commentstring . " TODO:", strftime(" %Y-%m-%d"))
 
 " Edit the previously edited file
-nmap <C-e> :e#<CR>
+nnoremap <C-e> :e#<CR>
 
-" Search and replace options
+" Append the modifier for very magic mode, to get Perl-like regex
 nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
@@ -133,13 +135,13 @@ nnoremap <leader>v <C-w>v<C-w>l
 " Open a horizontal split
 nnoremap <leader>h <C-w>s<C-w>j
 
-" Close the buffer but keep the window open
+" Close the buffer but keep the window open - mhinz/vim-sayonara
 nnoremap <leader>q :Sayonara!<cr>
 
-" Search files with FZF
+" Search files with FZF - junegunn/fzf.vim
 nnoremap <leader>t :Files<cr>
 
-" Search buffers with FZF
+" Search buffers with FZF - junegunn/fzf.vim
 nnoremap <leader>b :Buffers<cr>
 
 " Sort the visual selection
@@ -158,7 +160,7 @@ inoremap <down>  <nop>
 inoremap <left>  <nop>
 inoremap <right> <nop>
 
-" Inspired by unimpaired.vim
+" Inspired by tpope/vim-unimpaired
 " Move to next buffer
 nnoremap <silent> ]b :bnext<cr>
 
@@ -177,29 +179,30 @@ nnoremap <silent> ]<space> o<esc>k
 " Insert a blank line above the current line
 nnoremap <silent> [<space> O<esc>j
 
-" Move to next error reported by ALE
-nmap     <silent> ]e <Plug>(ale_next_wrap)
+" Move to next error - w0rp/ale
+nnoremap <silent> ]e <Plug>(ale_next_wrap)
 
-" Move to previous error reported by ALE
-nmap     <silent> [e <Plug>(ale_previous_wrap)
+" Move to previous error - w0rp/ale
+nnoremap <silent> [e <Plug>(ale_previous_wrap)
 
 " 'n' should always search FORWARD and 'N' BACKWARD
 nnoremap <expr> n 'Nn'[v:searchforward]
 nnoremap <expr> N 'nN'[v:searchforward]
 
-" Unmap ex-mode key bind
+" Unmap ex-mode key bind because I keep hitting it and it baffles me
 nnoremap Q <nop>
 
 " Yank to end of line with Y
 nnoremap Y y$
 
 " Visually select entire buffer
-nmap gV `[v`]
+nnoremap gV `[v`]
 
-" junegunn/vim-easy-align
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+" A simple, easy-to-use Vim alignment plugin - junegunn/vim-easy-align
+xnoremap ga <Plug>(EasyAlign)
+nnoremap ga <Plug>(EasyAlign)
 
+" Additional file type detection by extension
 augroup filetypes
     autocmd!
     autocmd BufEnter *.sls    setlocal filetype=yaml
@@ -209,30 +212,52 @@ augroup END
 " Set options for JavaScript
 augroup filetype_javascript
     autocmd!
-    autocmd FileType javascript setlocal shiftwidth=4 tabstop=4 textwidth=120 colorcolumn=+1
+    autocmd FileType javascript setlocal shiftwidth=4
+    autocmd FileType javascript setlocal tabstop=4
+    autocmd FileType javascript setlocal textwidth=120
+    autocmd FileType javascript setlocal colorcolumn=+1
 augroup END
 
 " Set options for Markdown
 augroup filetype_markdown
     autocmd!
-    autocmd FileType markdown   setlocal shiftwidth=4 tabstop=4
+    autocmd FileType markdown setlocal shiftwidth=4
+    autocmd FileType markdown setlocal tabstop=4
 augroup END
 
 " Set options for Python
 augroup filetype_python
     autocmd!
-    autocmd FileType python     setlocal shiftwidth=4 tabstop=4 textwidth=120 colorcolumn=+1
+    autocmd FileType python setlocal shiftwidth=4
+    autocmd FileType python setlocal tabstop=4
+    autocmd FileType python setlocal textwidth=120
+    autocmd FileType python setlocal colorcolumn=+1
 augroup END
 
 " Set options for shell scripts
 augroup filetype_shell
     autocmd!
-    autocmd FileType sh setlocal shiftwidth=2 tabstop=2 textwidth=80  colorcolumn=+1 comments=:#!,b:#/,b:#
+    autocmd FileType sh setlocal shiftwidth=2
+    autocmd FileType sh setlocal tabstop=2
+    autocmd FileType sh setlocal textwidth=80
+    autocmd FileType sh setlocal colorcolumn=+1
+    autocmd FileType sh setlocal comments=:#!,b:#/,b:#
 augroup END
 
+" Set options for todo.txt
 augroup filetype_todotxt
     autocmd!
-    autocmd BufEnter todo.txt iabbrev <buffer> <expr> todo strftime("%Y-%m-%d")
+    autocmd BufEnter todo.txt iabbrev <buffer> <expr> \t strftime("%Y-%m-%d")
+augroup END
+
+" Set options for vimrc and vimscript
+augroup filetype_vimrc
+    autocmd!
+    autocmd FileType vim setlocal shiftwidth=4
+    autocmd FileType vim setlocal tabstop=4
+    autocmd FileType vim setlocal textwidth=120
+    autocmd FileType vim setlocal colorcolumn=+1
+    nnoremap <buffer> <silent> <leader>s :source % <bar> :nohlsearch <bar> :edit<CR>
 augroup END
 
 " Equally resize panes when vim resizes
@@ -241,27 +266,15 @@ augroup window_resized
     autocmd VimResized * :wincmd =
 augroup END
 
-" vim-airline/vim-airline
-let g:airline_powerline_fonts = 1
-
-" pangloss/vim-javascript
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_flow  = 1
-
-" w0rp/ale
-let g:ale_sign_column_always   = 1
-let g:ale_echo_msg_error_str   = 'Error'
-let g:ale_echo_msg_warning_str = 'Warning'
-let g:ale_echo_msg_format      = '[%severity%/%linter%] %s'
-
 " ludovicchabant/vim-gutentags
-
+" If the filetype is known, append it to the tag file name
+" to group tags by language.
 function! PeteZalewskiTagFilePerFiletype(path)
-  if strlen(&l:filetype) ># 0
-    let b:gutentags_ctags_tagfile = &l:filetype . '.tags'
-    return 1
-  endif
-  return 0
+    if strlen(&l:filetype) ># 0
+        let b:gutentags_ctags_tagfile = &l:filetype . '.tags'
+        return 1
+    endif
+    return 0
 endfunction
 
 let g:gutentags_enabled                   = 1
@@ -271,7 +284,23 @@ let g:gutentags_ctags_language_specific   = 1
 let g:gutentags_file_list_command         = 'rg --files'
 let g:gutentags_init_user_func            = 'PeteZalewskiTagFilePerFiletype'
 
+" junegunn/fzf.vm
+let g:fzf_layout = { 'down': '8' }
+
+" pangloss/vim-javascript
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow  = 1
+
+" vim-airline/vim-airline
+let g:airline_powerline_fonts = 1
+
+" w0rp/ale
+let g:ale_sign_column_always   = 1
+let g:ale_echo_msg_error_str   = 'Error'
+let g:ale_echo_msg_warning_str = 'Warning'
+let g:ale_echo_msg_format      = '[%severity%/%linter%] %s'
+
 " Load local settings, if defined
 if filereadable(glob("~/.vimrc.local"))
-  source ~/.vimrc.local
+    source ~/.vimrc.local
 endif

@@ -3,3 +3,4 @@
 2018-09-01 Add pre-commit hook to render README.me with m4
 2018-09-01 Accept verbosity flag for install
 2018-09-01 vim mappings to execute commands in the other tmux pane: `nmap \r :!tmux send-keys -t 0:0.1 C-p C-j <CR><CR>`
+2018-09-04 color-coordinate fzf.vim with molokai
