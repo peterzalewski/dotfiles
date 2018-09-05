@@ -39,21 +39,27 @@ HISTIGNORE='ls:bg:fg:history:clear'   # Ignore common drudgery
 HISTTIMEFORMAT='%F %T '               # Use a sensible timestamp
 shopt -s cmdhist                      # Append to history immediately, rather than on exit
 
-case "$(uname)" in
-  Darwin)
-    alias ls="ls -hG"
-    export LSCOLORS='ExFxcxdxBxegedabagacad'
-    export LESS_TERMCAP_md=$'\e[01;34m'
-    export LESS_TERMCAP_me=$'\e[0m'
-    export LESS_TERMCAP_se=$'\e[0m'
-    export LESS_TERMCAP_so=$'\e[01;45;37m'
-    export LESS_TERMCAP_ue=$'\e[0m'
-    export LESS_TERMCAP_us=$'\e[01;32m'
-    ;;
-  *)
-    alias ls="ls --group-directories-first --color -h"
-    ;;
-esac
+# Colorize ls/exa
+if [[ -n "$(command -v exa)" ]]; then
+  alias ls='exa'
+  alias tree='exa -T'
+else
+  case "$(uname)" in
+    Darwin)
+      alias ls="ls -hG"
+      export LSCOLORS='ExFxcxdxBxegedabagacad'
+      export LESS_TERMCAP_md=$'\e[01;34m'
+      export LESS_TERMCAP_me=$'\e[0m'
+      export LESS_TERMCAP_se=$'\e[0m'
+      export LESS_TERMCAP_so=$'\e[01;45;37m'
+      export LESS_TERMCAP_ue=$'\e[0m'
+      export LESS_TERMCAP_us=$'\e[01;32m'
+      ;;
+    *)
+      alias ls="ls --group-directories-first --color -h"
+      ;;
+  esac
+fi
 
 _try_load() {
   local -r file="${1:-}"
