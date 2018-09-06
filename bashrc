@@ -69,7 +69,6 @@ _try_load() {
 
 _try_load /usr/local/etc/bash_completion.d/git-prompt.sh
 _try_load /usr/local/etc/profile.d/autojump.sh
-_try_load "${HOME}/.load_virtualenvwrapper.sh"
 
 for config_file in "${HOME}"/.bash.d/*; do
   _try_load "${config_file}"

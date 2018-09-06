@@ -22,7 +22,7 @@ if [[ $(type -t workon) != function ]]; then
     _try_source() { [[ -f $1 ]] || return; source "$1"; return 0; }
     _try_source /usr/local/bin/virtualenvwrapper.sh || \
     _try_source /etc/bash_completion.d/virtualenvwrapper || \
-    _try_source /usr/bin/virtualenvwrapper.sh 
+    _try_source /usr/bin/virtualenvwrapper.sh
     declare status=$?
     unset -f _try_source
 

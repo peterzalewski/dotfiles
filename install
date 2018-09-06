@@ -19,7 +19,6 @@ declare -ar LINKED_CONFIGS=(
   bashrc
   tmux.conf
   psqlrc
-  load_virtualenvwrapper.sh
   inputrc
   ripgreprc
 )
