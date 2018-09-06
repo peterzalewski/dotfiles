@@ -77,7 +77,7 @@ function install_vim_plugins {
       exit 1
     fi
   fi
-  
+
   local -r vim_plugin_loader="${vim_dir}/autoload/plug.vim"
   if [[ ! -s "${vim_plugin_loader}" ]]; then
     "${CURL}" \
@@ -92,7 +92,7 @@ function install_vim_plugins {
   else
     message "Found %s at %s" "$(hi "${vim_plugin_loader}")"
   fi
-  
+
   if rm -rf "${vim_dir}/plugged"; then
     message "Cleared installed vim plugins from %s" "$(hi "${vim_dir}")"
   else
@@ -126,14 +126,18 @@ function copy_gitconfig {
   local merge_strategy
   local -r git_version=$(git --version)
   if [[ "${git_version##git version }" =~ ^1 ]]; then
-    sed '/default = simple/s/simple/matching/' "${PWD}/gitconfig" >| "${gitconfig}"
     merge_strategy="matching"
   else
-    cp "${PWD}/gitconfig" "${gitconfig}"
     merge_strategy="simple"
   fi
+  readonly merge_strategy
 
-  message "Installed gitconfig with %s default merge strategy" "$(hi "${merge_strategy}")"
+  if m4 --define=MERGE_STRATEGY="${merge_strategy}" "${PWD}/gitconfig" >"${gitconfig}" 2>/dev/null; then
+    message "Installed gitconfig with %s default merge strategy" "$(hi "${merge_strategy}")"
+  else
+    error "Unable to render .gitconfig"
+    exit 1
+  fi
 }
 
 function _try_link_or_exit {

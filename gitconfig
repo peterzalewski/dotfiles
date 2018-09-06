@@ -1,29 +1,36 @@
+divert(-1)
+define(`EMAIL',ifdef(`EMAIL', `EMAIL', `peter@zalewski.com'))
+define(`MERGE_STRATEGY',ifdef(`MERGE_STRATEGY', `MERGE_STRATEGY', `simple'))
+divert(0)dnl
 [user]
+  email = EMAIL
   name = Peter Zalewski
-  email = peter@zalewski.com
 [core]
-  autocrlf = input
-  safecrlf = true
   autocorrect = 1
+  autocrlf = input
   pager = less -r
+  safecrlf = true
 [alias]
-  co = checkout
-  ci = commit
-  st = status -sb
   br = branch
-  hist = log --pretty=format:\"%C(auto) %h %ad | %s%d [%an]\" --graph --date=short
-  type = cat-file -t
-  dump = cat-file -p
+  ci = commit
+  co = checkout
   d = diff --color-words
-  praise = blame
-  hide = update-index --assume-unchanged
+  dump = cat-file -p
   hidden = !git ls-files -v | awk '$1 ~ \"^[[:lower:]]\" { print $2 }'
+  hide = update-index --assume-unchanged
+  hist = log --pretty=format:\"%C(auto) %h %ad | %s%d [%an]\" --graph --date=short
+  praise = blame
+  st = status -sb
+  type = cat-file -t
   unhide = update-index --no-assume-unchanged
   whoopsie = commit --amend --no-edit
 [color]
   ui = true
 [push]
-  default = simple
+  default = MERGE_STRATEGY
+[diff]
+  algorithm = patience
+  renames = copies
 [pager]
   diff = diff-so-fancy | less --tabs=1,5 -RFX
   show = diff-so-fancy | less --tabs=1,5 -RFX
