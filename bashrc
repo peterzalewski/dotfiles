@@ -40,6 +40,8 @@ HISTIGNORE='ls:bg:fg:history:clear'   # Ignore common drudgery
 HISTTIMEFORMAT='%F %T '               # Use a sensible timestamp
 shopt -s cmdhist                      # Append to history immediately, rather than on exit
 
+shopt -s globstar >/dev/null 2>&1     # Attempt to enable Bash 4 '**' recursive globbing
+
 # Colorize ls/exa
 if [[ -n "$(command -v exa)" ]]; then
   alias ls='exa'

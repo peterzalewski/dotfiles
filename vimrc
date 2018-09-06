@@ -207,6 +207,7 @@ augroup filetypes
     autocmd!
     autocmd BufEnter *.sls    setlocal filetype=yaml
     autocmd BufEnter *.aurora setlocal filetype=python
+    autocmd BufEnter gitconfig setlocal filetype=gitconfig
 augroup END
 
 " Set options for JavaScript
