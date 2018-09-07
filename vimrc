@@ -17,7 +17,7 @@ Plug 'tomasr/molokai'
 Plug 'tomtom/tcomment_vim'
 
 " Lightweight status line
-Plug 'vim-airline/vim-airline'
+Plug 'itchyny/lightline.vim'
 
 " Better JavaScript syntax
 Plug 'pangloss/vim-javascript'
