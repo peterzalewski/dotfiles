@@ -1,5 +1,34 @@
+# Colorize file and directory completions using LS_COLORS
 set colored-stats on
-set completion-ignore-case On
-set completion-prefix-display-length on
+
+# Case-insensitive file and directory name completion
+set completion-ignore-case on
+
+# Treat hypens and undercases as interchangeable in completions
+set completion-map-case on
+
+# When completions share more than this many characters, replace with ...
+# For example:
+# $ ls
+# version2.3  version6.7
+# $ cat v<TAB>
+# ...2.3  ...6.7
+set completion-prefix-display-length 2
+
+# Use vi-like bindings instead of emacs-like bindings to edit
+set editing-mode vi
+
+# Expand ~ in completions
 set expand-tilde on
+
+# Display / at the end of symlinked directories in completions, like real ones
+set mark-symlinked-directories on
+
+# List possible completions if they share a prefix
 set show-all-if-ambiguous on
+
+# List possible completions even when they do not share a prefix
+set show-all-if-unmodified on
+
+# Indicate file type by appending a character in completion, like @ for link
+set visible-stats on
