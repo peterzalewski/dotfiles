@@ -3,6 +3,7 @@
 alias tx="tmux"
 alias txkill="tmux kill-session -t "
 alias mux='tmuxinator'
+alias t='txopen'
 
 function txopen {
   local -r target="${1:-}"
@@ -23,7 +24,7 @@ function txopen {
     fi
     if [[ -n "${tmuxinator}" ]]; then
       local -ra tmuxinator_templates=($("${tmuxinator}" ls \
-        | tr -s '[[:space:]]' '\n' \
+        | tr -s '[:space:]' '\n' \
         | awk 'NR>2'
       ))
       if [[ "${#tmuxinator_templates[@]}" -gt 0 ]]; then
@@ -44,7 +45,7 @@ function txopen {
   # Open the matching tmuxinator template
   if [[ -n "${tmuxinator}" ]]; then
     local -r tmuxinator_template=$("${tmuxinator}" ls \
-      | tr -s '[[:space:]]' '\n' \
+      | tr -s '[:space:]' '\n' \
       | awk 'NR>2' \
       | grep -m 1 "${target}" \
     )

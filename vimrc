@@ -73,6 +73,9 @@ Plug 'junegunn/goyo.vim'
 " Highlight current (or adjacent) blocks of text and dim everything else
 Plug 'junegunn/limelight.vim'
 
+" Draw arrows and boxes in visual block mode
+Plug 'peterzalewski/vim-boxdraw'
+
 call plug#end()
 
 " }}}

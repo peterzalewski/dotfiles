@@ -1,35 +1,56 @@
-alias g='git'
-alias got='git '
-alias get='git '
-alias gs='git st'
-alias gb='git branch -vv'
-alias gd='git d'
-alias gc='git co'
-alias gh5='git hist -5'
-alias gh10='git hist -10'
-alias grep='grep --color=auto'
-alias t='txopen'
-alias view='view -M'
+# vim: set foldmethod=marker foldlevel=0 nomodeline:
+# ############################################################################
+# Description: focus on start up speed, colors, and shortcuts. not too wild.
+# Author: Peter Zalewski <peter@zalewski.com>
+# Source: https://github.com/peterzalewski/dotfiles/blob/master/bashrc
+# ############################################################################
+
+# Aliases {{{
+
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias bc='bc -l'
-alias map='xargs -n 1'
+alias .....='cd ../../../..'
+alias bc='bc --mathlib'
+alias g='git'
+alias gb='git branch -vv'
+alias gc='git checkout'
+alias gd='git d'
+alias get='git'
+alias gh='git hist'
+alias gh5='git hist -5'
+alias gh10='git hist -10'
+alias got='git'
+alias grep='grep --color=auto'
+alias gs='git st'
+alias map='xargs --max-args=1'
+alias tpout='tput'
+alias view='view -M'
 
+# Let me swear at the command prompt to sudo the previous command
 declare -a fun_words=(shit damnit fuck please)
 for word in "${fun_words[@]}"; do
+  # shellcheck disable=SC2139
   alias "${word}"='sudo $(fc -ln -1)'
 done
-unset fun_words
 
-export EDITOR="vim"
-export VISUAL="vim"
-export PAGER="less"
-export LESS="-igMRFX"
-export FZF_DEFAULT_COMMAND="rg --files -L"
+# }}}
+# Default programs and settings {{{
+
+export EDITOR='vim'
+export FZF_DEFAULT_COMMAND='rg --files -L'
+export LANG='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
+export LESS='-igMRFX'
+export PAGER='less'
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
-export LC_ALL="en_US.UTF-8"
-export LANG="en_US"
+export VISUAL='vim'
+
+# Attempt to enable Bash 4 '**' recursive globbing
+shopt -s globstar >/dev/null 2>&1
+
+# }}}
+# History {{{
 
 # Better history courtesy of https://sanctum.geek.nz/arabesque/better-bash-history/
 # Save multi-line commands as one command
@@ -45,16 +66,16 @@ export HISTFILESIZE=1000000
 export HISTSIZE=1000000
 
 # Do not log duplicate commands or those that start with a space
-export HISTCONTROL=ignoreboth
+export HISTCONTROL='ignoreboth'
 
 # Ignore common drudgery
 export HISTIGNORE='ls:bg:fg:history:clear:jobs:exit'
 
-# Use a sensible timestamp format
-export HISTTIMEFORMAT='%F %T '
+# Use ISO8601 for history timestamps
+export HISTTIMEFORMAT='%Y-%m-%dT%H:%M:%S%z '
 
-# Attempt to enable Bash 4 '**' recursive globbing
-shopt -s globstar >/dev/null 2>&1
+# }}}
+# Colors and appearance {{{
 
 # Colorize ls/exa
 if [[ -n "$(command -v exa)" ]]; then
@@ -62,24 +83,112 @@ if [[ -n "$(command -v exa)" ]]; then
   alias tree='exa -T'
 else
   case "$(uname)" in
-    Darwin)
-      alias ls="ls -hG"
-      export LSCOLORS='ExFxcxdxBxegedabagacad'
-      export LESS_TERMCAP_md=$'\e[01;34m'
-      export LESS_TERMCAP_me=$'\e[0m'
-      export LESS_TERMCAP_se=$'\e[0m'
-      export LESS_TERMCAP_so=$'\e[01;45;37m'
-      export LESS_TERMCAP_ue=$'\e[0m'
-      export LESS_TERMCAP_us=$'\e[01;32m'
-      ;;
-    *)
-      alias ls="ls --group-directories-first --color -h"
-      ;;
+    Darwin) alias ls="ls -hG" ;;
+    *) alias ls='ls --group-directories-first --color -h' ;;
   esac
+
+  # Set custom colors for `ls`: bold blue for directories,
+  # bold magenta for links, bold red for executables
+  export LSCOLORS='ExFxcxdxBxegedabagacad'
 fi
 
-_try_load() {
+# `less` checks for LESS_TERMCAP_* environment variables before checking the
+# termcap database for the corresponding control characters. `man` uses only
+# bold, standout, and underline formatting, so if we override those control
+# characters, we can add color to man pages. More at:
+# https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables
+
+# Set bold to bold + blue; used for headers
+export LESS_TERMCAP_md="$(tput bold; tput setaf 4)"
+
+# End bold
+export LESS_TERMCAP_me="$(tput sgr0)"
+
+# Set standout to bold + magenta background + white foreground; used for pager
+export LESS_TERMCAP_so="$(tput bold ; tput setaf 7 ; tput setab 5)"
+
+# End standout
+export LESS_TERMCAP_se="$(tput sgr0)"
+
+# Set underline to bold + green; used for keywords
+export LESS_TERMCAP_us="$(tput bold ; tput setaf 2)"
+
+# End underline
+export LESS_TERMCAP_ue="$(tput sgr0)"
+
+# }}}
+# Prompt {{{
+
+# Create a prompt like this, with colors (escape sequences) set with the
+# variables listed below:
+#
+# username at host in directory [on branch] $
+# *        |  *       |             *       |
+# |        |  |       |             |       +-> PROMPT_SYMBOL_COLOR
+# |        |  |       |             +--------*> PROMPT_RCS_COLOR
+# |        |  |       +-----------------------> PROMPT_DIR_COLOR
+# |        |  +------------------------------*> PROMPT_HOST_COLOR
+# |        +----------------------------------> PROMPT_SMALL_WORD_COLOR
+# +------------------------------------------*> PROMPT_USER_COLOR
+
+declare PROMPT_COLOR_OFF="$(tput sgr0)"
+
+# Bold
+declare PROMPT_SMALL_WORD_COLOR="$(tput bold)"
+
+# Bold + blue
+declare PROMPT_DIR_COLOR="$(tput bold ; tput setaf 4)"
+
+# Bold + red
+declare PROMPT_HOST_COLOR="$(tput bold ; tput setaf 1)"
+
+# Bold + magenta
+declare PROMPT_RCS_COLOR="$(tput bold ; tput setaf 5)"
+
+# '❯❯'
+declare PROMPT_SYMBOL=$'\xE2\x9D\xAF'$'\xE2\x9D\xAF'
+
+# Bold + white
+declare PROMPT_SYMBOL_COLOR="$(tput bold)$(tput setaf 7)"
+
+# Bold + green
+declare PROMPT_USER_COLOR="$(tput bold)$(tput setaf 2)"
+
+# Replace ~ in the current path with 🏠
+function _prompt_pwd {
+  declare -r PWD_WITHOUT_HOME="${PWD#$HOME}"
+  if [[ "${PWD}" != "${PWD_WITHOUT_HOME}" ]]; then
+    echo -n "🏠${PROMPT_DIR_COLOR}${PWD_WITHOUT_HOME}${PROMPT_COLOR_OFF}"
+  else
+    echo -n "${PROMPT_DIR_COLOR}${PWD}${PROMPT_COLOR_OFF}"
+  fi
+}
+
+# Evaluate __git_ps1 if it is available
+function _prompt_rcs_status {
+  if [[ -n "$(type -t __git_ps1)" ]]; then
+    echo -n "$(__git_ps1 " ${PROMPT_SMALL_WORD_COLOR}on${PROMPT_COLOR_OFF} \
+${PROMPT_RCS_COLOR}%s${PROMPT_COLOR_OFF}")"
+  else
+    echo -n
+  fi
+}
+
+export PS1="\
+\[${PROMPT_USER_COLOR}\]\u\[${PROMPT_COLOR_OFF}\] \
+\[${PROMPT_SMALL_WORD_COLOR}\]at\[${PROMPT_COLOR_OFF}\] \
+\[${PROMPT_HOST_COLOR}\]\h\[${PROMPT_COLOR_OFF}\] \
+\[${PROMPT_SMALL_WORD_COLOR}\]in\[${PROMPT_COLOR_OFF}\] \
+\$(_prompt_pwd)\
+\$(_prompt_rcs_status)\
+\[${PROMPT_SYMBOL_COLOR}\] \[${PROMPT_SYMBOL}\]\[${PROMPT_COLOR_OFF}\] "
+
+# }}}
+# Load other scripts {{{
+
+function _try_load {
   local -r file="${1:-}"
+  # shellcheck source=/dev/null
   [[ -s "${file}" ]] && . "${file}"
 }
 
@@ -90,7 +199,8 @@ for config_file in "${HOME}"/.bash.d/*; do
   _try_load "${config_file}"
 done
 
-unset _try_load
+# }}}
+# Functions {{{
 
 # Open an executable by name in vim
 function vimc {
@@ -99,35 +209,7 @@ function vimc {
 
 # cd to the path of the foremost Finder window
 function cdf {
-  cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
+  cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')" || return
 }
 
-# 2018-09-01 TODO: Switch to manual escape sequences for speed?
-declare PROMPT_BG_COLOR="$(tput bold)"
-declare PROMPT_COLOR_OFF="$(tput sgr0)"
-declare PROMPT_DIR_COLOR="$(tput bold)$(tput setaf 4)"
-declare PROMPT_HOST_COLOR="$(tput bold)$(tput setaf 1)"
-declare PROMPT_RCS_COLOR="$(tput bold)$(tput setaf 5)"
-# 2018-09-01 TODO: Does this work <bash 4.2?
-declare PROMPT_SYMBOL=$'\u276F\u276F'
-declare PROMPT_SYMBOL_COLOR="$(tput bold)$(tput setaf 7)"
-declare PROMPT_USER_COLOR="$(tput bold)$(tput setaf 2)"
-
-# 2018-09-01 TODO: Check for __git_ps1 before referencing
-export PS1="\
-\[${PROMPT_USER_COLOR}\]\u\[${PROMPT_COLOR_OFF}\] \
-\[${PROMPT_BG_COLOR}\]at\[${PROMPT_COLOR_OFF}\] \
-\[${PROMPT_HOST_COLOR}\]\h\[${PROMPT_COLOR_OFF}\] \
-\[${PROMPT_BG_COLOR}\]in\[${PROMPT_COLOR_OFF}\] \
-\[${PROMPT_DIR_COLOR}\]\w\[${PROMPT_COLOR_OFF}\]\
-\$(__git_ps1 ' \[${PROMPT_BG_COLOR}\]on\[${PROMPT_COLOR_OFF}\] \[${PROMPT_RCS_COLOR}\]%s\[${PROMPT_COLOR_OFF}\]')\
-\[${PROMPT_SYMBOL_COLOR}\] \[${PROMPT_SYMBOL}\]\[${PROMPT_COLOR_OFF}\] "
-
-unset PROMPT_BG_COLOR
-unset PROMPT_COLOR_OFF
-unset PROMPT_DIR_COLOR
-unset PROMPT_HOST_COLOR
-unset PROMPT_RCS_COLOR
-unset PROMPT_SYMBOL
-unset PROMPT_SYMBOL_COLOR
-unset PROMPT_USER_COLOR
+# }}}
