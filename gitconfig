@@ -34,3 +34,14 @@ divert(0)dnl
 [pager]
   diff = diff-so-fancy | less --tabs=1,5 -RFX
   show = diff-so-fancy | less --tabs=1,5 -RFX
+
+# Redirect all other github URIs to SSH
+[url "git@github.com:"]
+  insteadOf = "https://github.com/"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/"
+  pushInsteadOf = "https://github.com/"
+
+# Give github a handy alias
+[url "git://github.com/"]
+  insteadOf = "github:"
