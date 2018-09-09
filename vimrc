@@ -1,3 +1,14 @@
+" vim: set foldmethod=marker foldlevel=0 nomodeline:
+" ############################################################################
+" Description: set up vim, not too much, mostly small things
+" Author: Peter Zalewski <peter@zalewski.com>
+" Source: https://github.com/peterzalewski/dotfiles/blob/master/vimrc
+"
+" Manage plugins with vim-plug: https://github.com/junegunn/vim-plug
+" ############################################################################
+
+" Preamble {{{
+
 " Disable vi compatibility to enable full vim functionality
 set nocompatible
 
@@ -7,6 +18,9 @@ syntax enable
 " Enable filetype detection, plugin support, and autoindent 
 " These plugins come standard but disabled
 filetype plugin indent on
+
+"  }}}
+"  Plugins {{{
 
 call plug#begin()
 
@@ -61,6 +75,9 @@ Plug 'junegunn/limelight.vim'
 
 call plug#end()
 
+" }}}
+" Appearance {{{
+
 " Enable Molokai's 256-color alternative
 let g:rehash256 = 1
 
@@ -70,55 +87,120 @@ colorscheme molokai
 " Highlight the paren under the cursor, not the matching paren
 hi MatchParen ctermfg=208 ctermbg=233 cterm=bold
 
-" General options
-set autoindent                 " Copy indent from current line when starting new line
-set autoread                   " Re-read files changed outside of vim
-set backspace=eol,indent,start " Backspace over EOL, indents, and start of line in insert mode
-set clipboard=unnamed          " Yank to system clipboard
-set encoding=utf8              " Default to UTF-8 everywhere, including registers
-set expandtab                  " Convert tabs to spaces in insert mode
-set fileformats=unix,mac,dos   " Set EOL preferences and default to Unix line endings
-set fillchars=vert:\│          " Handsome vertical split character
-set foldlevelstart=20          " Edit files with first 20 levels of folds open
-set foldmethod=indent          " Fold lines with equal indent levels
-set formatoptions=qcj          " Auto-wrap comments, allow q in comments, remove comment leaders on join
-set gdefault                   " Substitutes are global on the current line by default
-set hidden                     " Abandoning hides buffers rather than unloads them
-set hlsearch                   " Highlight search results
-set ignorecase                 " Ignore case in search patterns
-set incsearch                  " Show first match as you type pattern
-set laststatus=2               " Additional status line
-set lazyredraw                 " Do not redraw unnecessarily
-set nobackup                   " Do not keep backups after overwriting files
-set nojoinspaces               " Only insert one space when joining lines
-set nostartofline              " Don't always jump to start of line
-set noswapfile                 " Do not create swap files
-set nowritebackup              " Do not create backups when writing files
-set number                     " Show absolute line number on current line
-set relativenumber             " Line numbers are relative to current line
-set ruler                      " Display row and column in file
-set scrolloff=2                " 2 lines of context for jumping to search results
-set shiftround                 " Round indents to multiple of 'shiftwidth'
-set shiftwidth=2               " Indent by 2 spaces
-set shortmess+=I               " Do not display the vim intro message on start
-set showcmd                    " Show last command below status line
-set showmatch                  " Briefly jump to matching bracket after inserting one
-set showmode                   " Indicates if in insert mode
-set smartcase                  " Default to case-insensitive search pattern until typing a capital letter
-set smarttab                   " Use 'shiftwidth' spaces when typing tab at beginning of line
-set softtabstop=2              " Use 2 spaces when typing tab anywhere
-set splitbelow                 " Default to opening new horizontal split BELOW current one
-set splitright                 " Default to opening new vertical split to RIGHT of current one
-set tabstop=2                  " Display tabs with 2 spaces
-set ttyfast                    " Yes, this is a fast terminal connection
-set visualbell                 " Flash screen instead of annoying me
-set wildignore+=node_modules   " Ignore node_modules when expanding wildcards and completing filenames
-set wildignore+=.git           " Ignore .git when expanding wildcards and completing filenames
-set wildmenu                   " Tab-completion for commands
-set wildmode=list:full,longest " List possible commands by length first
+" }}}
+" Built-in options {{{
+
+set autoindent                  " Copy indent from current line when starting new line
+set autoread                    " Re-read files changed outside of vim
+set backspace=eol,indent,start  " Backspace over EOL, indents, and start of line in insert mode
+set clipboard=unnamed           " Yank to system clipboard
+set completefunc=emoji#complete " Auto-complete Emoji!
+set encoding=utf8               " Default to UTF-8 everywhere, including registers
+set expandtab                   " Convert tabs to spaces in insert mode
+set fileformats=unix,mac,dos    " Set EOL preferences and default to Unix line endings
+set fillchars=vert:\│           " Handsome vertical split character
+set foldlevelstart=20           " Edit files with first 20 levels of folds open
+set foldmethod=indent           " Fold lines with equal indent levels
+set formatoptions=qcj           " Auto-wrap comments, allow q in comments, remove comment leaders on join
+set gdefault                    " Substitutes are global on the current line by default
+set hidden                      " Abandoning hides buffers rather than unloads them
+set hlsearch                    " Highlight search results
+set ignorecase                  " Ignore case in search patterns
+set incsearch                   " Show first match as you type pattern
+set laststatus=2                " Additional status line
+set lazyredraw                  " Do not redraw unnecessarily
+set modelines=2                 " Use settings from comments in files
+set nobackup                    " Do not keep backups after overwriting files
+set nojoinspaces                " Only insert one space when joining lines
+set nostartofline               " Don't always jump to start of line
+set noswapfile                  " Do not create swap files
+set nowritebackup               " Do not create backups when writing files
+set number                      " Show absolute line number on current line
+set relativenumber              " Line numbers are relative to current line
+set ruler                       " Display row and column in file
+set scrolloff=2                 " 2 lines of context for jumping to search results
+set shiftround                  " Round indents to multiple of 'shiftwidth'
+set shiftwidth=2                " Indent by 2 spaces
+set shortmess+=I                " Do not display the vim intro message on start
+set showcmd                     " Show last command below status line
+set showmatch                   " Briefly jump to matching bracket after inserting one
+set showmode                    " Indicates if in insert mode
+set smartcase                   " Default to case-insensitive search pattern until typing a capital letter
+set smarttab                    " Use 'shiftwidth' spaces when typing tab at beginning of line
+set softtabstop=2               " Use 2 spaces when typing tab anywhere
+set splitbelow                  " Default to opening new horizontal split BELOW current one
+set splitright                  " Default to opening new vertical split to RIGHT of current one
+set tabstop=2                   " Display tabs with 2 spaces
+set ttyfast                     " Yes, this is a fast terminal connection
+set virtualedit+=block          " Let me move past the last character on the line in visual mode
+set visualbell                  " Flash screen instead of annoying me
+set wildignore+=.git            " Ignore .git when expanding wildcards and completing filenames
+set wildignore+=node_modules    " Ignore node_modules when expanding wildcards and completing filenames
+set wildmenu                    " Tab-completion for commands
+set wildmode=list:full,longest  " List possible commands by length first
+
+" }}}
+" Plugin-specific settings {{{
+
+" ludovicchabant/vim-gutentags
+" If the filetype is known, append it to the tag file name
+" to group tags by language.
+function! PeteZalewskiTagFilePerFiletype(path)
+    if strlen(&l:filetype) ># 0
+        let b:gutentags_ctags_tagfile = &l:filetype . '.tags'
+        return 1
+    endif
+    return 0
+endfunction
+
+let g:gutentags_enabled                   = 1
+let g:gutentags_add_default_project_roots = 1
+let g:gutentags_cache_dir                 = glob("~/.ctags")
+let g:gutentags_ctags_language_specific   = 1
+let g:gutentags_file_list_command         = 'rg --files'
+let g:gutentags_init_user_func            = 'PeteZalewskiTagFilePerFiletype'
+
+" junegunn/fzf.vm
+let g:fzf_layout = { 'down': '8' }
+
+" junegun/goyo.vim
+" 2018-09-08 TODO: set Goyo width to &l:textwidth (if set)
+function! s:goyo_enter()
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+    Limelight
+endfunction
+function! s:goyo_leave()
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+    Limelight!
+endfunction
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+nnoremap <silent> <leader>g :Goyo<CR>
+let g:goyo_width = 107
+
+" pangloss/vim-javascript
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow  = 1
+
+" vim-airline/vim-airline
+let g:airline_powerline_fonts = 1
+
+" w0rp/ale
+let g:ale_sign_column_always   = 1
+let g:ale_echo_msg_error_str   = 'Error'
+let g:ale_echo_msg_warning_str = 'Warning'
+let g:ale_echo_msg_format      = '[%severity%/%linter%] %s'
+
+" }}}
+" Abbreviations {{{
 
 " Remind myself to do something
 iabbrev <expr> \t printf(&l:commentstring . " TODO:", strftime(" %Y-%m-%d"))
+
+" }}}
+" Mappings {{{
 
 " Edit the previously edited file
 nnoremap <C-e> :e#<CR>
@@ -209,6 +291,9 @@ nnoremap gV `[v`]
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
+" }}}
+" Autocommands {{{
+
 " Additional file type detection by extension
 augroup filetypes
     autocmd!
@@ -282,41 +367,12 @@ augroup window_resized
     autocmd VimResized * :wincmd =
 augroup END
 
-" ludovicchabant/vim-gutentags
-" If the filetype is known, append it to the tag file name
-" to group tags by language.
-function! PeteZalewskiTagFilePerFiletype(path)
-    if strlen(&l:filetype) ># 0
-        let b:gutentags_ctags_tagfile = &l:filetype . '.tags'
-        return 1
-    endif
-    return 0
-endfunction
-
-let g:gutentags_enabled                   = 1
-let g:gutentags_add_default_project_roots = 1
-let g:gutentags_cache_dir                 = glob("~/.ctags")
-let g:gutentags_ctags_language_specific   = 1
-let g:gutentags_file_list_command         = 'rg --files'
-let g:gutentags_init_user_func            = 'PeteZalewskiTagFilePerFiletype'
-
-" junegunn/fzf.vm
-let g:fzf_layout = { 'down': '8' }
-
-" pangloss/vim-javascript
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_flow  = 1
-
-" vim-airline/vim-airline
-let g:airline_powerline_fonts = 1
-
-" w0rp/ale
-let g:ale_sign_column_always   = 1
-let g:ale_echo_msg_error_str   = 'Error'
-let g:ale_echo_msg_warning_str = 'Warning'
-let g:ale_echo_msg_format      = '[%severity%/%linter%] %s'
+" }}}
+" Local {{{
 
 " Load local settings, if defined
 if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
+
+" }}}
