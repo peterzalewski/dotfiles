@@ -53,6 +53,12 @@ Plug 'tpope/vim-repeat'
 " Smartly manage tags
 Plug 'peterzalewski/vim-gutentags', { 'branch': 'language_specific', 'do': 'mkdir -p ${HOME}/.ctags' }
 
+" Promote productivity with distration-free mode
+Plug 'junegunn/goyo.vim'
+
+" Highlight current (or adjacent) blocks of text and dim everything else
+Plug 'junegunn/limelight.vim'
+
 call plug#end()
 
 " Enable Molokai's 256-color alternative
