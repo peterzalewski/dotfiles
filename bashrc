@@ -28,18 +28,33 @@ export PAGER="less"
 export LESS="-igMRFX"
 export FZF_DEFAULT_COMMAND="rg --files -L"
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US"
 
 # Better history courtesy of https://sanctum.geek.nz/arabesque/better-bash-history/
+# Save multi-line commands as one command
+shopt -s cmdhist
 
-shopt -s histappend                   # Shells append to history rather than overwrite
-HISTFILESIZE=1000000                  # Let's keep lots of history
-HISTSIZE=1000000                      # "
-HISTCONTROL=ignoreboth                # Do not log duplicate commands or those that start with a space
-HISTIGNORE='ls:bg:fg:history:clear'   # Ignore common drudgery
-HISTTIMEFORMAT='%F %T '               # Use a sensible timestamp
-shopt -s cmdhist                      # Append to history immediately, rather than on exit
+# Shells append to history rather than overwrite
+shopt -s histappend
 
-shopt -s globstar >/dev/null 2>&1     # Attempt to enable Bash 4 '**' recursive globbing
+# Let's keep lots of history
+export HISTFILESIZE=1000000
+
+# Ditto
+export HISTSIZE=1000000
+
+# Do not log duplicate commands or those that start with a space
+export HISTCONTROL=ignoreboth
+
+# Ignore common drudgery
+export HISTIGNORE='ls:bg:fg:history:clear:jobs:exit'
+
+# Use a sensible timestamp format
+export HISTTIMEFORMAT='%F %T '
+
+# Attempt to enable Bash 4 '**' recursive globbing
+shopt -s globstar >/dev/null 2>&1
 
 # Colorize ls/exa
 if [[ -n "$(command -v exa)" ]]; then
