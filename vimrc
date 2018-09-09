@@ -199,8 +199,9 @@ nnoremap Y y$
 nnoremap gV `[v`]
 
 " A simple, easy-to-use Vim alignment plugin - junegunn/vim-easy-align
-xnoremap ga <Plug>(EasyAlign)
-nnoremap ga <Plug>(EasyAlign)
+" Plugin requires recursive (map vs. noremap) bindings to work
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " Additional file type detection by extension
 augroup filetypes
