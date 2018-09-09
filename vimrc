@@ -268,10 +268,10 @@ nnoremap <silent> ]<space> o<esc>k
 nnoremap <silent> [<space> O<esc>j
 
 " Move to next error - w0rp/ale
-nnoremap <silent> ]e <Plug>(ale_next_wrap)
+nmap <silent> ]e <Plug>(ale_next_wrap)
 
 " Move to previous error - w0rp/ale
-nnoremap <silent> [e <Plug>(ale_previous_wrap)
+nmap <silent> [e <Plug>(ale_previous_wrap)
 
 " 'n' should always search FORWARD and 'N' BACKWARD
 nnoremap <expr> n 'Nn'[v:searchforward]
