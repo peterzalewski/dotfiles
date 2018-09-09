@@ -14,6 +14,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias bc='bc -l'
+alias map='xargs -n 1'
 
 declare -a fun_words=(shit damnit fuck please)
 for word in "${fun_words[@]}"; do
@@ -79,6 +80,11 @@ unset _try_load
 # Open an executable by name in vim
 function vimc {
   [[ "$#" == 1 ]] && vim "$(command -v "$1")"
+}
+
+# cd to the path of the foremost Finder window
+function cdf {
+  cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
 }
 
 # 2018-09-01 TODO: Switch to manual escape sequences for speed?
