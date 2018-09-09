@@ -212,8 +212,8 @@ nmap ga <Plug>(EasyAlign)
 " Additional file type detection by extension
 augroup filetypes
     autocmd!
-    autocmd BufEnter *.sls    setlocal filetype=yaml
-    autocmd BufEnter *.aurora setlocal filetype=python
+    autocmd BufEnter *.sls     setlocal filetype=yaml
+    autocmd BufEnter *.aurora  setlocal filetype=python
     autocmd BufEnter gitconfig setlocal filetype=gitconfig
 augroup END
 
@@ -259,13 +259,21 @@ augroup filetype_todotxt
 augroup END
 
 " Set options for vimrc and vimscript
-augroup filetype_vimrc
+augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal shiftwidth=4
     autocmd FileType vim setlocal tabstop=4
     autocmd FileType vim setlocal textwidth=120
     autocmd FileType vim setlocal colorcolumn=+1
-    nnoremap <buffer> <silent> <leader>s :source % <bar> :nohlsearch <bar> :edit<CR>
+
+    " Use :help on keyword when using K
+    autocmd FileType vim setlocal keywordprg=:help
+
+    " <leader>s sources the current Vimscript file, disables the current highlight, and reloads filetype
+    autocmd FileType vim nnoremap <buffer> <silent> <leader>s :source % <bar> :nohlsearch <bar> :edit<CR>
+
+    " Open help windows on the right, not below
+    autocmd BufWinEnter *.txt if &filetype ==# 'help' | wincmd L | endif
 augroup END
 
 " Equally resize panes when vim resizes
