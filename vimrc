@@ -239,6 +239,7 @@ nnoremap <leader>b :Buffers<cr>
 vnoremap <leader>s :sort<cr>
 
 " Format the visual selection with yapf, Yet Another Python Formatter
+" 2018-09-09 TODO: Is there a nicer way to do this?
 vnoremap <silent> <leader>f :<C-U>silent exec '%!yapf -l '.getpos("'<")[1].'-'.getpos("'>")[1].' %:p'<cr><cr>
 
 " Forbid navigation by arrows
@@ -362,6 +363,9 @@ augroup filetype_vim
 
     " Open help windows on the right, not below
     autocmd BufWinEnter *.txt if &filetype ==# 'help' | wincmd L | endif
+
+    " Shortcut: `q` in normal mode closes the help window
+    autocmd FileType help nnoremap <buffer> q :quit<CR>
 augroup END
 
 " Equally resize panes when vim resizes
