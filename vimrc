@@ -296,6 +296,13 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
+
+command -nargs=1 SendKeysToTmux :silent call SendKeysToTmux(<args>)
+
+function! SendKeysToTmux(cmd)
+    call system("tmux send-keys -t bottom '" . a:cmd . "' C-m")
+endfunction
+
 " Autocommands {{{
 
 " Additional file type detection by extension
