@@ -1,11 +1,10 @@
 x 2018-08-31 Replace ~ with 🏠 in prompt
 x 2018-09-01 Parameterize .gitconfig and render with m4
 2018-09-01 Add pre-commit hook to render README.me with m4
-2018-09-01 Accept verbosity flag for install
 2018-09-01 vim mappings to execute commands in the other tmux pane: `nmap \r :!tmux send-keys -t 0:0.1 C-p C-j <CR><CR>`
 2018-09-04 Color-coordinate fzf.vim with molokai
 2018-09-06 Manage macOS installed with a Brewfile https://github.com/Homebrew/homebrew-bundle
 2018-09-08 Get lazy loading Virtualenvwrapper working with pyenv
 2018-09-08 Compile and install Alacritty.app
-2018-09-08 Make install sections optional -- vim plugins, dotfiles, etc.
+x 2018-09-08 Make install sections optional -- vim plugins, dotfiles, etc.
 x 2018-09-09 Bash completions for `txopen`

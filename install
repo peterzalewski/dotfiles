@@ -1,23 +1,38 @@
 #!/usr/bin/env bash
-
+##############################################################################
+# Install/update my dotfiles and work environment in these stages:
+#   1. (dotfiles) Link dotfiles, e.g. .bashrc, .inputrc
+#   2. (vim-plugins) Install vim plugins
+#   3. (bash-plugins) Link files in .bash.d/
+#   4. (dot-configs) Link files in .config/
+# Disable any stage by passing --no-${stage_name}. For example:
+#   ./install --no-vim-plugins
+#
+# AUTHOR: Peter Zalewski <peter@zalewski.com>
+# SOURCE: https://github.com/peterzalewski/dotfiles/blob/master/install
+##############################################################################
 set -o errexit
 set -o nounset
 set -o pipefail
 set -o noclobber
 
-declare BLUE COLOR_OFF RED
+declare IS_VERBOSE=0
+
+declare BLUE BOLD COLOR_OFF GREEN RED
 BLUE="$(tput setaf 6)" && readonly BLUE
+BOLD="$(tput bold)" && readonly BOLD
 COLOR_OFF="$(tput sgr0)" && readonly COLOR_OFF
+GREEN="$(tput setaf 2)" && readonly GREEN
 RED="$(tput setaf 1)" && readonly RED
 
 declare PWD CURL TEMP_DIR
 TEMP_DIR="$(mktemp -d -q -t "$(basename "${BASH_SOURCE[0]}")")" && readonly TEMP_DIR
 PWD="$(pwd)" && readonly PWD
 CURL="$(command -v curl)" && readonly CURL
-declare -ar LINKED_CONFIGS=(
+declare -a DOTFILES_TO_LINK=(
   vimrc
   bashrc
-  tmux.conf
+  tmux-conf
   psqlrc
   inputrc
   ripgreprc
@@ -43,7 +58,7 @@ function cleanup {
 ################################################################################
 function message {
   local -r msg="$1"; shift
-  printf '%b '"${msg}"'\n' "${BLUE}INFO${COLOR_OFF}" "$@"
+  printf '%b '"${msg}"'\n' "${BOLD}${BLUE}INFO${COLOR_OFF}" "$@"
 }
 
 ################################################################################
@@ -57,11 +72,11 @@ function message {
 ################################################################################
 function error {
   local -r msg="$1"; shift
-  printf '%b '"${msg}"'\n' "${RED}ERROR${COLOR_OFF}" "$@" >&2
+  printf '%b '"${msg}"'\n' "${BOLD}${RED}ERROR${COLOR_OFF}" "$@" >&2
 }
 
 function hi {
-  printf '%b' "${BLUE}$*${COLOR_OFF}"
+  printf '%b' "${GREEN}$*${COLOR_OFF}"
 }
 
 function install_vim_plugins {
@@ -115,11 +130,10 @@ function install_vim_plugins {
   fi
 }
 
-function copy_gitconfig {
+function make_gitconfig {
   local -r gitconfig="${HOME}/.gitconfig"
   if [[ -f "${gitconfig}" ]]; then
-    message "Found %s" "$(hi "${HOME}/.gitconfig")"
-    return
+    message "Overwriting %s" "$(hi "${HOME}/.gitconfig")"
   fi
 
   local merge_strategy
@@ -131,7 +145,7 @@ function copy_gitconfig {
   fi
   readonly merge_strategy
 
-  if m4 --define=MERGE_STRATEGY="${merge_strategy}" "${PWD}/gitconfig" >"${gitconfig}" 2>/dev/null; then
+  if m4 --define=MERGE_STRATEGY="${merge_strategy}" "${PWD}/gitconfig" >|"${gitconfig}" 2>/dev/null; then
     message "Installed gitconfig with %s default merge strategy" "$(hi "${merge_strategy}")"
   else
     error "Unable to render .gitconfig"
@@ -155,11 +169,13 @@ function _try_link_or_exit {
   fi
 }
 
-function link_configs {
-  for file in "${LINKED_CONFIGS[@]}"; do
-    _try_link_or_exit "${PWD}/${file}" "${HOME}/.${file}"
+function link_dotfiles {
+  for file in "${DOTFILES_TO_LINK[@]}"; do
+    _try_link_or_exit "${PWD}/${file}" "${HOME}/.${file//-/.}"
   done || true
+}
 
+function link_bash_plugins {
   local -r bashrc_dir="${HOME}/.bash.d"
   if ! mkdir -p "${bashrc_dir}"; then
     error "Unable to create bash.d directory at %s" "$(hi "${bashrc_dir}")"
@@ -168,9 +184,11 @@ function link_configs {
   for file in "${PWD}"/bash.d/*; do
     _try_link_or_exit "${file}" "${bashrc_dir}/${file##*/}"
   done || true
+}
 
+function link_dot_config {
   local config_dirs dest_dir
-  read -ar config_dirs < <(find "${PWD}/config" -maxdepth 1 -mindepth 1 -type d -print0 | xargs -0 -n 1 basename)
+  read -r -a config_dirs < <(find "${PWD}/config" -maxdepth 1 -mindepth 1 -type d -print0 | xargs -0 -n 1 basename)
   readonly config_dirs
   for source_dir in "${config_dirs[@]}"; do
     dest_dir="${HOME}/.config/${source_dir}"
@@ -187,12 +205,66 @@ function link_configs {
 function main {
   trap 'cleanup' EXIT
 
-  link_configs
-  copy_gitconfig
-  install_vim_plugins
+  local is_linking_dotfiles=1 is_making_gitconfig=1 is_installing_vim_plugins=1
+  local is_linking_bash_plugins=1 is_linking_dot_config=1
+  local arg
+
+  while [[ "$#" -gt 0 ]]; do
+    case "${1}" in
+      --no-*)
+        arg="${1#--no-}"
+        case "${arg}" in
+          bash-plugins) is_linking_bash_plugins=0 ;;
+          dotfiles) is_linking_dotfiles=0 ;;
+          dot-config) is_linking_dot_config=0 ;;
+          gitconfig) is_making_gitconfig=0 ;;
+          vim-plugins) is_installing_vim_plugins=0 ;;
+          *)
+            if [[ "${DOTFILES_TO_LINK[*]}" =~ $arg ]]; then
+              DOTFILES_TO_LINK=("${DOTFILES_TO_LINK[@]/$arg}")
+            else
+              error "Unknown action to disable: %s" "${arg}"
+              exit 1
+            fi
+            ;;
+        esac
+        shift
+        ;;
+      *)
+        error "Unknown option: %s" "${1}"
+        exit 1
+    esac
+  done
+
+  readonly IS_VERBOSE DOTFILES_TO_LINK
+
+  if [[ "${is_linking_dotfiles}" = 1 ]]; then
+    message '==> Linking dotfiles'
+    link_dotfiles
+
+    if [[ "${is_making_gitconfig}" = 1 ]]; then
+      make_gitconfig
+    fi
+  fi
+
+  if [[ "${is_installing_vim_plugins}" = 1 ]]; then
+    message '==> Installing vim plugins'
+    install_vim_plugins
+  fi
+
+  if [[ "${is_linking_bash_plugins}" = 1 ]]; then
+    message '==> Linking plugins under .bash.d/'
+    link_bash_plugins
+  fi
+
+  if [[ "${is_linking_dot_config}" = 1 ]]; then
+    message '==> Linking configs under .config/'
+    link_dot_config
+  fi
+
+  exit 0
 }
 
 main "$@"
-exit 0
 
 # vim: ft=sh:sw=2:ts=2:et
