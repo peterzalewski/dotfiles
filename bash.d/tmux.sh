@@ -1,56 +1,83 @@
 #!/usr/bin/env bash
+##############################################################################
+# Author: Peter Zalewski <peter@zalewski.com>
+# Source: https://github.com/peterzalewski/dotfiles/blob/master/bash.d/tmux.sh
+##############################################################################
 
-alias tx="tmux"
-alias txkill="tmux kill-session -t "
 alias mux='tmuxinator'
 alias t='txopen'
+alias tx='tmux'
+alias txkill='tmux kill-session -t'
 
+##############################################################################
+# Stream a list of open tmux sessions
+##############################################################################
+function _tmux_sessions {
+  local -r tmux="$(command -v tmux)"
+  [[ -n "${tmux}" ]] && "${tmux}" ls -F "#{session_name}" 2>/dev/null
+}
+
+##############################################################################
+# Stream a list of Tmuxinator projects
+##############################################################################
+function _tmuxinator_projects {
+  local -r tmuxinator="$(command -v tmuxinator)"
+  [[ -n "${tmuxinator}" ]] && "${tmuxinator}" ls | sed -E -n '2,$s/\s+/\n/gp'
+}
+
+##############################################################################
+# Given the name of a tmux session, attempt the following:
+#   1. Open an existing tmux session with that name
+#   2. Start a defined Tmuxinator project with that name
+#   3. Start a new tmux session with that name
+# If no name is given, list existing sessions and projects.
+# Arguments:
+#   $1 target: [optional] name of a tmux session
+##############################################################################
 function txopen {
   local -r target="${1:-}"
-  local -r tmux=$(command -v tmux)
-  local -r tmuxinator=$(command -v tmuxinator)
+  local -r tmux="$(command -v tmux)"
+  local -r tmuxinator="$(command -v tmuxinator)"
 
   if [[ -z "${tmux}" ]]; then
-    printf "ERROR: tmux not installed\n" >&2
+                                              # /-> Bold + red
+    printf '%bERROR:%b tmux not installed\n' "$(tput bold ; tput setaf 1)" "$(tput sgr0)" >&2
     return 1
   fi
 
   # No target given, so scrape available targets
   if [[ -z "${target}" ]]; then
-    local -ra current_sessions=($("${tmux}" ls -F "#{session_name}" 2>/dev/null))
+    mapfile -t current_sessions < <(_tmux_sessions)
     if [[ "${#current_sessions[@]}" -gt 0 ]]; then
-      printf "\e[0;95mOpen sessions:\e[0m\n"
-      printf "%s\n" "${current_sessions[@]}"
+                                     # /-> Bold + cyan
+      printf '%bOpen sessions:%b\n' "$(tput bold ; tput setaf 6)" "$(tput sgr0)"
+      printf '%s\n' "${current_sessions[@]}"
     fi
     if [[ -n "${tmuxinator}" ]]; then
-      local -ra tmuxinator_templates=($("${tmuxinator}" ls \
-        | tr -s '[:space:]' '\n' \
-        | awk 'NR>2'
-      ))
-      if [[ "${#tmuxinator_templates[@]}" -gt 0 ]]; then
-        printf "\e[0;95mDefined sessions:\e[0m\n"
-        printf "%s\n" "${tmuxinator_templates[@]}"
+      mapfile -t tmuxinator_projects < <(_tmuxinator_projects)
+      if [[ "${#tmuxinator_projects[@]}" -gt 0 ]]; then
+                                          # /-> Bold + blue
+        printf '%bDefined sessions:%b\n' "$(tput bold ; tput setaf 4)" "$(tput sgr0)"
+        printf '%s\n' "${tmuxinator_projects[@]}"
       fi
     fi
     return 0
   fi
 
   # Open the matching open session
-  local -r current_session=$("${tmux}" ls -F "#{session_name}" 2>/dev/null | grep -m 1 "${target}")
+  local -r current_session="$(_tmux_sessions | grep --max-count=1 "${target}")"
   if [[ -n "${current_session}" ]]; then
     "${tmux}" attach -t "${current_session}"
     return 0
   fi
 
-  # Open the matching tmuxinator template
+  # Open the matching Tmuxinator project
   if [[ -n "${tmuxinator}" ]]; then
-    local -r tmuxinator_template=$("${tmuxinator}" ls \
-      | tr -s '[:space:]' '\n' \
-      | awk 'NR>2' \
-      | grep -m 1 "${target}" \
-    )
-    if [[ -n "${tmuxinator_template}" ]]; then
-      "${tmuxinator}" start "${tmuxinator_template}"
+    local -r tmuxinator_project="$(_tmuxinator_projects \
+      | grep --max-count=1 "${target}" \
+    )"
+    if [[ -n "${tmuxinator_project}" ]]; then
+      "${tmuxinator}" start "${tmuxinator_project}"
       return 0
     fi
   fi
@@ -58,3 +85,18 @@ function txopen {
   # Otherwise open a new session using the target as name
   "${tmux}" new-session -s "${target}" -n "bash"
 }
+
+##############################################################################
+# Return matching names of tmux sessions and Tmuxinator projects for tab-
+# completion.
+##############################################################################
+function _txopen_complete {
+  if [[ "${#COMP_WORDS[@]}" != 2 ]]; then
+    return
+  fi
+
+  mapfile -t COMPREPLY < <(compgen -W "$(_tmux_sessions)" -- "${COMP_WORDS[1]}")
+  mapfile -t COMPREPLY -O "${#COMPREPLY[@]}" < <(compgen -W "$(_tmuxinator_projects)" -- "${COMP_WORDS[1]}")
+}
+
+complete -F _txopen_complete txopen t
