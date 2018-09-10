@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 ##############################################################################
-# Install/update my dotfiles and work environment in these stages:
-#   1. (dotfiles) Link dotfiles, e.g. .bashrc, .inputrc
-#   2. (vim-plugins) Install vim plugins
-#   3. (bash-plugins) Link files in .bash.d/
-#   4. (dot-configs) Link files in .config/
-# Disable any stage by passing --no-${stage_name}. For example:
-#   ./install --no-vim-plugins
+#/ Usage: ./install [-h|--help] [--no-*]
+#/
+#/ Install/update my dotfiles and work environment in these stages:
+#/   1. (dotfiles) Link dotfiles, e.g. .bashrc, .inputrc
+#/   2. (vim-plugins) Install vim plugins
+#/   3. (bash-plugins) Link files in .bash.d/
+#/   4. (dot-configs) Link files in .config/
+#/
+#/ Disable any stage by passing --no-${stage_name}. For example:
+#/   ./install --no-vim-plugins
+#/
+#/ Other arguments:
+#/   -h      display this usage information
 #
 # AUTHOR: Peter Zalewski <peter@zalewski.com>
 # SOURCE: https://github.com/peterzalewski/dotfiles/blob/master/install
@@ -77,6 +83,10 @@ function error {
 
 function hi {
   printf '%b' "${GREEN}$*${COLOR_OFF}"
+}
+
+function usage {
+  grep '^#/' "${BASH_SOURCE[0]}" | cut -c 4-
 }
 
 function install_vim_plugins {
@@ -211,6 +221,10 @@ function main {
 
   while [[ "$#" -gt 0 ]]; do
     case "${1}" in
+      -h|--help)
+        usage
+        exit 0
+        ;;
       --no-*)
         arg="${1#--no-}"
         case "${arg}" in
@@ -224,6 +238,7 @@ function main {
               DOTFILES_TO_LINK=("${DOTFILES_TO_LINK[@]/$arg}")
             else
               error "Unknown action to disable: %s" "${arg}"
+              usage
               exit 1
             fi
             ;;
@@ -232,6 +247,7 @@ function main {
         ;;
       *)
         error "Unknown option: %s" "${1}"
+        usage
         exit 1
     esac
   done
