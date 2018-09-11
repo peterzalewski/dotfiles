@@ -120,6 +120,13 @@ export LESS_TERMCAP_us="$(tput bold ; tput setaf 2)"
 # End underline
 export LESS_TERMCAP_ue="$(tput sgr0)"
 
+if [[ -n "$(command -v grc)" ]]; then
+  alias colorify="grc -es --colour=auto"
+  for app in {ps,du,df,lsof,ifconfig,ping,traceroute,dig}; do
+    alias "${app}"="colorify "${app}""
+  done
+fi
+
 # }}}
 # Prompt {{{
 
