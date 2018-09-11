@@ -46,6 +46,9 @@ export PAGER='less'
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 export VISUAL='vim'
 
+# Use vi-like bindings instead of emacs-like bindings to edit
+set -o vi
+
 # Attempt to enable Bash 4 '**' recursive globbing
 shopt -s globstar >/dev/null 2>&1
 
