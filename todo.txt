@@ -2,10 +2,11 @@ x 2018-08-31 Replace ~ with 🏠 in prompt
 x 2018-09-01 Parameterize .gitconfig and render with m4
 2018-09-01 Add pre-commit hook to render README.me with m4
 x 2018-09-01 vim mappings to execute commands in the other tmux pane: `nmap \r :!tmux send-keys -t 0:0.1 C-p C-j <CR><CR>`
-2018-09-04 Color-coordinate fzf.vim with molokai
+x 2018-09-04 Color-coordinate fzf
 2018-09-06 Manage macOS installed with a Brewfile https://github.com/Homebrew/homebrew-bundle
 2018-09-08 Get lazy loading Virtualenvwrapper working with pyenv
 2018-09-08 Compile and install Alacritty.app
 x 2018-09-08 Make install sections optional -- vim plugins, dotfiles, etc.
 x 2018-09-09 Bash completions for `txopen`
 2018-09-10 Use grc to colorify things like ping and ifconfig
+2018-09-11 Write a syntax file for todo.txt "for fun"
