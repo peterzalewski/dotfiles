@@ -156,14 +156,17 @@ declare PROMPT_HOST_COLOR="$(tput bold ; tput setaf 1)"
 # Bold + magenta
 declare PROMPT_RCS_COLOR="$(tput bold ; tput setaf 5)"
 
-# '❯❯'
-declare PROMPT_SYMBOL=$'\xE2\x9D\xAF'$'\xE2\x9D\xAF'
+# '❯'
+declare PROMPT_SYMBOL=$'\xE2\x9D\xAF'
 
 # Bold + white
-declare PROMPT_SYMBOL_COLOR="$(tput bold)$(tput setaf 7)"
+declare PROMPT_SYMBOL_COLOR="$(tput bold ; tput setaf 7)"
 
 # Bold + green
-declare PROMPT_USER_COLOR="$(tput bold)$(tput setaf 2)"
+declare PROMPT_USER_COLOR="$(tput bold ; tput setaf 2)"
+
+# Bold + red
+declare PROMPT_LAST_COMMAND_FAILED="$(tput bold ; tput setaf 1)"
 
 # Replace ~ in the current path with 🏠
 function _prompt_pwd {
@@ -185,14 +188,31 @@ ${PROMPT_RCS_COLOR}%s${PROMPT_COLOR_OFF}")"
   fi
 }
 
+# Display the prompt symbol in red if the last shell command failed
+function _prompt_color_symbol_by_exit_status {
+  if [[ "${LAST_EXIT}" != 0 ]]; then
+    echo -n "${PROMPT_LAST_COMMAND_FAILED}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
+  else
+    echo -n "${PROMPT_SYMBOL_COLOR}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
+  fi
+}
+
+# Save the exit code of the last shell command. This must happen
+# before functions to build the prompt are called.
+function _prompt_save_last_exit {
+  export LAST_EXIT="$?"
+}
+
+export PROMPT_COMMAND="_prompt_save_last_exit"
 export PS1="\
 \[${PROMPT_USER_COLOR}\]\u\[${PROMPT_COLOR_OFF}\] \
 \[${PROMPT_SMALL_WORD_COLOR}\]at\[${PROMPT_COLOR_OFF}\] \
 \[${PROMPT_HOST_COLOR}\]\h\[${PROMPT_COLOR_OFF}\] \
 \[${PROMPT_SMALL_WORD_COLOR}\]in\[${PROMPT_COLOR_OFF}\] \
 \$(_prompt_pwd)\
-\$(_prompt_rcs_status)\
-\[${PROMPT_SYMBOL_COLOR}\] \[${PROMPT_SYMBOL}\]\[${PROMPT_COLOR_OFF}\] "
+\$(_prompt_rcs_status) \
+\$(_prompt_color_symbol_by_exit_status)\
+\[${PROMPT_SYMBOL_COLOR}\]\[${PROMPT_SYMBOL}\]\[${PROMPT_COLOR_OFF}\] "
 
 # }}}
 # Load other scripts {{{

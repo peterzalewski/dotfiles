@@ -17,6 +17,7 @@
 # AUTHOR: Peter Zalewski <peter@zalewski.com>
 # SOURCE: https://github.com/peterzalewski/dotfiles/blob/master/install
 ##############################################################################
+
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -36,12 +37,12 @@ TEMP_DIR="$(mktemp -d -q -t "$(basename "${BASH_SOURCE[0]}")")" && readonly TEMP
 PWD="$(pwd)" && readonly PWD
 CURL="$(command -v curl)" && readonly CURL
 declare -a DOTFILES_TO_LINK=(
-  vimrc
   bashrc
-  tmux-conf
-  psqlrc
   inputrc
+  psqlrc
   ripgreprc
+  tmux-conf
+  vimrc
 )
 
 ################################################################################
