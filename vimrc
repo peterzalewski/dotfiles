@@ -76,6 +76,9 @@ Plug 'junegunn/limelight.vim'
 " Draw arrows and boxes in visual block mode
 Plug 'peterzalewski/vim-boxdraw'
 
+" Syntax for .tmux.conf
+Plug 'tmux-plugins/vim-tmux'
+
 call plug#end()
 
 " }}}
@@ -297,7 +300,7 @@ nmap ga <Plug>(EasyAlign)
 
 " }}}
 
-command -nargs=1 SendKeysToTmux :silent call SendKeysToTmux(<args>)
+command! -nargs=1 SendKeysToTmux :silent call SendKeysToTmux(<args>)
 
 function! SendKeysToTmux(cmd)
     call system("tmux send-keys -t bottom '" . a:cmd . "' C-m")

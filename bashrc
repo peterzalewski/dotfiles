@@ -243,4 +243,15 @@ function cdf {
   cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')" || return
 }
 
+function check-connectivity {
+  local -r curl="$(command -v curl)"
+  local -r response="$("${curl}" --silent --max-redir 0 http://www.msftncsi.com/ncsi.txt)"
+
+  if [[ "${response}" = "Microsoft NCSI" ]]; then
+    printf 'Connection appears good!\n'
+  else
+    printf 'Connection appears down!\n'
+  fi
+}
+
 # }}}
