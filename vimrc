@@ -183,7 +183,7 @@ function! s:goyo_leave()
 endfunction
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
-nnoremap <silent> <leader>g :Goyo<CR>
+
 let g:goyo_width = 107
 
 " pangloss/vim-javascript
@@ -330,6 +330,8 @@ augroup filetype_markdown
     autocmd!
     autocmd FileType markdown setlocal shiftwidth=4
     autocmd FileType markdown setlocal tabstop=4
+    autocmd FileType markdown nnoremap <buffer> <silent> <leader>g :Goyo<CR>
+    autocmd FileType iabbrev <buffer> <expr> \t strftime("%m/%d/%Y")
 augroup END
 
 " Set options for Python
