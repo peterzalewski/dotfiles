@@ -1,10 +1,7 @@
-divert(-1)
-define(`EMAIL',ifdef(`EMAIL', `EMAIL', `peter@zalewski.com'))
-define(`MERGE_STRATEGY',ifdef(`MERGE_STRATEGY', `MERGE_STRATEGY', `simple'))
-divert(0)dnl
 [user]
-  email = EMAIL
   name = Peter Zalewski
+[include]
+  path = .gitconfig.local
 [core]
   autocorrect = 1
   autocrlf = input
@@ -27,7 +24,7 @@ divert(0)dnl
 [color]
   ui = true
 [push]
-  default = MERGE_STRATEGY
+  default = simple
 [diff]
   algorithm = patience
   renames = copies

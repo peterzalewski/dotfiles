@@ -1,0 +1,4 @@
+# Local settings, kept in the dotfiles repo for convenience
+bash_profile
+gitconfig-local
+vimrc-local

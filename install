@@ -37,12 +37,16 @@ TEMP_DIR="$(mktemp -d -q -t "$(basename "${BASH_SOURCE[0]}")")" && readonly TEMP
 PWD="$(pwd)" && readonly PWD
 CURL="$(command -v curl)" && readonly CURL
 declare -a DOTFILES_TO_LINK=(
+  bash_profile
   bashrc
+  gitconfig
+  gitconfig-local
   inputrc
   psqlrc
   ripgreprc
   tmux-conf
   vimrc
+  vimrc-local
 )
 
 ################################################################################
@@ -141,29 +145,6 @@ function install_vim_plugins {
   fi
 }
 
-function make_gitconfig {
-  local -r gitconfig="${HOME}/.gitconfig"
-  if [[ -f "${gitconfig}" ]]; then
-    message "Overwriting %s" "$(hi "${HOME}/.gitconfig")"
-  fi
-
-  local merge_strategy
-  local -r git_version=$(git --version)
-  if [[ "${git_version##git version }" =~ ^1 ]]; then
-    merge_strategy="matching"
-  else
-    merge_strategy="simple"
-  fi
-  readonly merge_strategy
-
-  if m4 --define=MERGE_STRATEGY="${merge_strategy}" "${PWD}/gitconfig" >|"${gitconfig}" 2>/dev/null; then
-    message "Installed gitconfig with %s default merge strategy" "$(hi "${merge_strategy}")"
-  else
-    error "Unable to render .gitconfig"
-    exit 1
-  fi
-}
-
 function _try_link_or_exit {
   local -r source_file="${1}"
   local -r dest_file="${2}"
@@ -216,7 +197,7 @@ function link_dot_config {
 function main {
   trap 'cleanup' EXIT
 
-  local is_linking_dotfiles=1 is_making_gitconfig=1 is_installing_vim_plugins=1
+  local is_linking_dotfiles=1 is_installing_vim_plugins=1
   local is_linking_bash_plugins=1 is_linking_dot_config=1
   local arg
 
@@ -232,7 +213,6 @@ function main {
           bash-plugins) is_linking_bash_plugins=0 ;;
           dotfiles) is_linking_dotfiles=0 ;;
           dot-config) is_linking_dot_config=0 ;;
-          gitconfig) is_making_gitconfig=0 ;;
           vim-plugins) is_installing_vim_plugins=0 ;;
           *)
             if [[ "${DOTFILES_TO_LINK[*]}" =~ $arg ]]; then
@@ -258,10 +238,6 @@ function main {
   if [[ "${is_linking_dotfiles}" = 1 ]]; then
     message '==> Linking dotfiles'
     link_dotfiles
-
-    if [[ "${is_making_gitconfig}" = 1 ]]; then
-      make_gitconfig
-    fi
   fi
 
   if [[ "${is_installing_vim_plugins}" = 1 ]]; then
