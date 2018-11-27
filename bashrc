@@ -172,28 +172,28 @@ declare PROMPT_LAST_COMMAND_FAILED="$(tput bold ; tput setaf 1)"
 function _prompt_pwd {
   declare -r PWD_WITHOUT_HOME="${PWD#$HOME}"
   if [[ "${PWD}" != "${PWD_WITHOUT_HOME}" ]]; then
-    echo -n "🏠${PROMPT_DIR_COLOR}${PWD_WITHOUT_HOME}${PROMPT_COLOR_OFF}"
+    printf "🏠\001${PROMPT_DIR_COLOR}\002${PWD_WITHOUT_HOME}\001${PROMPT_COLOR_OFF}\002"
   else
-    echo -n "${PROMPT_DIR_COLOR}${PWD}${PROMPT_COLOR_OFF}"
+    printf "\001${PROMPT_DIR_COLOR}\002${PWD}\001${PROMPT_COLOR_OFF}\002"
   fi
 }
 
 # Evaluate __git_ps1 if it is available
 function _prompt_rcs_status {
   if [[ -n "$(type -t __git_ps1)" ]]; then
-    echo -n "$(__git_ps1 " ${PROMPT_SMALL_WORD_COLOR}on${PROMPT_COLOR_OFF} \
-${PROMPT_RCS_COLOR}%s${PROMPT_COLOR_OFF}")"
+    printf "$(__git_ps1 " \001${PROMPT_SMALL_WORD_COLOR}\002on\001${PROMPT_COLOR_OFF}\002 \
+\001${PROMPT_RCS_COLOR}\002%s\001${PROMPT_COLOR_OFF}\002")"
   else
-    echo -n
+    printf ""
   fi
 }
 
 # Display the prompt symbol in red if the last shell command failed
 function _prompt_color_symbol_by_exit_status {
   if [[ "${LAST_EXIT}" != 0 ]]; then
-    echo -n "${PROMPT_LAST_COMMAND_FAILED}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
+    printf "\001${PROMPT_LAST_COMMAND_FAILED}\002${PROMPT_SYMBOL}\001${PROMPT_COLOR_OFF}\002"
   else
-    echo -n "${PROMPT_SYMBOL_COLOR}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
+    printf "\001${PROMPT_SYMBOL_COLOR}\002${PROMPT_SYMBOL}\001${PROMPT_COLOR_OFF}\002"
   fi
 }
 
