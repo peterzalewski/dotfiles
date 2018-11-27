@@ -166,6 +166,13 @@ let g:gutentags_ctags_language_specific   = 1
 let g:gutentags_file_list_command         = 'rg --files'
 let g:gutentags_init_user_func            = 'PeteZalewskiTagFilePerFiletype'
 
+" itchyny/lightline.vim
+let g:lightline = {
+    \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
+    \ }
+\ }
+
 " junegunn/fzf.vm
 let g:fzf_layout = { 'down': '8' }
 
@@ -189,9 +196,6 @@ let g:goyo_width = 107
 " pangloss/vim-javascript
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow  = 1
-
-" vim-airline/vim-airline
-let g:airline_powerline_fonts = 1
 
 " w0rp/ale
 let g:ale_sign_column_always   = 1
