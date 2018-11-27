@@ -43,6 +43,7 @@ export FZF_DEFAULT_OPTS='--color=16,hl:12,fg+:14,pointer:11,info:6 --reverse --i
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 export LESS='-igMRFX'
+export LESSHISTFILE='-'
 export PAGER='less'
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
 export VISUAL='vim'
@@ -235,7 +236,20 @@ done
 
 # Open an executable by name in vim
 function vimc {
-  [[ "$#" == 1 ]] && vim "$(command -v "$1")"
+  if [[ "$#" != 1 ]]; then
+    return 1
+  fi
+
+  local -r target="${1}"
+
+  if ! command -v "${target}" >/dev/null 2>&1; then
+    local -r path="${HOME}/Code/shell/bin/${target}"
+    touch "${path}"
+    chmod +x "${path}"
+    hash -r
+  fi
+
+  vim "$(command -v "${target}")"
 }
 
 # cd to the path of the foremost Finder window
@@ -243,14 +257,21 @@ function cdf {
   cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')" || return
 }
 
-function check-connectivity {
+# list path components
+function path_parts {
+  echo "${PATH}" | tr ':' '\n'
+}
+
+function check_connectivity {
   local -r curl="$(command -v curl)"
   local -r response="$("${curl}" --silent --max-redir 0 http://www.msftncsi.com/ncsi.txt)"
 
   if [[ "${response}" = "Microsoft NCSI" ]]; then
-    printf 'Connection appears good!\n'
+    printf '👍\n'
+    return 0
   else
-    printf 'Connection appears down!\n'
+    printf '👎\n'
+    return 1
   fi
 }
 
