@@ -17,7 +17,7 @@
   hide = update-index --assume-unchanged
   hist = log --pretty=format:\"%C(auto) %h %ad | %s%d [%an]\" --graph --date=short
   praise = blame
-  st = status -sb
+  st = status -s -uall
   type = cat-file -t
   unhide = update-index --no-assume-unchanged
   whoopsie = commit --amend --no-edit
