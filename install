@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ##############################################################################
-#/ Usage: ./install [-h|--help] [--no-*]
+#/ Usage: $0 [-h|--help] [--no-*]
 #/
 #/ Install/update my dotfiles and work environment in these stages:
 #/   1. (dotfiles) Link dotfiles, e.g. .bashrc, .inputrc
@@ -23,8 +23,6 @@ set -o nounset
 set -o pipefail
 set -o noclobber
 
-declare IS_VERBOSE=0
-
 declare BLUE BOLD COLOR_OFF GREEN RED
 BLUE="$(tput setaf 6)" && readonly BLUE
 BOLD="$(tput bold)" && readonly BOLD
@@ -32,10 +30,12 @@ COLOR_OFF="$(tput sgr0)" && readonly COLOR_OFF
 GREEN="$(tput setaf 2)" && readonly GREEN
 RED="$(tput setaf 1)" && readonly RED
 
-declare PWD CURL TEMP_DIR
-TEMP_DIR="$(mktemp -d -q -t "$(basename "${BASH_SOURCE[0]}")")" && readonly TEMP_DIR
-PWD="$(pwd)" && readonly PWD
+declare CURL PWD STTY_OPTIONS TEMP_DIR
 CURL="$(command -v curl)" && readonly CURL
+PWD="$(pwd)" && readonly PWD
+STTY_OPTIONS="$(stty -g)" && readonly STTY_OPTIONS
+TEMP_DIR="$(mktemp -d -q -t "$(basename "${BASH_SOURCE[0]}")")" && readonly TEMP_DIR
+
 declare -a DOTFILES_TO_LINK=(
   bash_profile
   bashrc
@@ -52,16 +52,20 @@ declare -a DOTFILES_TO_LINK=(
 ################################################################################
 # Deletes the temp directory. Intended to be called automatically on script exit.
 # Globals:
+#   STTY_OPTIONS
 #   TEMP_DIR
 ################################################################################
 function cleanup {
   rm -rf "${TEMP_DIR}"
+  tput cnorm
+  stty "${STTY_OPTIONS}"
 }
 
 ################################################################################
 # Prints a status message to STDOUT
 # Globals:
 #   BLUE
+#   BOLD
 #   COLOR_OFF
 # Arguments:
 #   Variadic: arguments to printf. First is a formatting string. All following
@@ -76,6 +80,7 @@ function message {
 # Prints an error message to STDERR
 # Globals:
 #   COLOR_OFF
+#   BOLD
 #   RED
 # Arguments:
 #   Variadic: arguments to printf. First is a formatting string. All following
@@ -86,14 +91,36 @@ function error {
   printf '%b '"${msg}"'\n' "${BOLD}${RED}ERROR${COLOR_OFF}" "$@" >&2
 }
 
+################################################################################
+# Prints an error message to STDERR
+# Globals:
+#   COLOR_OFF
+#   GREEN
+# Arguments:
+#   Variadic: arguments to printf. All arguments are passed to printf without
+#   expansion, which means formatting is NOT respected.
+################################################################################
 function hi {
   printf '%b' "${GREEN}$*${COLOR_OFF}"
 }
 
+################################################################################
+# Print script usage information
+################################################################################
 function usage {
-  grep '^#/' "${BASH_SOURCE[0]}" | cut -c 4-
+  grep '^#/' < "${BASH_SOURCE[0]}" | cut -c4- | sed s/\$0/"$(basename "${BASH_SOURCE[0]}")"/g
 }
 
+################################################################################
+# Install vim plugins. This means first creating ~/.vim and installing
+# https://github.com/junegunn/vim-plug manually, and then running +PlugInstall.
+# Globals:
+#   BLUE
+#   COLOR_OFF
+#   CURL
+#   HOME
+#   TEMP_DIR
+################################################################################
 function install_vim_plugins {
   local -r vim="$(command -v vim)"
   local -r vim_dir="${HOME}/.vim"
@@ -135,7 +162,7 @@ function install_vim_plugins {
 
   # Match all lines in the temp .vimrc with this regex:
   # ^Plug '([^/]\S*)'.*$
-  printf '%s\n' "$(sed -En 's!^Plug '"'"'([^/]\S*)'"'"'.*$!'"${BLUE}"'INFO'"${COLOR_OFF}"'  \1!p' < "${temp_vimrc}" | sort -f)"
+  printf '%s\n' "$(sed -En 's!^Plug '"'"'([^/]\S*)'"'"'.*$!'"${BOLD}${BLUE}"'INFO'"${COLOR_OFF}"'  \1!p' < "${temp_vimrc}" | sort -f)"
   if "${vim}" -e -i NONE -u "${temp_vimrc}" -U NONE +"PlugInstall!" +qall >/dev/null 2>&1; then
     message "...done!"
   else
@@ -145,6 +172,12 @@ function install_vim_plugins {
   fi
 }
 
+################################################################################
+# Attempt to create a symbolic link.
+# Arguments:
+#   source_file: Required. The source file for the symbolic link.
+#   dest_file: Required. The target file for the symbolic link.
+################################################################################
 function _try_link_or_exit {
   local -r source_file="${1}"
   local -r dest_file="${2}"
@@ -161,12 +194,25 @@ function _try_link_or_exit {
   fi
 }
 
+################################################################################
+# Link dotfiles to their expected locations. This is destructive.
+# Globals:
+#   DOTFILES_TO_LINK
+#   HOME
+#   PWD
+################################################################################
 function link_dotfiles {
   for file in "${DOTFILES_TO_LINK[@]}"; do
     _try_link_or_exit "${PWD}/${file}" "${HOME}/.${file//-/.}"
   done || true
 }
 
+################################################################################
+# Link miscellaneous Bash functions and commands under bash.d.
+# Globals:
+#   HOME
+#   PWD
+################################################################################
 function link_bash_plugins {
   local -r bashrc_dir="${HOME}/.bash.d"
   if ! mkdir -p "${bashrc_dir}"; then
@@ -178,6 +224,12 @@ function link_bash_plugins {
   done || true
 }
 
+################################################################################
+# Link application configurations under .config.
+# Globals:
+#   HOME
+#   PWD
+################################################################################
 function link_dot_config {
   local config_dirs dest_dir
   read -r -a config_dirs < <(find "${PWD}/config" -maxdepth 1 -mindepth 1 -type d -print0 | xargs -0 -n 1 basename)
@@ -194,11 +246,15 @@ function link_dot_config {
   done
 }
 
+################################################################################
+# Attempt to link configurations and install plugins and components for my
+# commonly used programs e.g. vim.
+# Globals:
+#   DOTFILES_TO_LINK
+################################################################################
 function main {
-  trap 'cleanup' EXIT
-
-  local is_linking_dotfiles=1 is_installing_vim_plugins=1
-  local is_linking_bash_plugins=1 is_linking_dot_config=1
+  local is_installing_vim_plugins=1 is_linking_bash_plugins=1
+  local is_linking_dot_config=1 is_linking_dotfiles=1
   local arg
 
   while [[ "$#" -gt 0 ]]; do
@@ -233,7 +289,10 @@ function main {
     esac
   done
 
-  readonly IS_VERBOSE DOTFILES_TO_LINK
+  readonly DOTFILES_TO_LINK
+
+  trap 'cleanup' EXIT
+  stty -echo
 
   if [[ "${is_linking_dotfiles}" = 1 ]]; then
     message '==> Linking dotfiles'
@@ -255,9 +314,10 @@ function main {
     link_dot_config
   fi
 
-  exit 0
+  return 0
 }
 
 main "$@"
+exit 0
 
 # vim: ft=sh:sw=2:ts=2:et

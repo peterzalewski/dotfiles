@@ -23,6 +23,7 @@ alias gh10='git hist -10'
 alias got='git'
 alias grep='grep --color=auto'
 alias gs='git st'
+alias ll='ls -al'
 alias map='xargs --max-args=1'
 alias tpout='tput'
 alias view='view -M'
@@ -225,7 +226,8 @@ function _try_load {
 }
 
 _try_load /usr/local/etc/bash_completion.d/git-prompt.sh
-_try_load /usr/local/etc/profile.d/autojump.sh
+_try_load /usr/local/etc/bash_completion.d/git-completion.bash
+_try_load /usr/local/etc/profile.d/z.sh
 
 for config_file in "${HOME}"/.bash.d/*; do
   _try_load "${config_file}"
@@ -243,9 +245,21 @@ function vimc {
   local -r target="${1}"
 
   if ! command -v "${target}" >/dev/null 2>&1; then
-    local -r path="${HOME}/Code/shell/bin/${target}"
-    touch "${path}"
-    chmod +x "${path}"
+    local -r filename="${HOME}/Code/shell/bin/${target}"
+    cat > "${filename}" <<- EOM
+			#!/usr/bin/env bash
+
+			set -euo pipefail
+
+			function main {
+			}
+
+			main "\$@"
+			exit 0
+
+			# vim: ft=sh:sw=2:ts=2:et
+		EOM
+    chmod +x "${filename}"
     hash -r
   fi
 
@@ -259,7 +273,7 @@ function cdf {
 
 # list path components
 function path_parts {
-  echo "${PATH}" | tr ':' '\n'
+  echo "${PATH}" | tr ':' '\n' | nl
 }
 
 function check_connectivity {
