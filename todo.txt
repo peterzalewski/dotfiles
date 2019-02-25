@@ -12,3 +12,7 @@ x 2018-09-10 Use grc to colorify things like ping and ifconfig
 2018-09-11 Write a syntax file for todo.txt "for fun"
 2018-09-13 Change color of tmux tab if any foreground processes die?
 2018-10-04 Install Hack font
+2019-02-17 Detect Unicode support and degrade fancy prompt
+2019-02-17 Install `diff-so-fancy` to common `bin` directory
+2019-02-17 Verify `en_US.UTF-8` locale generation is enabled in `/etc/locale.gen`
+2019-02-24 Capture email address to populate .gitconfig.local

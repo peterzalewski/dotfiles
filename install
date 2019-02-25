@@ -34,7 +34,7 @@ declare CURL PWD STTY_OPTIONS TEMP_DIR
 CURL="$(command -v curl)" && readonly CURL
 PWD="$(pwd)" && readonly PWD
 STTY_OPTIONS="$(stty -g)" && readonly STTY_OPTIONS
-TEMP_DIR="$(mktemp -d -q -t "$(basename "${BASH_SOURCE[0]}")")" && readonly TEMP_DIR
+TEMP_DIR="$(mktemp -d -q)" && readonly TEMP_DIR
 
 declare -a DOTFILES_TO_LINK=(
   bash_profile
