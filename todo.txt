@@ -9,7 +9,7 @@ x 2018-09-04 Color-coordinate fzf
 x 2018-09-08 Make install sections optional -- vim plugins, dotfiles, etc.
 x 2018-09-09 Bash completions for `txopen`
 x 2018-09-10 Use grc to colorify things like ping and ifconfig
-2018-09-11 Write a syntax file for todo.txt "for fun"
+x 2018-09-11 Write a syntax file for todo.txt "for fun"
 2018-09-13 Change color of tmux tab if any foreground processes die?
 2018-10-04 Install Hack font
 2019-02-17 Detect Unicode support and degrade fancy prompt

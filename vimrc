@@ -79,6 +79,9 @@ Plug 'peterzalewski/vim-boxdraw'
 " Syntax for .tmux.conf
 Plug 'tmux-plugins/vim-tmux'
 
+" Syntax for my todo.txt
+Plug 'peterzalewski/vim-todo'
+
 call plug#end()
 
 " }}}
@@ -303,6 +306,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
+" Commands {{{
 
 command! -nargs=1 SendKeysToTmux :silent call SendKeysToTmux(<args>)
 
@@ -310,6 +314,7 @@ function! SendKeysToTmux(cmd)
     call system("tmux send-keys -t bottom '" . a:cmd . "' C-m")
 endfunction
 
+" }}}
 " Autocommands {{{
 
 " Additional file type detection by extension
@@ -318,6 +323,7 @@ augroup filetypes
     autocmd BufEnter *.sls     setlocal filetype=yaml
     autocmd BufEnter *.aurora  setlocal filetype=python
     autocmd BufEnter gitconfig setlocal filetype=gitconfig
+    autocmd BufEnter todo.txt  setlocal filetype=todo
 augroup END
 
 " Set options for JavaScript
