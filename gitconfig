@@ -16,6 +16,7 @@
   hidden = !git ls-files -v | awk '$1 ~ \"^[[:lower:]]\" { print $2 }'
   hide = update-index --assume-unchanged
   hist = log --pretty=format:\"%C(auto) %h %ad | %s%d [%an]\" --graph --date=short
+  root = rev-parse --show-toplevel
   praise = blame
   st = status -s -uall
   type = cat-file -t
