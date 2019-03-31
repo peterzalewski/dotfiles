@@ -347,8 +347,8 @@ augroup END
 " Set options for Python
 augroup filetype_python
     autocmd!
-    autocmd FileType python setlocal shiftwidth=4
-    autocmd FileType python setlocal tabstop=4
+    autocmd FileType python setlocal shiftwidth=2
+    autocmd FileType python setlocal tabstop=2
     autocmd FileType python setlocal textwidth=120
     autocmd FileType python setlocal colorcolumn=+1
 augroup END
