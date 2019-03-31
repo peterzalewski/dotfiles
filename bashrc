@@ -105,19 +105,19 @@ fi
 # https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables
 
 # Set bold to bold + blue; used for headers
-export LESS_TERMCAP_md="$(tput bold; tput setaf 4)"
+export LESS_TERMCAP_md="$(tput bold; tput setaf 12)"
 
 # End bold
 export LESS_TERMCAP_me="$(tput sgr0)"
 
 # Set standout to bold + magenta background + white foreground; used for pager
-export LESS_TERMCAP_so="$(tput bold ; tput setaf 7 ; tput setab 5)"
+export LESS_TERMCAP_so="$(tput bold ; tput setaf 15 ; tput setab 13)"
 
 # End standout
 export LESS_TERMCAP_se="$(tput sgr0)"
 
 # Set underline to bold + green; used for keywords
-export LESS_TERMCAP_us="$(tput bold ; tput setaf 2)"
+export LESS_TERMCAP_us="$(tput bold ; tput setaf 10)"
 
 # End underline
 export LESS_TERMCAP_ue="$(tput sgr0)"
@@ -150,25 +150,25 @@ declare PROMPT_COLOR_OFF="$(tput sgr0)"
 declare PROMPT_SMALL_WORD_COLOR="$(tput bold)"
 
 # Bold + blue
-declare PROMPT_DIR_COLOR="$(tput bold ; tput setaf 4)"
+declare PROMPT_DIR_COLOR="$(tput bold ; tput setaf 12)"
 
 # Bold + red
-declare PROMPT_HOST_COLOR="$(tput bold ; tput setaf 1)"
+declare PROMPT_HOST_COLOR="$(tput bold ; tput setaf 9)"
 
 # Bold + magenta
-declare PROMPT_RCS_COLOR="$(tput bold ; tput setaf 5)"
+declare PROMPT_RCS_COLOR="$(tput bold ; tput setaf 13)"
 
 # '❯'
 declare PROMPT_SYMBOL=$'\xE2\x9D\xAF'
 
 # Bold + white
-declare PROMPT_SYMBOL_COLOR="$(tput bold ; tput setaf 7)"
+declare PROMPT_SYMBOL_COLOR="$(tput bold ; tput setaf 15)"
 
 # Bold + green
-declare PROMPT_USER_COLOR="$(tput bold ; tput setaf 2)"
+declare PROMPT_USER_COLOR="$(tput bold ; tput setaf 10)"
 
 # Bold + red
-declare PROMPT_LAST_COMMAND_FAILED="$(tput bold ; tput setaf 1)"
+declare PROMPT_LAST_COMMAND_FAILED="$(tput bold ; tput setaf 9)"
 
 # Replace ~ in the current path with 🏠
 function _prompt_pwd {
