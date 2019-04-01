@@ -15,6 +15,7 @@ x 2018-09-11 Write a syntax file for todo.txt "for fun"
 2019-02-17 Install `diff-so-fancy` to common `bin` directory
 2019-02-17 Verify `en_US.UTF-8` locale generation is enabled in `/etc/locale.gen`
 2019-02-24 Capture email address to populate .gitconfig.local
+x 2019-02-28 Vim binding to select added/modified files in the Git working directory
 2019-03-28 tmux keybind to run `t` alias with input for name
 2019-03-28 tmux keybind to switch to `todo.txt`
 2019-03-29 Toggle `paste` in insert mode

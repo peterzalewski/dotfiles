@@ -245,6 +245,9 @@ nnoremap <leader>t :Files<cr>
 " Search buffers with FZF - junegunn/fzf.vim
 nnoremap <leader>b :Buffers<cr>
 
+" Search modified git files with FZF - junegunn/fzf.vim
+nnoremap <leader>g :GFiles?<cr>
+
 " Sort the visual selection
 vnoremap <leader>s :sort<cr>
 
