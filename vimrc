@@ -125,6 +125,7 @@ set nostartofline               " Don't always jump to start of line
 set noswapfile                  " Do not create swap files
 set nowritebackup               " Do not create backups when writing files
 set number                      " Show absolute line number on current line
+set pastetoggle=<F12>           " Toggle paste in insert and normal mode with F12
 set relativenumber              " Line numbers are relative to current line
 set ruler                       " Display row and column in file
 set scrolloff=2                 " 2 lines of context for jumping to search results
