@@ -11,10 +11,6 @@ unbind-key C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
 
-# pbcopy and pbpaste don't work in bash shells launched by tmux
-# reattach-to-user-namespace fixes that
-if-shell 'test "$(uname -s)" = Darwin' 'set -g default-command "reattach-to-user-namespace -l bash"'
-
 # }}}
 # Bindings {{{
 
