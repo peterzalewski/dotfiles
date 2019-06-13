@@ -22,7 +22,7 @@ function _tmux_sessions {
 ##############################################################################
 function _tmuxinator_projects {
   local -r tmuxinator="$(command -v tmuxinator)"
-  [[ -n "${tmuxinator}" ]] && "${tmuxinator}" ls | sed -E -n '2,$s/\s+/\n/gp'
+  [[ -n "${tmuxinator}" ]] && "${tmuxinator}" list -n | sed -n '2,$p'
 }
 
 ##############################################################################

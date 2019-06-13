@@ -24,6 +24,7 @@ bind-key _ split-window -v -c "#{pane_current_path}"
 bind-key c new-window -n 'bash'
 bind-key r source-file ~/.tmux.conf \; display '~/.tmux.conf sourced'
 bind-key | split-window -h -c "#{pane_current_path}"
+bind-key f resize-pane -t 2 -y 8
 
 # }}}
 # Session options {{{
