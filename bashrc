@@ -113,23 +113,15 @@ fi
 # characters, we can add color to man pages. More at:
 # https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables
 
-# Set bold to bold + blue; used for headers
-export LESS_TERMCAP_md="$(tput bold; tput setaf 12)"
-
-# End bold
-export LESS_TERMCAP_me="$(tput sgr0)"
-
-# Set standout to bold + magenta background + white foreground; used for pager
-export LESS_TERMCAP_so="$(tput bold ; tput setaf 15 ; tput setab 13)"
-
-# End standout
-export LESS_TERMCAP_se="$(tput sgr0)"
-
-# Set underline to bold + green; used for keywords
-export LESS_TERMCAP_us="$(tput bold ; tput setaf 10)"
-
-# End underline
-export LESS_TERMCAP_ue="$(tput sgr0)"
+function man() {
+  LESS_TERMCAP_md="$(tput bold; tput setaf 12)" \
+  LESS_TERMCAP_me="$(tput sgr0)" \
+  LESS_TERMCAP_so="$(tput bold ; tput setaf 15 ; tput setab 13)" \
+  LESS_TERMCAP_se="$(tput sgr0)" \
+  LESS_TERMCAP_us="$(tput bold ; tput setaf 10)" \
+  LESS_TERMCAP_ue="$(tput sgr0)" \
+  command man "$@"
+}
 
 if [[ -n "$(command -v grc)" ]]; then
   alias colorify="grc -es --colour=auto"
