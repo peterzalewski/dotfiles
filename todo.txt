@@ -23,3 +23,4 @@ x 2019-03-29 Toggle `paste` in insert mode
 2019-06-12 When using `please`, `damnit` aliases, rewrite history to remove the unsuccessful command
 2019-06-12 Store `$PWD` in history?
 2019-06-12 Customize the emoji replacement for `$HOME`, so the work laptop has an office building
+2019-06-12 Call `open` on URLs in `vim` when using `gf`, instead of using `curl`
