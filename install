@@ -253,7 +253,7 @@ function link_dot_config {
 #   DOTFILES_TO_LINK
 ################################################################################
 function main {
-  local is_installing_vim_plugins=1 is_linking_bash_plugins=1
+  local is_installing_vim_plugins=0 is_linking_bash_plugins=1
   local is_linking_dot_config=1 is_linking_dotfiles=1
   local arg is_included
 
