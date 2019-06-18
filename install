@@ -72,8 +72,9 @@ function cleanup {
 #   are parameters to the formatting string.
 ################################################################################
 function message {
-  local -r msg="$1"; shift
-  printf '%b '"${msg}"'\n' "${BOLD}${BLUE}INFO${COLOR_OFF}" "$@"
+  local -r msg="$1"; shift;
+  mapfile -t < <(for arg in "$@"; do printf '%b\n' "${GREEN}${arg}${COLOR_OFF}"; done)
+  printf '%b '"${msg}"'\n' "${BOLD}${BLUE}INFO${COLOR_OFF}" "${MAPFILE[@]}"
 }
 
 ################################################################################
@@ -87,21 +88,9 @@ function message {
 #   are parameters to the formatting string.
 ################################################################################
 function error {
-  local -r msg="$1"; shift
-  printf '%b '"${msg}"'\n' "${BOLD}${RED}ERROR${COLOR_OFF}" "$@" >&2
-}
-
-################################################################################
-# Prints an error message to STDERR
-# Globals:
-#   COLOR_OFF
-#   GREEN
-# Arguments:
-#   Variadic: arguments to printf. All arguments are passed to printf without
-#   expansion, which means formatting is NOT respected.
-################################################################################
-function hi {
-  printf '%b' "${GREEN}$*${COLOR_OFF}"
+  local -r msg="$1"; shift;
+  mapfile -t < <(for arg in "$@"; do printf '%b\n' "${RED}${arg}${COLOR_OFF}"; done)
+  printf '%b '"${msg}"'\n' "${BOLD}${RED}ERROR${COLOR_OFF}" "${MAPFILE[@]}" >&2
 }
 
 ################################################################################
@@ -127,9 +116,9 @@ function install_vim_plugins {
 
   if [[ ! -d "${vim_dir}" ]]; then
     if mkdir -p "${vim_dir}"; then
-      message "Created vim directory at %s" "$(hi "${vim_dir}")"
+      message "Created vim directory at %s" "${vim_dir}"
     else
-      error "Unable to create vim directory at %s" "$(hi "${vim_dir}")"
+      error "Unable to create vim directory at %s" "${vim_dir}"
       exit 1
     fi
   fi
@@ -144,15 +133,15 @@ function install_vim_plugins {
       --location \
       --output "${vim_plugin_loader}" \
       https://raw.github.com/junegunn/vim-plug/master/plug.vim
-    message "Installed %s at %s" "$(hi "${vim_plugin_loader}")"
+    message "Installed %s at %s" "${vim_plugin_loader}"
   else
-    message "Found %s at %s" "$(hi "${vim_plugin_loader}")"
+    message "Found %s at %s" "${vim_plugin_loader}"
   fi
 
   if rm -rf "${vim_dir}/plugged"; then
-    message "Cleared installed vim plugins from %s" "$(hi "${vim_dir}")"
+    message "Cleared installed vim plugins from %s" "${vim_dir}"
   else
-    error "Unable to clear vim plugin directory %s" "$(hi "${vim_dir}")"
+    error "Unable to clear vim plugin directory %s" "${vim_dir}"
     exit 1
   fi
 
@@ -187,9 +176,9 @@ function _try_link_or_exit {
   fi
 
   if ln -nsf "${source_file}" "${dest_file}" >/dev/null 2>&1; then
-    message "Linked %s to %s" "$(hi "${source_file}")" "$(hi "${dest_file}")"
+    message "Linked %s to %s" "${source_file}" "${dest_file}"
   else
-    error "Unable to link %s to %s" "${source_file}" "$(hi "${dest_file}")"
+    error "Unable to link %s to %s" "${source_file}" "${dest_file}"
     exit 1
   fi
 }
@@ -216,7 +205,7 @@ function link_dotfiles {
 function link_bash_plugins {
   local -r bashrc_dir="${HOME}/.bash.d"
   if ! mkdir -p "${bashrc_dir}"; then
-    error "Unable to create bash.d directory at %s" "$(hi "${bashrc_dir}")"
+    error "Unable to create bash.d directory at %s" "${bashrc_dir}"
   fi
 
   for file in "${PWD}"/bash.d/*; do
@@ -237,7 +226,7 @@ function link_dot_config {
   for source_dir in "${config_dirs[@]}"; do
     dest_dir="${HOME}/.config/${source_dir}"
     if ! mkdir -p "${dest_dir}"; then
-      error "Unable to create .config directory at %s" "$(hi "${dest_dir}")"
+      error "Unable to create .config directory at %s" "${dest_dir}"
       exit 1
     fi
     for file in "${PWD}/config/${source_dir}"/*; do
