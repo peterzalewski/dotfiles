@@ -255,7 +255,7 @@ function link_dot_config {
 function main {
   local is_installing_vim_plugins=1 is_linking_bash_plugins=1
   local is_linking_dot_config=1 is_linking_dotfiles=1
-  local arg
+  local arg is_included
 
   while [[ "$#" -gt 0 ]]; do
     case "${1}" in
@@ -263,29 +263,32 @@ function main {
         usage
         exit 0
         ;;
-      --no-*)
-        arg="${1#--no-}"
-        case "${arg}" in
-          bash-plugins) is_linking_bash_plugins=0 ;;
-          dotfiles) is_linking_dotfiles=0 ;;
-          dot-config) is_linking_dot_config=0 ;;
-          vim-plugins) is_installing_vim_plugins=0 ;;
-          *)
-            if [[ "${DOTFILES_TO_LINK[*]}" =~ $arg ]]; then
-              DOTFILES_TO_LINK=("${DOTFILES_TO_LINK[@]/$arg}")
-            else
-              error "Unknown action to disable: %s" "${arg}"
-              usage
-              exit 1
-            fi
-            ;;
-        esac
-        shift
-        ;;
       *)
-        error "Unknown option: %s" "${1}"
-        usage
-        exit 1
+        if [[ "${1}" =~ ^--(no|with)-([-a-z]+)$ ]]; then
+          [[ "${BASH_REMATCH[1]}" = "with" ]] && is_included=1 || is_included=0
+          arg="${BASH_REMATCH[2]}"
+          case "${arg}" in
+            bash-plugins) is_linking_bash_plugins="${is_included}"  ;;
+            dotfiles) is_linking_dotfiles="${is_included}"  ;;
+            dot-config) is_linking_dot_config="${is_included}"  ;;
+            vim-plugins) is_installing_vim_plugins="${is_included}" ;;
+            *)
+              if [[ "${DOTFILES_TO_LINK[*]}" =~ $arg ]]; then
+                DOTFILES_TO_LINK=("${DOTFILES_TO_LINK[@]/$arg}")
+              else
+                error "Unknown component: %s" "${arg}"
+                usage
+                exit 1
+              fi
+              ;;
+          esac
+          shift
+        else
+          error "Unknown option: %s" "${1}"
+          usage
+          exit 1
+        fi
+        ;;
     esac
   done
 
@@ -295,23 +298,31 @@ function main {
   stty -echo
 
   if [[ "${is_linking_dotfiles}" = 1 ]]; then
-    message '==> Linking dotfiles'
+    message 'Linking dotfiles'
     link_dotfiles
+  else
+    message "Skipping dotfiles"
   fi
 
   if [[ "${is_installing_vim_plugins}" = 1 ]]; then
-    message '==> Installing vim plugins'
+    message 'Installing vim plugins'
     install_vim_plugins
+  else
+    message "Skipping vim plugins"
   fi
 
   if [[ "${is_linking_bash_plugins}" = 1 ]]; then
-    message '==> Linking plugins under .bash.d/'
+    message 'Linking plugins under .bash.d/'
     link_bash_plugins
+  else
+    message "Skipping plugins under .bash.d/"
   fi
 
   if [[ "${is_linking_dot_config}" = 1 ]]; then
-    message '==> Linking configs under .config/'
+    message 'Linking configs under .config/'
     link_dot_config
+  else
+    message "Skipping configs under .config/"
   fi
 
   return 0
