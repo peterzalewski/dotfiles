@@ -39,7 +39,13 @@ done
 # }}}
 # Default programs and settings {{{
 
-export EDITOR='vim'
+if [[ -n "$(command -v nvim)" ]]; then
+  export EDITOR='nvim'
+  alias vim='nvim'
+else
+  export EDITOR='vim'
+fi
+
 export FZF_DEFAULT_COMMAND='rg --files -L'
 export FZF_DEFAULT_OPTS='--color=16,hl:12,fg+:14,pointer:11,info:6 --reverse --inline-info --prompt="❯❯ "'
 export LANG='en_US.UTF-8'
@@ -56,7 +62,7 @@ export LESS="${less_options[*]}"
 export LESSHISTFILE='-'
 export PAGER='less'
 export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
-export VISUAL='vim'
+export VISUAL="${EDITOR}"
 
 # Use vi-like bindings instead of emacs-like bindings to edit
 set -o vi
