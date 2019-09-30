@@ -82,6 +82,9 @@ Plug 'tmux-plugins/vim-tmux'
 " Syntax for my todo.txt
 Plug 'peterzalewski/vim-todo'
 
+" Syntax for Apache Thrift definitions
+Plug 'solarnz/thrift.vim'
+
 call plug#end()
 
 " }}}
