@@ -240,6 +240,19 @@ for config_file in "${HOME}"/.bash.d/*; do
   _try_load "${config_file}"
 done
 
+declare pyenv="$(command -v pyenv)"
+if [[ -n "${pyenv}" ]]; then
+  eval "$("${pyenv}" init -)"
+  eval "$("${pyenv}" sh-virtualenvwrapper_lazy)"
+fi
+unset pyenv
+
+declare rbenv="$(command -v rbenv)"
+if [[ -n "${rbenv}" ]]; then
+  eval "$("${rbenv}" init -)"
+fi
+unset rbenv
+
 # }}}
 # Functions {{{
 
