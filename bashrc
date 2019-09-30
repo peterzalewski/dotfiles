@@ -42,11 +42,12 @@ done
 if [[ -n "$(command -v nvim)" ]]; then
   export EDITOR='nvim'
   alias vim='nvim'
+  alias nvum='nvim'
 else
   export EDITOR='vim'
 fi
 
-export FZF_DEFAULT_COMMAND='rg --files -L'
+export FZF_DEFAULT_COMMAND='rg --files --follow'
 export FZF_DEFAULT_OPTS='--color=16,hl:12,fg+:14,pointer:11,info:6 --reverse --inline-info --prompt="❯❯ "'
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
