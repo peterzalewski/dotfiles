@@ -85,6 +85,9 @@ Plug 'peterzalewski/vim-todo'
 " Syntax for Apache Thrift definitions
 Plug 'solarnz/thrift.vim'
 
+" Use ripgrep (rg) for searching in files
+Plug 'jremmen/vim-ripgrep'
+
 call plug#end()
 
 " }}}
@@ -179,6 +182,9 @@ let g:lightline = {
         \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
     \ }
 \ }
+
+" jremmen/vim-ripgrep
+let g:rg_derive_root = 1
 
 " junegunn/fzf.vm
 let g:fzf_layout = { 'down': '8' }
@@ -311,6 +317,8 @@ nnoremap gV `[v`]
 " Plugin requires recursive (map vs. noremap) bindings to work
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+nnoremap <silent> <leader>r :Rg<cr>
 
 " }}}
 " Commands {{{
