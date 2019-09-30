@@ -33,7 +33,7 @@ bind-key f resize-pane -t 2 -y 8
 set-option -g base-index 1
 
 # Set TERM to this value in new windows
-set-option -g default-terminal "screen-256color"
+set-option -g default-terminal "tmux-256color"
 
 # Wait less than the default 500s after a metacharacter
 set-option -s escape-time 10

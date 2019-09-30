@@ -99,6 +99,10 @@ let g:rehash256 = 1
 " Use this color scheme
 colorscheme molokai
 
+" Use italic for comments
+highlight Comment cterm=italic
+highlight SpecialComment cterm=italic
+
 " Highlight the paren under the cursor, not the matching paren
 hi MatchParen ctermfg=208 ctermbg=233 cterm=bold
 
