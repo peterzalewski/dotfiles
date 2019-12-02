@@ -27,6 +27,7 @@ alias gs='git st'
 alias ll='ls -al'
 alias map='xargs --max-args=1'
 alias tpout='tput'
+alias venv='python -m venv'
 alias view='view -M'
 
 # Let me swear at the command prompt to sudo the previous command
@@ -244,7 +245,9 @@ done
 declare pyenv="$(command -v pyenv)"
 if [[ -n "${pyenv}" ]]; then
   eval "$("${pyenv}" init -)"
-  eval "$("${pyenv}" sh-virtualenvwrapper_lazy)"
+  if "${pyenv}" commands | grep sh-virtualenvwrapper_lazy; then
+    eval "$("${pyenv}" sh-virtualenvwrapper_lazy)" >/dev/null 2>&1 || true
+  fi
 fi
 unset pyenv
 
