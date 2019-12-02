@@ -153,47 +153,64 @@ fi
 # |        +----------------------------------> PROMPT_SMALL_WORD_COLOR
 # +------------------------------------------*> PROMPT_USER_COLOR
 
-declare PROMPT_COLOR_OFF="$(tput sgr0)"
+declare PROMPT_COLOR_OFF="\001$(tput sgr0)\002"
 
 # Bold
-declare PROMPT_SMALL_WORD_COLOR="$(tput bold)"
+declare PROMPT_SMALL_WORD_COLOR="\001$(tput bold)\002"
 
 # Bold + blue
-declare PROMPT_DIR_COLOR="$(tput bold ; tput setaf 12)"
-
-# Bold + red
-declare PROMPT_HOST_COLOR="$(tput bold ; tput setaf 9)"
+declare PROMPT_DIR_COLOR="\001$(tput bold ; tput setaf 12)\002"
 
 # Bold + magenta
-declare PROMPT_RCS_COLOR="$(tput bold ; tput setaf 13)"
+declare PROMPT_HOST_COLOR="\001$(tput bold ; tput setaf 13)\002"
+
+# Bold + red
+declare PROMPT_RCS_COLOR="\001$(tput bold ; tput setaf 9)\002"
 
 # '❯'
 declare PROMPT_SYMBOL=$'\xE2\x9D\xAF'
 
 # Bold + white
-declare PROMPT_SYMBOL_COLOR="$(tput bold ; tput setaf 15)"
+declare PROMPT_SYMBOL_COLOR="\001$(tput bold ; tput setaf 15)\002"
 
 # Bold + green
-declare PROMPT_USER_COLOR="$(tput bold ; tput setaf 10)"
+declare PROMPT_USER_COLOR="\001$(tput bold ; tput setaf 10)\002"
 
 # Bold + red
-declare PROMPT_LAST_COMMAND_FAILED="$(tput bold ; tput setaf 9)"
+declare PROMPT_LAST_COMMAND_FAILED="\001$(tput bold ; tput setaf 9)\002"
+
+function _prompt_user {
+  if [[ "${USER}" = "${KITTY_USER}" ]]; then
+    printf "${PROMPT_USER_COLOR}I${PROMPT_COLOR_OFF} am "
+  else
+    printf "${PROMPT_USER_COLOR}${USER}${PROMPT_COLOR_OFF} is "
+  fi
+}
+
+function _prompt_hostname_if_not_own {
+  if [[ "${HOSTNAME}" != "${KITTY_HOSTNAME}" ]]; then
+    printf "${PROMPT_SMALL_WORD_COLOR}at${PROMPT_COLOR_OFF} \
+${PROMPT_HOST_COLOR}${HOSTNAME}${PROMPT_COLOR_OFF} "
+  else
+    printf ""
+  fi
+}
 
 # Replace ~ in the current path with 🏠
 function _prompt_pwd {
   declare -r PWD_WITHOUT_HOME="${PWD#$HOME}"
   if [[ "${PWD}" != "${PWD_WITHOUT_HOME}" ]]; then
-    printf "🏠\001${PROMPT_DIR_COLOR}\002${PWD_WITHOUT_HOME}\001${PROMPT_COLOR_OFF}\002"
+    printf "\001🏠\002${PROMPT_DIR_COLOR}${PWD_WITHOUT_HOME}${PROMPT_COLOR_OFF}"
   else
-    printf "\001${PROMPT_DIR_COLOR}\002${PWD}\001${PROMPT_COLOR_OFF}\002"
+    printf "${PROMPT_DIR_COLOR}${PWD}${PROMPT_COLOR_OFF}"
   fi
 }
 
 # Evaluate __git_ps1 if it is available
 function _prompt_rcs_status {
   if [[ -n "$(type -t __git_ps1)" ]]; then
-    printf "$(__git_ps1 " \001${PROMPT_SMALL_WORD_COLOR}\002on\001${PROMPT_COLOR_OFF}\002 \
-\001${PROMPT_RCS_COLOR}\002%s\001${PROMPT_COLOR_OFF}\002")"
+    printf "$(__git_ps1 " ${PROMPT_SMALL_WORD_COLOR}on${PROMPT_COLOR_OFF} \
+${PROMPT_RCS_COLOR}%s${PROMPT_COLOR_OFF}")"
   else
     printf ""
   fi
@@ -202,9 +219,9 @@ function _prompt_rcs_status {
 # Display the prompt symbol in red if the last shell command failed
 function _prompt_color_symbol_by_exit_status {
   if [[ "${LAST_EXIT}" != 0 ]]; then
-    printf "\001${PROMPT_LAST_COMMAND_FAILED}\002${PROMPT_SYMBOL}\001${PROMPT_COLOR_OFF}\002"
+    printf "${PROMPT_LAST_COMMAND_FAILED}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
   else
-    printf "\001${PROMPT_SYMBOL_COLOR}\002${PROMPT_SYMBOL}\001${PROMPT_COLOR_OFF}\002"
+    printf "${PROMPT_SYMBOL_COLOR}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
   fi
 }
 
@@ -216,14 +233,12 @@ function _prompt_save_last_exit {
 
 export PROMPT_COMMAND="_prompt_save_last_exit"
 export PS1="\
-\[${PROMPT_USER_COLOR}\]\u\[${PROMPT_COLOR_OFF}\] \
-\[${PROMPT_SMALL_WORD_COLOR}\]at\[${PROMPT_COLOR_OFF}\] \
-\[${PROMPT_HOST_COLOR}\]\h\[${PROMPT_COLOR_OFF}\] \
-\[${PROMPT_SMALL_WORD_COLOR}\]in\[${PROMPT_COLOR_OFF}\] \
+\$(_prompt_user)\
+\$(_prompt_hostname_if_not_own)\
+${PROMPT_SMALL_WORD_COLOR}in${PROMPT_COLOR_OFF} \
 \$(_prompt_pwd)\
-\$(_prompt_rcs_status) \
-\$(_prompt_color_symbol_by_exit_status)\
-\[${PROMPT_SYMBOL_COLOR}\]\[${PROMPT_SYMBOL}\]\[${PROMPT_COLOR_OFF}\] "
+\$(_prompt_rcs_status)\
+\$(_prompt_color_symbol_by_exit_status) "
 
 # }}}
 # Load other scripts {{{
