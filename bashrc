@@ -260,8 +260,8 @@ done
 declare pyenv="$(command -v pyenv)"
 if [[ -n "${pyenv}" ]]; then
   eval "$("${pyenv}" init -)"
-  if "${pyenv}" commands | grep sh-virtualenvwrapper_lazy; then
-    eval "$("${pyenv}" sh-virtualenvwrapper_lazy)" >/dev/null 2>&1 || true
+  if pyenv commands | grep virtualenvwrapper_lazy >/dev/null; then
+    pyenv virtualenvwrapper_lazy >/dev/null 2>&1 || true
   fi
 fi
 unset pyenv
