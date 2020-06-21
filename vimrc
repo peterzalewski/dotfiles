@@ -9,8 +9,9 @@
 
 " Preamble {{{
 
-" Disable vi compatibility to enable full vim functionality
-set nocompatible
+" Use UTF-8 everywhere, including registers and this file
+set encoding=utf8               
+scriptencoding utf-8
 
 " Support for syntax highlighting is disabled by default
 syntax enable
@@ -124,7 +125,7 @@ highlight SpecialComment cterm=italic
 highlight CursorLineNr guifg='#C594C5' ctermfg=176 guibg=NONE ctermbg=NONE
 
 " Highlight the paren under the cursor, not the matching paren
-hi MatchParen ctermfg=208 ctermbg=233 cterm=bold
+highlight MatchParen ctermfg=208 ctermbg=233 cterm=bold
 
 " }}}
 " Built-in options {{{
@@ -134,12 +135,10 @@ set autoread                    " Re-read files changed outside of vim
 set backspace=eol,indent,start  " Backspace over EOL, indents, and start of line in insert mode
 set clipboard=unnamed           " Yank to system clipboard
 set completefunc=emoji#complete " Auto-complete Emoji!
-set encoding=utf8               " Default to UTF-8 everywhere, including registers
 set expandtab                   " Convert tabs to spaces in insert mode
 set fileformats=unix,mac,dos    " Set EOL preferences and default to Unix line endings
 set fillchars=vert:\│           " Handsome vertical split character
 set foldlevelstart=20           " Edit files with first 20 levels of folds open
-set foldmethod=indent           " Fold lines with equal indent levels
 set formatoptions=qcj           " Auto-wrap comments, allow q in comments, remove comment leaders on join
 set gdefault                    " Substitutes are global on the current line by default
 set hidden                      " Abandoning hides buffers rather than unloads them
@@ -218,8 +217,6 @@ function! s:goyo_leave()
     silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
     Limelight!
 endfunction
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 let g:goyo_width = 107
 
@@ -252,19 +249,19 @@ nnoremap ? ?\v
 vnoremap ? ?\v
 
 " Leader commands
-let mapleader=","
+let g:mapleader=','
 
 " Remove search highlight
 nnoremap <leader><space> :noh<cr>
 
 " Open a vertical split
-nnoremap <leader>v <C-w>v<C-w>l
+nnoremap <leader><bar> <C-w>v<C-w>l
 
 " Open a horizontal split
-nnoremap <leader>h <C-w>s<C-w>j
+nnoremap <leader>_ <C-w>s<C-w>j
 
 " Close the buffer but keep the window open - mhinz/vim-sayonara
-nnoremap <leader>q :Sayonara!<cr>
+nnoremap <silent> <leader>q :Sayonara!<cr>
 
 " Search files with FZF - junegunn/fzf.vim
 nnoremap <leader>t :Files<cr>
@@ -276,7 +273,7 @@ nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>g :GFiles?<cr>
 
 " Sort the visual selection
-vnoremap <leader>s :sort<cr>
+vnoremap <silent> <leader>s :sort<cr>
 
 " Format the visual selection with yapf, Yet Another Python Formatter
 " 2018-09-09 TODO: Is there a nicer way to do this?
@@ -304,6 +301,9 @@ nnoremap <silent> ]q :cnext<cr>
 
 " Move to previous entry in quickfix list
 nnoremap <silent> [q :cprev<cr>
+
+" Close the quickfix list
+nnoremap <silent> <leader>Q :cclose<cr>
 
 " Insert a blank line below the current line
 nnoremap <silent> ]<space> o<esc>k
@@ -335,7 +335,11 @@ nnoremap gV `[v`]
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-nnoremap <silent> <leader>r :Rg<cr>
+nnoremap <silent> <leader>R :Rg<cr>
+
+" Use tab and shift-tab to navigate omnicomplete suggestions
+inoremap <silent> <expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <silent> <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 
 " }}}
 " Commands {{{
@@ -350,60 +354,36 @@ endfunction
 " Autocommands {{{
 
 " Additional file type detection by extension
-augroup filetypes
+augroup personal
     autocmd!
     autocmd BufEnter *.sls     setlocal filetype=yaml
-    autocmd BufEnter *.aurora  setlocal filetype=python
     autocmd BufEnter gitconfig setlocal filetype=gitconfig
     autocmd BufEnter todo.txt  setlocal filetype=todo
-augroup END
 
-" Set options for JavaScript
-augroup filetype_javascript
-    autocmd!
     autocmd FileType javascript setlocal shiftwidth=4
     autocmd FileType javascript setlocal tabstop=4
     autocmd FileType javascript setlocal textwidth=120
     autocmd FileType javascript setlocal colorcolumn=+1
-augroup END
 
-" Set options for Markdown
-augroup filetype_markdown
-    autocmd!
     autocmd FileType markdown setlocal shiftwidth=4
     autocmd FileType markdown setlocal tabstop=4
-    autocmd FileType markdown nnoremap <buffer> <silent> <leader>g :Goyo<CR>
-    autocmd FileType iabbrev <buffer> <expr> \t strftime("%m/%d/%Y")
-augroup END
+    autocmd FileType markdown nnoremap <buffer> <silent> <leader>G :Goyo<CR>
+    autocmd FileType markdown iabbrev <buffer> <expr> \t strftime("%m/%d/%Y")
 
-" Set options for Python
-augroup filetype_python
-    autocmd!
     autocmd FileType python setlocal shiftwidth=2
     autocmd FileType python setlocal tabstop=2
     autocmd FileType python setlocal textwidth=120
     autocmd FileType python setlocal colorcolumn=+1
-augroup END
+    autocmd FileType python setlocal completeopt-=preview
 
-" Set options for shell scripts
-augroup filetype_shell
-    autocmd!
     autocmd FileType sh setlocal shiftwidth=2
     autocmd FileType sh setlocal tabstop=2
     autocmd FileType sh setlocal textwidth=80
     autocmd FileType sh setlocal colorcolumn=+1
     autocmd FileType sh setlocal comments=:#!,b:#/,b:#
-augroup END
 
-" Set options for todo.txt
-augroup filetype_todotxt
-    autocmd!
     autocmd BufEnter todo.txt iabbrev <buffer> <expr> \t strftime("%Y-%m-%d")
-augroup END
 
-" Set options for vimrc and vimscript
-augroup filetype_vim
-    autocmd!
     autocmd FileType vim setlocal shiftwidth=4
     autocmd FileType vim setlocal tabstop=4
     autocmd FileType vim setlocal textwidth=120
@@ -412,27 +392,27 @@ augroup filetype_vim
     " Use :help on keyword when using K
     autocmd FileType vim setlocal keywordprg=:help
 
-    " <leader>s sources the current Vimscript file, disables the current highlight, and reloads filetype
-    autocmd FileType vim nnoremap <buffer> <silent> <leader>s :source % <bar> :nohlsearch <bar> :edit<CR>
-
     " Open help windows on the right, not below
     autocmd BufWinEnter *.txt if &filetype ==# 'help' | wincmd L | endif
 
     " Shortcut: `q` in normal mode closes the help window
     autocmd FileType help nnoremap <buffer> q :quit<CR>
-augroup END
 
-" Equally resize panes when vim resizes
-augroup window_resized
-    autocmd!
+    " Source .vimrc on save
+    autocmd BufWritePost .vimrc,vimrc,.vimrc.local ++nested source $MYVIMRC
+
+    " Equally resize panes when vim resizes
     autocmd VimResized * :wincmd =
+
+    autocmd User GoyoEnter nested call <SID>goyo_enter()
+    autocmd User GoyoLeave nested call <SID>goyo_leave()
 augroup END
 
 " }}}
 " Local {{{
 
 " Load local settings, if defined
-if filereadable(glob("~/.vimrc.local"))
+if filereadable(glob('~/.vimrc.local'))
     source ~/.vimrc.local
 endif
 
