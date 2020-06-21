@@ -228,7 +228,30 @@ let g:jedi#rename_command = '<leader>pr'
 let g:rg_derive_root = 1
 
 " junegunn/fzf.vm
-let g:fzf_layout = { 'down': '8' }
+let $FZF_DEFAULT_OPTS='--color=dark --color=fg:15,bg:0,hl:1,fg+:#ffffff,bg+:0,hl+:1,prompt:3,pointer:3,marker:5,spinner:11,header:-1,border:#65737e --border --layout=reverse --info=hidden'
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+function! FloatingFZF()
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+
+  let padding = 20
+  let height = float2nr(10)
+  let width = float2nr(&columns - (padding * 2))
+  let vertical = 5
+
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': vertical,
+        \ 'col': padding,
+        \ 'width': width,
+        \ 'height': height,
+        \ 'style': 'minimal'
+        \ }
+
+  let win = nvim_open_win(buf, v:true, opts)
+  call nvim_win_set_option(win, 'winhl', 'Normal:Visual')
+endfunction
 
 " junegun/goyo.vim
 " 2018-09-08 TODO: set Goyo width to &l:textwidth (if set)
@@ -298,7 +321,7 @@ nnoremap <leader>_ <C-w>s<C-w>j
 nnoremap <silent> <leader>q :Sayonara!<cr>
 
 " Search files with FZF - junegunn/fzf.vim
-nnoremap <leader>t :Files<cr>
+nnoremap <silent> <leader>t :call fzf#vim#files('.', {'options': '--prompt "  "'})<CR>
 
 " Search buffers with FZF - junegunn/fzf.vim
 nnoremap <leader>b :Buffers<cr>
