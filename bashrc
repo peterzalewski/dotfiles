@@ -25,7 +25,7 @@ alias got='git'
 alias grep='grep --color=auto'
 alias gs='git st'
 alias ll='ls -al'
-alias map='xargs --max-args=1'
+alias map='xargs -n 1'
 alias tpout='tput'
 alias venv='python -m venv'
 alias view='view -M'
@@ -93,7 +93,7 @@ export HISTSIZE=1000000
 export HISTCONTROL='ignoreboth'
 
 # Ignore common drudgery
-export HISTIGNORE='ls:bg:fg:history:clear:jobs:exit'
+export HISTIGNORE='ls:ll:bg:fg:history:clear:jobs:exit:gd:gs:reset'
 
 # Use ISO8601 for history timestamps
 export HISTTIMEFORMAT='%Y-%m-%dT%H:%M:%S%z '
@@ -257,15 +257,6 @@ _try_load /usr/local/etc/profile.d/z.sh
 for config_file in "${HOME}"/.bash.d/*; do
   _try_load "${config_file}"
 done
-
-declare pyenv="$(command -v pyenv)"
-if [[ -n "${pyenv}" ]]; then
-  eval "$("${pyenv}" init -)"
-  if pyenv commands | grep virtualenvwrapper_lazy >/dev/null; then
-    pyenv virtualenvwrapper_lazy >/dev/null 2>&1 || true
-  fi
-fi
-unset pyenv
 
 declare rbenv="$(command -v rbenv)"
 if [[ -n "${rbenv}" ]]; then
