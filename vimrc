@@ -29,7 +29,7 @@ call plug#begin()
 Plug 'mhartington/oceanic-next'
 
 " Comment lines and blocks, sensitive to file type
-Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-commentary'
 
 " Lightweight status line
 Plug 'itchyny/lightline.vim'
@@ -47,7 +47,7 @@ Plug 'tpope/vim-surround'
 Plug 'christoomey/vim-tmux-navigator'
 
 " Asynchronously lint and syntax check buffers
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 " Syntax for Jinja2
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -64,9 +64,6 @@ Plug 'junegunn/fzf.vim'
 
 " Repeat vim-surround commands with .
 Plug 'tpope/vim-repeat'
-
-" Smartly manage tags
-Plug 'peterzalewski/vim-gutentags', { 'branch': 'language_specific', 'do': 'mkdir -p ${HOME}/.ctags' }
 
 " Promote productivity with distration-free mode
 Plug 'junegunn/goyo.vim'
@@ -88,6 +85,39 @@ Plug 'solarnz/thrift.vim'
 
 " Use ripgrep (rg) for searching in files
 Plug 'jremmen/vim-ripgrep'
+
+" Fancy git support
+Plug 'tpope/vim-fugitive'
+
+" Better Python syntax
+Plug 'vim-python/python-syntax'
+
+" Worthwhile auto-complete
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Python auto-complete
+Plug 'deoplete-plugins/deoplete-jedi'
+
+" Syntax for Apache Aurora files
+Plug 'kevints/vim-aurora-syntax'
+
+" Jump to Python definitions and such
+Plug 'davidhalter/jedi-vim'
+
+" Python-sensitive function and class folding
+Plug 'tmhedberg/simpylfold'
+
+" Visualize indents for whitespace delimited languages
+Plug 'Yggdroot/indentLine'
+
+" Display unique icons for filetypes from a patched font
+Plug 'ryanoasis/vim-devicons'
+
+" Automagically clear highlight after searching and moving
+Plug 'junegunn/vim-slash'
+
+" Highlight what I just yanked
+Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 
@@ -126,6 +156,9 @@ highlight CursorLineNr guifg='#C594C5' ctermfg=176 guibg=NONE ctermbg=NONE
 
 " Highlight the paren under the cursor, not the matching paren
 highlight MatchParen ctermfg=208 ctermbg=233 cterm=bold
+
+" Flash yanked text in white on red
+highlight HighlightedyankRegion ctermfg=253 ctermbg=203 guifg='#d8dee9' guibg='#ec5f67'
 
 " }}}
 " Built-in options {{{
@@ -181,23 +214,15 @@ set wildmode=list:full,longest  " List possible commands by length first
 " }}}
 " Plugin-specific settings {{{
 
-" ludovicchabant/vim-gutentags
-" If the filetype is known, append it to the tag file name
-" to group tags by language.
-function! PeteZalewskiTagFilePerFiletype(path)
-    if strlen(&l:filetype) ># 0
-        let b:gutentags_ctags_tagfile = &l:filetype . '.tags'
-        return 1
-    endif
-    return 0
-endfunction
-
-let g:gutentags_enabled                   = 1
-let g:gutentags_add_default_project_roots = 1
-let g:gutentags_cache_dir                 = glob("~/.ctags")
-let g:gutentags_ctags_language_specific   = 1
-let g:gutentags_file_list_command         = 'rg --files'
-let g:gutentags_init_user_func            = 'PeteZalewskiTagFilePerFiletype'
+" davidhalter/jedi-vim
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#completions_enabled = 0
+let g:jedi#goto_command = '<leader>pd'
+let g:jedi#goto_assignments_command = '<leader>pg'
+let g:jedi#goto_stubs_command = '<leader>ps'
+let g:jedi#documentation_command = 'K'
+let g:jedi#usages_command = '<leader>pn'
+let g:jedi#rename_command = '<leader>pr'
 
 " jremmen/vim-ripgrep
 let g:rg_derive_root = 1
@@ -220,9 +245,21 @@ endfunction
 
 let g:goyo_width = 107
 
+" Shougo/deoplete.nvim
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('ignore_sources', {
+\    '_': ['buffer', 'around']
+\})
+
+" Yggdroot/indentLine
+let g:indentLine_char = '⎸'
+
 " pangloss/vim-javascript
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_flow  = 1
+let g:javascript_plugin_jsdoc  = 1
+let g:javascript_plugin_flow   = 1
+
+" vim-python/python-syntax
+let g:python_highlight_all     = 1
 
 " w0rp/ale
 let g:ale_sign_column_always   = 1
@@ -250,9 +287,6 @@ vnoremap ? ?\v
 
 " Leader commands
 let g:mapleader=','
-
-" Remove search highlight
-nnoremap <leader><space> :noh<cr>
 
 " Open a vertical split
 nnoremap <leader><bar> <C-w>v<C-w>l
