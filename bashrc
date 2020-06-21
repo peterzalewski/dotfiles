@@ -122,11 +122,11 @@ fi
 # https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables
 
 function man() {
-  LESS_TERMCAP_md="$(tput bold; tput setaf 12)" \
+  LESS_TERMCAP_md="$(tput bold; tput setaf 6)" \
   LESS_TERMCAP_me="$(tput sgr0)" \
-  LESS_TERMCAP_so="$(tput bold ; tput setaf 15 ; tput setab 13)" \
+  LESS_TERMCAP_so="$(tput bold ; tput setaf 1)" \
   LESS_TERMCAP_se="$(tput sgr0)" \
-  LESS_TERMCAP_us="$(tput bold ; tput setaf 10)" \
+  LESS_TERMCAP_us="$(tput bold ; tput setaf 3)" \
   LESS_TERMCAP_ue="$(tput sgr0)" \
   command man "$@"
 }
@@ -156,34 +156,34 @@ fi
 declare PROMPT_COLOR_OFF="\001$(tput sgr0)\002"
 
 # Bold
-declare PROMPT_SMALL_WORD_COLOR="\001$(tput bold)\002"
+declare PROMPT_SMALL_WORD_COLOR="\001$(tput bold ; tput sitm)\002"
 
-# Bold + blue
-declare PROMPT_DIR_COLOR="\001$(tput bold ; tput setaf 12)\002"
+# Bold + yellow
+declare PROMPT_DIR_COLOR="\001$(tput bold ; tput setaf 3)\002"
 
-# Bold + magenta
-declare PROMPT_HOST_COLOR="\001$(tput bold ; tput setaf 13)\002"
+# Bold + green
+declare PROMPT_HOST_COLOR="\001$(tput bold ; tput setaf 10)\002"
 
-# Bold + red
+# Bold + orange
 declare PROMPT_RCS_COLOR="\001$(tput bold ; tput setaf 9)\002"
 
 # '❯'
-declare PROMPT_SYMBOL=$'\xE2\x9D\xAF'
+declare PROMPT_SYMBOL=$'\001\xE2\x9D\xAF\002'
 
 # Bold + white
 declare PROMPT_SYMBOL_COLOR="\001$(tput bold ; tput setaf 15)\002"
 
-# Bold + green
-declare PROMPT_USER_COLOR="\001$(tput bold ; tput setaf 10)\002"
+# Bold + magenta
+declare PROMPT_USER_COLOR="\001$(tput bold ; tput setaf 13)\002"
 
 # Bold + red
-declare PROMPT_LAST_COMMAND_FAILED="\001$(tput bold ; tput setaf 9)\002"
+declare PROMPT_LAST_COMMAND_FAILED="\001$(tput bold ; tput setaf 1)\002"
 
 function _prompt_user {
   if [[ "${USER}" = "${KITTY_USER}" ]]; then
-    printf "${PROMPT_USER_COLOR}I${PROMPT_COLOR_OFF} am "
+    printf "${PROMPT_USER_COLOR}I${PROMPT_COLOR_OFF}${PROMPT_SMALL_WORD_COLOR} am "
   else
-    printf "${PROMPT_USER_COLOR}${USER}${PROMPT_COLOR_OFF} is "
+    printf "${PROMPT_USER_COLOR}${USER}${PROMPT_COLOR_OFF}${PROMPT_SMALL_WORD_COLOR} is "
   fi
 }
 

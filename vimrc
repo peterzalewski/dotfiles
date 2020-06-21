@@ -24,8 +24,8 @@ filetype plugin indent on
 
 call plug#begin()
 
-" Molokai color scheme
-Plug 'tomasr/molokai'
+" Oceanic-Next color scheme
+Plug 'mhartington/oceanic-next'
 
 " Comment lines and blocks, sensitive to file type
 Plug 'tomtom/tcomment_vim'
@@ -93,15 +93,35 @@ call plug#end()
 " }}}
 " Appearance {{{
 
-" Enable Molokai's 256-color alternative
-let g:rehash256 = 1
+if has('termguicolors')
+    set termguicolors               " Enable 24-bit color
+else
+    set t_Co  = 256
+endif
+
+if !has('nvim')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+" itchyny/lightline.vim
+let g:lightline = {
+    \ 'colorscheme': 'oceanicnext',
+    \ 'active': {
+        \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ]
+    \ }
+\ }
 
 " Use this color scheme
-colorscheme molokai
+let g:oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
 
 " Use italic for comments
 highlight Comment cterm=italic
 highlight SpecialComment cterm=italic
+
+" Highlight line number in magenta
+highlight CursorLineNr guifg='#C594C5' ctermfg=176 guibg=NONE ctermbg=NONE
 
 " Highlight the paren under the cursor, not the matching paren
 hi MatchParen ctermfg=208 ctermbg=233 cterm=bold
@@ -179,13 +199,6 @@ let g:gutentags_cache_dir                 = glob("~/.ctags")
 let g:gutentags_ctags_language_specific   = 1
 let g:gutentags_file_list_command         = 'rg --files'
 let g:gutentags_init_user_func            = 'PeteZalewskiTagFilePerFiletype'
-
-" itchyny/lightline.vim
-let g:lightline = {
-    \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
-    \ }
-\ }
 
 " jremmen/vim-ripgrep
 let g:rg_derive_root = 1
