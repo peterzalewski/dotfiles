@@ -48,8 +48,9 @@ else
   export EDITOR='vim'
 fi
 
-export FZF_DEFAULT_COMMAND='rg --files --follow'
-export FZF_DEFAULT_OPTS='--color=16,hl:12,fg+:14,pointer:11,info:6 --reverse --inline-info --prompt="❯❯ "'
+export FZF_DEFAULT_COMMAND='rg --files --follow --glob=!{.git,node_modules}'
+export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+export FZF_DEFAULT_OPTS='--color=dark --color=fg:15,bg:0,hl:1,fg+:#FFFFFF,bg+:0,hl+:1,prompt:3,pointer:3,marker:5,spinner:11,header:-1,info:6 --layout=reverse --info=hidden --prompt="❯ "'
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 declare -a less_options=(
