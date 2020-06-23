@@ -16,7 +16,7 @@ x 2019-02-28 Vim binding to select added/modified files in the Git working direc
 2019-03-28 tmux keybind to run `t` alias with input for name
 2019-03-28 tmux keybind to switch to `todo.txt`
 x 2019-03-29 Toggle `paste` in insert mode
-2019-03-29 Fork `surround.vim` to make surrounding without spaces the default
+x 2019-03-29 Fork `surround.vim` to make surrounding without spaces the default
 2019-06-12 When using `please`, `damnit` aliases, rewrite history to remove the unsuccessful command
 2019-06-12 Store `$PWD` in history?
 2019-06-12 Customize the emoji replacement for `$HOME`, so the work laptop has an office building

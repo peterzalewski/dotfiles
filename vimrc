@@ -41,7 +41,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'mhinz/vim-sayonara'
 
 " Manipulate quoting and parenthizing characters
-Plug 'tpope/vim-surround'
+Plug 'peterzalewski/vim-surround'
 
 " Navigate between tmux panes and vim windows
 Plug 'christoomey/vim-tmux-navigator'
