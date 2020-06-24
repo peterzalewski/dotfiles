@@ -165,8 +165,8 @@ declare PROMPT_DIR_COLOR="\001$(tput bold ; tput setaf 3)\002"
 # Bold + green
 declare PROMPT_HOST_COLOR="\001$(tput bold ; tput setaf 10)\002"
 
-# Bold + orange
-declare PROMPT_RCS_COLOR="\001$(tput bold ; tput setaf 9)\002"
+# Bold + red
+declare PROMPT_RCS_COLOR="\001$(tput bold ; tput setaf 1)\002"
 
 # '❯'
 declare PROMPT_SYMBOL=$'\001\xE2\x9D\xAF\002'
@@ -179,6 +179,9 @@ declare PROMPT_USER_COLOR="\001$(tput bold ; tput setaf 13)\002"
 
 # Bold + red
 declare PROMPT_LAST_COMMAND_FAILED="\001$(tput bold ; tput setaf 1)\002"
+
+# Bold + green
+declare PROMPT_VIRTUALENV_COLOR="\001$(tput bold; tput setaf 2)\002"
 
 function _prompt_user {
   if [[ "${USER}" = "${KITTY_USER}" ]]; then
@@ -211,7 +214,7 @@ function _prompt_pwd {
 function _prompt_rcs_status {
   if [[ -n "$(type -t __git_ps1)" ]]; then
     printf "$(__git_ps1 " ${PROMPT_SMALL_WORD_COLOR}on${PROMPT_COLOR_OFF} \
-${PROMPT_RCS_COLOR}%s${PROMPT_COLOR_OFF}")"
+${PROMPT_RCS_COLOR} %s${PROMPT_COLOR_OFF}")"
   else
     printf ""
   fi
@@ -223,6 +226,15 @@ function _prompt_color_symbol_by_exit_status {
     printf "${PROMPT_LAST_COMMAND_FAILED}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
   else
     printf "${PROMPT_SYMBOL_COLOR}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
+  fi
+}
+
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+function _prompt_virtualenv {
+  if [[ -n "${VIRTUAL_ENV}" ]]; then
+    printf " \001🐍\002${PROMPT_VIRTUALENV_COLOR}"$(basename "${VIRTUAL_ENV}")"${PROMPT_COLOR_OFF}"
+  else
+    printf ""
   fi
 }
 
@@ -239,6 +251,7 @@ export PS1="\
 ${PROMPT_SMALL_WORD_COLOR}in${PROMPT_COLOR_OFF} \
 \$(_prompt_pwd)\
 \$(_prompt_rcs_status)\
+\$(_prompt_virtualenv)\
 \$(_prompt_color_symbol_by_exit_status) "
 
 # }}}
