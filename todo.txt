@@ -1,6 +1,6 @@
 x 2018-08-31 Replace ~ with 🏠 in prompt
 x 2018-09-01 Parameterize .gitconfig and render with m4
-2018-09-01 Add pre-commit hook to render README.me with m4
+x 2018-09-01 Add pre-commit hook to render README.me with m4
 x 2018-09-01 vim mappings to execute commands in the other tmux pane: `nmap \r :!tmux send-keys -t 0:0.1 C-p C-j <CR><CR>
 x 2018-09-04 Color-coordinate fzf
 2018-09-06 Manage macOS installed with a Brewfile https://github.com/Homebrew/homebrew-bundle
@@ -23,3 +23,5 @@ x 2019-03-29 Fork `surround.vim` to make surrounding without spaces the default
 2019-06-12 Call `open` on URLs in `vim` when using `gf`, instead of using `curl`
 2020-06-21 Use pills in `vim` statusline like [elenapan](https://github.com/elenapan/dotfiles)
 2020-06-21 Install `fzf` bash functions from latest version
+2020-06-21 Patch Operator Mono as part of install process
+2020-06-21 Make `.bashrc.local` and `.vimrc.local` accessible from dotfiles directory (they are ignored, but should have specific exceptions in `fzf`)

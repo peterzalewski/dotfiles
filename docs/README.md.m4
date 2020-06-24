@@ -1,3 +1,10 @@
+divert(-1)
+define({YEAR})
+define({RELEASE_DATE})
+define({NUM_FILES})
+changequote({,})
+changecom(@@)
+divert(0)dnl
 ```
                         ў
                          пмммм
@@ -23,13 +30,13 @@
                                                         пплп
               кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП
               Г                          - PZALEWSKI PRESENTS -                            Г
-              Г                     DOTFILES (C) Peter Zalewski 2020                       Г
+              Г                     DOTFILES (C) Peter Zalewski YEAR                       Г
               РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
               кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФТФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП
-              Г  Supplier(s) : peterZalewski         Г  Release Date : 2020-06-23          Г
+              Г  Supplier(s) : peterZalewski         Г  Release Date : RELEASE_DATE          Г
               Г  Cracker(s)  : ^pZaLeWsKi^           Г  Protection   : CD CHECKS           Г
               Г  Packager(s) : git hub (dot) com     Г  Repo Genre   : CONFIGURATION !     Г
-              Г  File Format : .git                  Г  # of Files   : 19                  Г
+              Г  File Format : .git                  Г  # of Files   : format({%-20d}, NUM_FILES)Г
               УФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФСФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФД
               Г  Requirements: W9x, P2 300Hz, 32MB ram, Sound Card, DX7.x , 3D card        Г
               РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
