@@ -445,7 +445,6 @@ augroup personal
     autocmd!
     autocmd BufEnter *.sls     setlocal filetype=yaml
     autocmd BufEnter gitconfig setlocal filetype=gitconfig
-    autocmd BufEnter todo.txt  setlocal filetype=todo
 
     autocmd FileType javascript setlocal shiftwidth=4
     autocmd FileType javascript setlocal tabstop=4
@@ -468,8 +467,6 @@ augroup personal
     autocmd FileType sh setlocal textwidth=80
     autocmd FileType sh setlocal colorcolumn=+1
     autocmd FileType sh setlocal comments=:#!,b:#/,b:#
-
-    autocmd BufEnter todo.txt iabbrev <buffer> <expr> \t strftime("%Y-%m-%d")
 
     autocmd FileType vim setlocal shiftwidth=4
     autocmd FileType vim setlocal tabstop=4
