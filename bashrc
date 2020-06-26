@@ -258,21 +258,51 @@ function _try_load {
 }
 
 _try_load /usr/local/etc/bash_completion.d/git-prompt.sh
-_try_load /usr/local/etc/bash_completion.d/git-completion.bash
+# _try_load /usr/local/etc/bash_completion.d/git-completion.bash
 _try_load /usr/local/etc/profile.d/z.sh
 
 for config_file in "${HOME}"/.bash.d/*; do
   _try_load "${config_file}"
 done
 
-declare rbenv="$(command -v rbenv)"
-if [[ -n "${rbenv}" ]]; then
-  eval "$("${rbenv}" init -)"
-fi
-unset rbenv
-
 # }}}
 # Functions {{{
+
+# rbenv init is slow because it requires eval and rehash. I know I want
+# to use it, so just declare the same function that init does, here, and
+# add the shims directory to the PATH in .bash_profile. Works out the same.
+function rbenv {
+  local -r subcommand="${1:-}"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "${subcommand}" in
+  rehash|shell)
+    eval "$(rbenv "sh-${subcommand}" "$@")"
+    ;;
+  *)
+    command rbenv "${subcommand}" "$@"
+    ;;
+  esac
+}
+
+# Same thing goes for pyenv.
+function pyenv {
+  local -r subcommand="${1:-}"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "${subcommand}" in
+  rehash|shell)
+    eval "$(pyenv "sh-${subcommand}" "$@")"
+    ;;
+  *)
+    command pyenv "${subcommand}" "$@"
+    ;;
+  esac
+}
 
 # Open an executable by name in vim
 function vimc {
