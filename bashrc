@@ -145,56 +145,52 @@ fi
 # Create a prompt like this, with colors (escape sequences) set with the
 # variables listed below:
 #
-# username at host in directory [on branch] $
+# username at host in directory [on branch] ❯
 # *        |  *       |             *       |
-# |        |  |       |             |       +-> PROMPT_SYMBOL_COLOR
-# |        |  |       |             +--------*> PROMPT_RCS_COLOR
-# |        |  |       +-----------------------> PROMPT_DIR_COLOR
-# |        |  +------------------------------*> PROMPT_HOST_COLOR
-# |        +----------------------------------> PROMPT_SMALL_WORD_COLOR
-# +------------------------------------------*> PROMPT_USER_COLOR
+# |        |  |       |             |       +-> PROMPT_SUCCESS/FAILURE
+# |        |  |       |             +--------*> PROMPT_RCS
+# |        |  |       +-----------------------> PROMPT_DIR
+# |        |  +------------------------------*> PROMPT_HOST
+# |        +----------------------------------> PROMPT_WORD
+# +------------------------------------------*> PROMPT_USER
 
-declare PROMPT_COLOR_OFF="\001$(tput sgr0)\002"
+declare COLOR_OFF="\001\x1b[0m\002"
 
-# Bold
-declare PROMPT_SMALL_WORD_COLOR="\001$(tput bold ; tput sitm)\002"
+# Bold + italic
+declare PROMPT_WORD="\001\x1b[1;3;38m\002"
 
 # Bold + yellow
-declare PROMPT_DIR_COLOR="\001$(tput bold ; tput setaf 3)\002"
+declare PROMPT_DIR="\001\x1b[1;33m\002"
 
 # Bold + green
-declare PROMPT_HOST_COLOR="\001$(tput bold ; tput setaf 10)\002"
+declare PROMPT_HOST="\001\x1b[1;32m\002"
 
 # Bold + red
-declare PROMPT_RCS_COLOR="\001$(tput bold ; tput setaf 1)\002"
-
-# '❯'
-declare PROMPT_SYMBOL=$'\001\xE2\x9D\xAF\002'
+declare PROMPT_RCS="\001\x1b[1;31m\002"
 
 # Bold + white
-declare PROMPT_SYMBOL_COLOR="\001$(tput bold ; tput setaf 15)\002"
+declare PROMPT_SUCCESS="\001\x1b[1;38m\002"
 
 # Bold + magenta
-declare PROMPT_USER_COLOR="\001$(tput bold ; tput setaf 13)\002"
+declare PROMPT_USER="\001\x1b[1;35m\002"
 
 # Bold + red
-declare PROMPT_LAST_COMMAND_FAILED="\001$(tput bold ; tput setaf 1)\002"
+declare PROMPT_FAILURE="\001\x1b[1;31m\002"
 
 # Bold + green
-declare PROMPT_VIRTUALENV_COLOR="\001$(tput bold; tput setaf 2)\002"
+declare PROMPT_VIRTUALENV="\001\x1b[1;32m\002"
 
 function _prompt_user {
   if [[ "${USER}" = "${KITTY_USER}" ]]; then
-    printf "${PROMPT_USER_COLOR}I${PROMPT_COLOR_OFF}${PROMPT_SMALL_WORD_COLOR} am "
+    printf "${PROMPT_USER}I${COLOR_OFF}${PROMPT_WORD} am ${COLOR_OFF}"
   else
-    printf "${PROMPT_USER_COLOR}${USER}${PROMPT_COLOR_OFF}${PROMPT_SMALL_WORD_COLOR} is "
+    printf "${PROMPT_USER}%s${COLOR_OFF}${PROMPT_WORD} is ${COLOR_OFF}" "${USER}"
   fi
 }
 
 function _prompt_hostname_if_not_own {
   if [[ "${HOSTNAME}" != "${KITTY_HOSTNAME}" ]]; then
-    printf "${PROMPT_SMALL_WORD_COLOR}at${PROMPT_COLOR_OFF} \
-${PROMPT_HOST_COLOR}${HOSTNAME}${PROMPT_COLOR_OFF} "
+    printf "${PROMPT_WORD}at${COLOR_OFF} ${PROMPT_HOST}%s${COLOR_OFF} " "${HOSTNAME}"
   else
     printf ""
   fi
@@ -204,17 +200,16 @@ ${PROMPT_HOST_COLOR}${HOSTNAME}${PROMPT_COLOR_OFF} "
 function _prompt_pwd {
   declare -r PWD_WITHOUT_HOME="${PWD#$HOME}"
   if [[ "${PWD}" != "${PWD_WITHOUT_HOME}" ]]; then
-    printf "\001🏠\002${PROMPT_DIR_COLOR}${PWD_WITHOUT_HOME}${PROMPT_COLOR_OFF}"
+    printf "${PROMPT_WORD}in${COLOR_OFF} 🏠${PROMPT_DIR}%s${COLOR_OFF}" "${PWD_WITHOUT_HOME}"
   else
-    printf "${PROMPT_DIR_COLOR}${PWD}${PROMPT_COLOR_OFF}"
+    printf "${PROMPT_WORD}in${COLOR_OFF} ${PROMPT_DIR}%s${COLOR_OFF}" "${PWD}"
   fi
 }
 
 # Evaluate __git_ps1 if it is available
 function _prompt_rcs_status {
   if [[ -n "$(type -t __git_ps1)" ]]; then
-    printf "$(__git_ps1 " ${PROMPT_SMALL_WORD_COLOR}on${PROMPT_COLOR_OFF} \
-${PROMPT_RCS_COLOR} %s${PROMPT_COLOR_OFF}")"
+    printf "$(__git_ps1 " ${PROMPT_WORD}on${COLOR_OFF} ${PROMPT_RCS} %s${COLOR_OFF}")"
   else
     printf ""
   fi
@@ -223,16 +218,16 @@ ${PROMPT_RCS_COLOR} %s${PROMPT_COLOR_OFF}")"
 # Display the prompt symbol in red if the last shell command failed
 function _prompt_color_symbol_by_exit_status {
   if [[ "${LAST_EXIT}" != 0 ]]; then
-    printf "${PROMPT_LAST_COMMAND_FAILED}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
+    printf "${PROMPT_FAILURE}❯${COLOR_OFF}"
   else
-    printf "${PROMPT_SYMBOL_COLOR}${PROMPT_SYMBOL}${PROMPT_COLOR_OFF}"
+    printf "${PROMPT_SUCCESS}❯${COLOR_OFF}"
   fi
 }
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 function _prompt_virtualenv {
   if [[ -n "${VIRTUAL_ENV}" ]]; then
-    printf " \001🐍\002${PROMPT_VIRTUALENV_COLOR}"$(basename "${VIRTUAL_ENV}")"${PROMPT_COLOR_OFF}"
+    printf " 🐍${PROMPT_VIRTUALENV}%s${COLOR_OFF}" "$(basename "${VIRTUAL_ENV}")"
   else
     printf ""
   fi
@@ -248,7 +243,6 @@ export PROMPT_COMMAND="_prompt_save_last_exit"
 export PS1="\
 \$(_prompt_user)\
 \$(_prompt_hostname_if_not_own)\
-${PROMPT_SMALL_WORD_COLOR}in${PROMPT_COLOR_OFF} \
 \$(_prompt_pwd)\
 \$(_prompt_rcs_status)\
 \$(_prompt_virtualenv)\
