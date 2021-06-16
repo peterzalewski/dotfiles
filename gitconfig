@@ -18,7 +18,7 @@
   hist = log --pretty=format:\"%C(auto) %h %ad | %s%d [%an]\" --graph --date=short
   root = rev-parse --show-toplevel
   praise = blame
-  st = status -s -uall
+  st = status -s
   type = cat-file -t
   unhide = update-index --no-assume-unchanged
   whoopsie = commit --amend --no-edit

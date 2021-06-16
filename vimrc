@@ -25,18 +25,6 @@ filetype plugin indent on
 
 call plug#begin()
 
-" Oceanic-Next color scheme
-Plug 'mhartington/oceanic-next'
-
-" Comment lines and blocks, sensitive to file type
-Plug 'tpope/vim-commentary'
-
-" Lightweight status line
-Plug 'itchyny/lightline.vim'
-
-" Better JavaScript syntax
-Plug 'pangloss/vim-javascript'
-
 " Close the current buffer but not the window
 Plug 'mhinz/vim-sayonara'
 
@@ -46,72 +34,28 @@ Plug 'peterzalewski/vim-surround'
 " Navigate between tmux panes and vim windows
 Plug 'christoomey/vim-tmux-navigator'
 
-" Asynchronously lint and syntax check buffers
-Plug 'dense-analysis/ale'
-
-" Syntax for Jinja2
-Plug 'Glench/Vim-Jinja2-Syntax'
-
 " Align text by characters and more complex expressions
 Plug 'junegunn/vim-easy-align'
 
-" Syntax for JSX
-Plug 'mxw/vim-jsx'
-
-" Use FZF for searching files, buffers, etc.
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-
 " Repeat vim-surround commands with .
 Plug 'tpope/vim-repeat'
+
+" Draw arrows and boxes in visual block mode
+Plug 'peterzalewski/vim-boxdraw'
+
+" Appearance {{{
+
+" Oceanic-Next color scheme
+Plug 'mhartington/oceanic-next'
+
+" Lightweight status line
+Plug 'itchyny/lightline.vim'
 
 " Promote productivity with distration-free mode
 Plug 'junegunn/goyo.vim'
 
 " Highlight current (or adjacent) blocks of text and dim everything else
 Plug 'junegunn/limelight.vim'
-
-" Draw arrows and boxes in visual block mode
-Plug 'peterzalewski/vim-boxdraw'
-
-" Syntax for .tmux.conf
-Plug 'tmux-plugins/vim-tmux'
-
-" Syntax for my todo.txt
-Plug 'peterzalewski/vim-todo'
-
-" Syntax for Apache Thrift definitions
-Plug 'solarnz/thrift.vim'
-
-" Use ripgrep (rg) for searching in files
-Plug 'jremmen/vim-ripgrep'
-
-" Fancy git support
-Plug 'tpope/vim-fugitive'
-
-" Better Python syntax
-Plug 'vim-python/python-syntax'
-
-" Worthwhile auto-complete
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-" Python auto-complete
-Plug 'deoplete-plugins/deoplete-jedi'
-
-" Syntax for Apache Aurora files
-Plug 'kevints/vim-aurora-syntax'
-
-" Jump to Python definitions and such
-Plug 'davidhalter/jedi-vim'
-
-" Python-sensitive function and class folding
-Plug 'tmhedberg/simpylfold'
-
-" Visualize indents for whitespace delimited languages
-Plug 'Yggdroot/indentLine'
-
-" Display unique icons for filetypes from a patched font
-Plug 'ryanoasis/vim-devicons'
 
 " Automagically clear highlight after searching and moving
 Plug 'junegunn/vim-slash'
@@ -121,6 +65,91 @@ Plug 'machakann/vim-highlightedyank'
 
 " Display a nice startup screen with MRU files
 Plug 'mhinz/vim-startify'
+
+" }}}
+" IDE {{{
+
+" Fancy git support
+Plug 'tpope/vim-fugitive'
+
+" Comment lines and blocks, sensitive to file type
+Plug 'tpope/vim-commentary'
+
+" Asynchronously lint and syntax check buffers
+Plug 'dense-analysis/ale'
+
+" Worthwhile auto-complete
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Visualize indents for whitespace delimited languages
+Plug 'Yggdroot/indentLine'
+
+" Display unique icons for filetypes from a patched font
+Plug 'ryanoasis/vim-devicons'
+
+" Use FZF for searching files, buffers, etc.
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
+" Visualize and navigate the undo tree
+Plug 'sjl/gundo.vim'
+
+" Use FZF for searching files, buffers, etc.
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
+" Visualize and navigate the undo tree
+Plug 'sjl/gundo.vim'
+
+" }}}
+" Python {{{
+
+" Python-sensitive function and class folding
+Plug 'tmhedberg/simpylfold'
+
+" Python auto-complete
+Plug 'deoplete-plugins/deoplete-jedi'
+
+" Jump to Python definitions and such
+Plug 'davidhalter/jedi-vim'
+
+" PEP8-compliant Python indenting
+Plug 'Vimjas/vim-python-pep8-indent'
+
+" }}}
+" Syntax {{{
+
+" Better Python syntax
+Plug 'vim-python/python-syntax'
+
+" Syntax for Apache Aurora files
+Plug 'kevints/vim-aurora-syntax'
+
+" Syntax for Apache Thrift definitions
+Plug 'solarnz/thrift.vim'
+
+" Syntax for .tmux.conf
+Plug 'tmux-plugins/vim-tmux'
+
+" Syntax for JSX
+Plug 'mxw/vim-jsx'
+
+" Syntax for Jinja2
+Plug 'Glench/Vim-Jinja2-Syntax'
+
+" Better JavaScript syntax
+Plug 'pangloss/vim-javascript'
+
+" Display unique icons for filetypes from a patched font
+Plug 'ryanoasis/vim-devicons'
+
+" Syntax for my todo.txt
+Plug 'peterzalewski/vim-todo'
+
+" Syntax for nix
+Plug 'LnL7/vim-nix'
+
+" }}}
 
 call plug#end()
 
@@ -303,9 +332,11 @@ let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('ignore_sources', {
 \    '_': ['buffer', 'around']
 \})
+let g:deoplete#sources#jedi#enable_typeinfo = 0
 
 " Yggdroot/indentLine
 let g:indentLine_char = '⎸'
+let g:indentLine_fileType = ['python']
 
 " pangloss/vim-javascript
 let g:javascript_plugin_jsdoc  = 1
@@ -329,9 +360,6 @@ iabbrev <expr> \t printf(&l:commentstring . " TODO:", strftime(" %Y-%m-%d"))
 " }}}
 " Mappings {{{
 
-" Edit the previously edited file
-nnoremap <C-e> :e#<CR>
-
 " Append the modifier for very magic mode, to get Perl-like regex
 nnoremap / /\v
 vnoremap / /\v
@@ -340,6 +368,10 @@ vnoremap ? ?\v
 
 " Leader commands
 let g:mapleader=','
+
+nmap <leader><space> za
+nmap { zk
+nmap } zj
 
 " Open a vertical split
 nnoremap <leader><bar> <C-w>v<C-w>l
@@ -351,13 +383,26 @@ nnoremap <leader>_ <C-w>s<C-w>j
 nnoremap <silent> <leader>q :Sayonara!<cr>
 
 " Search files with FZF - junegunn/fzf.vim
-nnoremap <silent> <leader>t :call fzf#vim#files('.', {'options': '--prompt "  "'})<CR>
+nnoremap <silent> <leader>t :call fzf#vim#files(getcwd(), {'options': '--prompt "  "'})<CR>
 
 " Search buffers with FZF - junegunn/fzf.vim
 nnoremap <leader>b :Buffers<cr>
 
 " Search modified git files with FZF - junegunn/fzf.vim
 nnoremap <leader>g :GFiles?<cr>
+
+function! RipgrepFzf(query)
+  let command_fmt = 'rg --column --line-number --no-heading -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), 0)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>)
+
+" Search with ripgrep
+nnoremap <leader>r :RG<cr>
 
 " Sort the visual selection
 vnoremap <silent> <leader>s :sort<cr>
@@ -427,6 +472,11 @@ nnoremap <silent> <leader>R :Rg<cr>
 " Use tab and shift-tab to navigate omnicomplete suggestions
 inoremap <silent> <expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent> <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+
+nnoremap <silent> <leader>u :GundoToggle<cr>
+
+" dense-analysis/ale
+nmap <silent> <leader>F <Plug>(ale_fix)
 
 " }}}
 " Commands {{{

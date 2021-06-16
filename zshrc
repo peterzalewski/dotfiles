@@ -5,12 +5,19 @@
 # Source: https://github.com/peterzalewski/dotfiles/blob/master/bashrc
 # ############################################################################
 
+zmodload zsh/parameter
+autoload -Uz compinit
+if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+  compinit
+else
+  compinit -C
+fi
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+autoload -U colors
+colors
+
 # Aliases {{{
 
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
 alias bc='bc --mathlib'
 alias g='git'
 alias gb='git branch -vv'
@@ -41,47 +48,41 @@ done
 # Default programs and settings {{{
 
 if [[ -n "$(command -v nvim)" ]]; then
-  export EDITOR='nvim'
   alias vim='nvim'
   alias nvum='nvim'
-else
-  export EDITOR='vim'
 fi
-
-export FZF_DEFAULT_COMMAND='rg --files --follow --glob=!{.git,node_modules}'
-export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
-export FZF_DEFAULT_OPTS='--color=dark --color=fg:15,bg:0,hl:1,fg+:#FFFFFF,bg+:0,hl+:1,prompt:3,pointer:3,marker:5,spinner:11,header:-1,info:6 --layout=reverse --info=hidden --prompt="❯ "'
-export LANG='en_US.UTF-8'
-export LC_ALL='en_US.UTF-8'
-declare -a less_options=(
-  --LONG-PROMPT
-  --RAW-CONTROL-CHARS
-  --hilite-search
-  --ignore-case
-  --no-init
-  --quit-if-one-screen
-)
-export LESS="${less_options[*]}"
-export LESSHISTFILE='-'
-export PAGER='less'
-export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
-export VISUAL="${EDITOR}"
 
 # Use vi-like bindings instead of emacs-like bindings to edit
 set -o vi
 
-# Attempt to enable Bash 4 '**' recursive globbing
-shopt -s globstar >/dev/null 2>&1
+if type shopt &>/dev/null; then
+  # Attempt to enable Bash 4 '**' recursive globbing
+  shopt -s globstar >/dev/null 2>&1
+  alias ..='cd ..'
+  alias ...='cd ../..'
+  alias ....='cd ../../..'
+  alias .....='cd ../../../..'
+elif type setopt &>/dev/null; then
+  setopt AUTO_CD
+fi
 
 # }}}
 # History {{{
 
-# Better history courtesy of https://sanctum.geek.nz/arabesque/better-bash-history/
-# Save multi-line commands as one command
-shopt -s cmdhist
+if type shopt &>/dev/null; then
+  # Better history courtesy of https://sanctum.geek.nz/arabesque/better-bash-history/
+  # Save multi-line commands as one command
+  shopt -s cmdhist
 
-# Shells append to history rather than overwrite
-shopt -s histappend
+  # Shells append to history rather than overwrite
+  shopt -s histappend
+elif type setopt &>/dev/null; then
+  setopt HIST_IGNORE_DUPS
+  setopt INC_APPEND_HISTORY
+  setopt HIST_IGNORE_SPACE
+  setopt PROMPT_PERCENT
+  setopt PROMPT_SUBST
+fi
 
 # Let's keep lots of history
 export HISTFILESIZE=1000000
@@ -154,45 +155,29 @@ fi
 # |        +----------------------------------> PROMPT_WORD
 # +------------------------------------------*> PROMPT_USER
 
-declare COLOR_OFF="\001\x1b[0m\002"
-
-# Bold + white + italic
-declare PROMPT_WORD="\001\x1b[1;3;38m\002"
-
-# Bold + yellow
-declare PROMPT_DIR="\001\x1b[1;33m\002"
-
-# Bold + green
-declare PROMPT_HOST="\001\x1b[1;32m\002"
-
-# Bold + red
-declare PROMPT_RCS="\001\x1b[1;31m\002"
-
-# Bold + white
-declare PROMPT_SUCCESS="\001\x1b[1;38m\002"
-
-# Bold + magenta
-declare PROMPT_USER="\001\x1b[1;35m\002"
-
-# Bold + red
-declare PROMPT_FAILURE="\001\x1b[1;31m\002"
-
-# Bold + green
-declare PROMPT_VIRTUALENV="\001\x1b[1;32m\002"
+declare COLOR_OFF="$reset_color"
+declare PROMPT_WORD="\e[1;3;38m"
+declare PROMPT_DIR="$fg_bold[yellow]"
+declare PROMPT_HOST="$fg_bold[green]"
+declare PROMPT_RCS="$fg_bold[red]"
+declare PROMPT_SUCCESS="$fg_bold[white]"
+declare PROMPT_USER="$fg_bold[magenta]"
+declare PROMPT_FAILURE="$fg_bold[red]"
+declare PROMPT_VIRTUALENV="$fg_bold[green]"
 
 function _prompt_user {
   if [[ "${USER}" = "${KITTY_USER}" ]]; then
-    printf "${PROMPT_USER}I${COLOR_OFF}${PROMPT_WORD} am ${COLOR_OFF}"
+    echo "%{$PROMPT_USER%}I%{$COLOR_OFF%}%{$PROMPT_WORD%} am %{$COLOR_OFF%}"
   else
-    printf "${PROMPT_USER}%s${COLOR_OFF}${PROMPT_WORD} is ${COLOR_OFF}" "${USER}"
+    echo "%{${PROMPT_USER}%}%n%{${COLOR_OFF}%}%{${PROMPT_WORD}%} is %{${COLOR_OFF}%}"
   fi
 }
 
 function _prompt_hostname_if_not_own {
-  if [[ "${HOSTNAME}" != "${KITTY_HOSTNAME}" ]]; then
-    printf "${PROMPT_WORD}at${COLOR_OFF} ${PROMPT_HOST}%s${COLOR_OFF} " "${HOSTNAME}"
+  if [[ "${HOSTNAME:-"${HOST}"}" != "${KITTY_HOSTNAME}" ]]; then
+    echo "%{${PROMPT_WORD}%}at%{${COLOR_OFF}%} %{${PROMPT_HOST}%}%m%{${COLOR_OFF}%} "
   else
-    printf ""
+    echo ""
   fi
 }
 
@@ -200,53 +185,42 @@ function _prompt_hostname_if_not_own {
 function _prompt_pwd {
   declare -r PWD_WITHOUT_HOME="${PWD#$HOME}"
   if [[ "${PWD}" != "${PWD_WITHOUT_HOME}" ]]; then
-    printf "${PROMPT_WORD}in${COLOR_OFF} 🏠${PROMPT_DIR}%s${COLOR_OFF}" "${PWD_WITHOUT_HOME}"
+    echo "%{${PROMPT_WORD}%}in%{${COLOR_OFF}%} 🏠%{${PROMPT_DIR}%}${PWD_WITHOUT_HOME}%{${COLOR_OFF}%}"
   else
-    printf "${PROMPT_WORD}in${COLOR_OFF} ${PROMPT_DIR}%s${COLOR_OFF}" "${PWD}"
+    echo "%{${PROMPT_WORD}%}in%{${COLOR_OFF}%} %{${PROMPT_DIR}%}%d%{${COLOR_OFF}%}"
   fi
 }
 
 # Evaluate __git_ps1 if it is available
 function _prompt_rcs_status {
-  if [[ -n "$(type -t __git_ps1)" ]]; then
-    printf "$(__git_ps1 " ${PROMPT_WORD}on${COLOR_OFF} ${PROMPT_RCS} %s${COLOR_OFF}")"
+  if git rev-parse --is-inside-work-tree &>/dev/null; then
+    echo " %{${PROMPT_WORD}%}on%{${COLOR_OFF}%} %{${PROMPT_RCS}%} $(git symbolic-ref --short HEAD)%{${COLOR_OFF}%}"
   else
-    printf ""
+    echo ""
   fi
 }
 
 # Display the prompt symbol in red if the last shell command failed
 function _prompt_color_symbol_by_exit_status {
-  if [[ "${LAST_EXIT}" != 0 ]]; then
-    printf "${PROMPT_FAILURE}❯${COLOR_OFF}"
-  else
-    printf "${PROMPT_SUCCESS}❯${COLOR_OFF}"
-  fi
+  echo "%(?.%{${PROMPT_SUCCESS}%}❯%{${COLOR_OFF}%}.%{${PROMPT_FAILURE}%}❯%{${COLOR_OFF}%})"
 }
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 function _prompt_virtualenv {
   if [[ -n "${VIRTUAL_ENV}" ]]; then
-    printf " 🐍${PROMPT_VIRTUALENV}%s${COLOR_OFF}" "$(basename "${VIRTUAL_ENV}")"
+    echo " 🐍%{${PROMPT_VIRTUALENV}%}$(basename "${VIRTUAL_ENV}")%{${COLOR_OFF}%}"
   else
-    printf ""
+    echo ""
   fi
 }
 
-# Save the exit code of the last shell command. This must happen
-# before functions to build the prompt are called.
-function _prompt_save_last_exit {
-  export LAST_EXIT="$?"
-}
-
-export PROMPT_COMMAND="_prompt_save_last_exit"
-export PS1="\
-\$(_prompt_user)\
-\$(_prompt_hostname_if_not_own)\
-\$(_prompt_pwd)\
-\$(_prompt_rcs_status)\
-\$(_prompt_virtualenv)\
-\$(_prompt_color_symbol_by_exit_status) "
+export PROMPT='\
+$(_prompt_user)\
+$(_prompt_hostname_if_not_own)\
+$(_prompt_pwd)\
+$(_prompt_rcs_status)\
+$(_prompt_virtualenv)\
+$(_prompt_color_symbol_by_exit_status) '
 
 # }}}
 # Load other scripts {{{
@@ -257,11 +231,11 @@ function _try_load {
   [[ -s "${file}" ]] && . "${file}"
 }
 
-_try_load /usr/local/etc/bash_completion.d/git-prompt.sh
+# _try_load /usr/local/etc/bash_completion.d/git-prompt.sh
 # _try_load /usr/local/etc/bash_completion.d/git-completion.bash
-_try_load /usr/local/etc/profile.d/z.sh
+# _try_load /usr/local/etc/profile.d/z.sh
 
-for config_file in "${HOME}"/.bash.d/*; do
+for config_file in "${HOME}"/.zsh.d/*; do
   _try_load "${config_file}"
 done
 
@@ -368,4 +342,6 @@ function print_colors() {
 
 # }}}
 
-[[ -f "${HOME}/.bashrc.local" ]] && source "${HOME}/.bashrc.local"
+ export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+ export WORKON_HOME="$HOME/.virtualenvs"
+# source /usr/local/bin/virtualenvwrapper.sh
