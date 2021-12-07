@@ -88,14 +88,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'ryanoasis/vim-devicons'
 
 " Use FZF for searching files, buffers, etc.
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-
-" Visualize and navigate the undo tree
-Plug 'sjl/gundo.vim'
-
-" Use FZF for searching files, buffers, etc.
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " Visualize and navigate the undo tree

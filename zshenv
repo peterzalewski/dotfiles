@@ -7,7 +7,8 @@ fi
 export RBENV_ROOT="${HOME}/.rbenv"
 export GOROOT="/usr/local/go"
 
-declare -ar extra_paths=(
+declare -a extra_paths
+extra_paths=(
   "${RBENV_ROOT}/shims"
   "${HOME}/Code/php/arcanist/bin"
   "${GOROOT}/bin"
@@ -16,6 +17,7 @@ declare -ar extra_paths=(
   "${HOME}/Code/shell/bin"
   "${HOME}/.cargo/bin"
 )
+declare -r extra_paths
 
 for p in "${extra_paths[@]}"; do
   if [[ -d "${p}" ]]; then
@@ -26,8 +28,9 @@ export PATH
 
 export KITTY_HOSTNAME="Peter-Zalewski"
 
-export OSCAR_PROFILE_PATH=~/.oscar_exports
-source $OSCAR_PROFILE_PATH
+if [[ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]]; then
+  source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+fi
 
 if [[ -n "$(command -v nvim)" ]]; then
   export EDITOR='nvim'
@@ -40,7 +43,8 @@ export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
 export FZF_DEFAULT_OPTS='--color=dark --color=fg:15,bg:0,hl:1,fg+:#FFFFFF,bg+:0,hl+:1,prompt:3,pointer:3,marker:5,spinner:11,header:-1,info:6 --layout=reverse --info=hidden --prompt="❯ "'
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
-declare -a less_options=(
+declare -a less_options
+less_options=(
   --LONG-PROMPT
   --RAW-CONTROL-CHARS
   --hilite-search
@@ -48,6 +52,7 @@ declare -a less_options=(
   --no-init
   --quit-if-one-screen
 )
+declare -r less_options
 export LESS="${less_options[*]}"
 export LESSHISTFILE='-'
 export PAGER='less'

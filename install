@@ -111,8 +111,9 @@ function usage {
 #   TEMP_DIR
 ################################################################################
 function install_vim_plugins {
-  local -r vim="$(command -v vim)"
-  local -r vim_dir="${HOME}/.vim"
+  local -r vim="$(command -v nvim)"
+  # Use XDG_CACHE_DIR
+  local -r vim_dir="${HOME}/.cache/nvim"
 
   if [[ ! -d "${vim_dir}" ]]; then
     if mkdir -p "${vim_dir}"; then
@@ -123,7 +124,8 @@ function install_vim_plugins {
     fi
   fi
 
-  local -r vim_plugin_loader="${vim_dir}/autoload/plug.vim"
+  # XDG_DATA_DIR
+  local -r vim_plugin_loader="$HOME/.local/share/nvim/site/autoload/plug.vim"
   if [[ ! -s "${vim_plugin_loader}" ]]; then
     "${CURL}" \
       --insecure \
@@ -146,7 +148,7 @@ function install_vim_plugins {
   fi
 
   local -r temp_vimrc="${TEMP_DIR}/vimrc"
-  awk '/plug#begin/,/plug#end/' ~/.vimrc >| "${temp_vimrc}"
+  awk '/plug#begin/,/plug#end/' vimrc >| "${temp_vimrc}"
   message "Installing vim plugins..."
 
   # Match all lines in the temp .vimrc with this regex:

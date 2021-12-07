@@ -38,7 +38,8 @@ alias venv='python -m venv'
 alias view='view -M'
 
 # Let me swear at the command prompt to sudo the previous command
-declare -a fun_words=(shit damnit fuck please)
+declare -a fun_words
+fun_words=(shit damnit fuck please)
 for word in "${fun_words[@]}"; do
   # shellcheck disable=SC2139
   alias "${word}"='sudo $(fc -ln -1)'
