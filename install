@@ -37,8 +37,6 @@ STTY_OPTIONS="$(stty -g)" && readonly STTY_OPTIONS
 TEMP_DIR="$(mktemp -d -q)" && readonly TEMP_DIR
 
 declare -a DOTFILES_TO_LINK=(
-  bash_profile
-  bashrc
   gitconfig
   gitconfig-local
   inputrc
@@ -47,6 +45,8 @@ declare -a DOTFILES_TO_LINK=(
   tmux-conf
   vimrc
   vimrc-local
+  zshenv
+  zshrc
 )
 
 ################################################################################
@@ -197,19 +197,19 @@ function link_dotfiles {
 }
 
 ################################################################################
-# Link miscellaneous Bash functions and commands under bash.d.
+# Link miscellaneous Bash functions and commands under zsh.d.
 # Globals:
 #   HOME
 #   PWD
 ################################################################################
 function link_bash_plugins {
-  local -r bashrc_dir="${HOME}/.bash.d"
-  if ! mkdir -p "${bashrc_dir}"; then
-    error "Unable to create bash.d directory at %s" "${bashrc_dir}"
+  local -r zshrc_dir="${HOME}/.zsh.d"
+  if ! mkdir -p "${zshrc_dir}"; then
+    error "Unable to create zsh.d directory at %s" "${zshrc_dir}"
   fi
 
-  for file in "${PWD}"/bash.d/*; do
-    _try_link_or_exit "${file}" "${bashrc_dir}/${file##*/}"
+  for file in "${PWD}"/zsh.d/*; do
+    _try_link_or_exit "${file}" "${zshrc_dir}/${file##*/}"
   done || true
 }
 
@@ -301,10 +301,10 @@ function main {
   fi
 
   if [[ "${is_linking_bash_plugins}" = 1 ]]; then
-    message 'Linking plugins under .bash.d/'
+    message 'Linking plugins under .zsh.d/'
     link_bash_plugins
   else
-    message "Skipping plugins under .bash.d/"
+    message "Skipping plugins under .zsh.d/"
   fi
 
   if [[ "${is_linking_dot_config}" = 1 ]]; then
