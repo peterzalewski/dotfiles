@@ -367,3 +367,5 @@ function print_colors() {
 }
 
 # }}}
+
+[[ -f "${HOME}/.bashrc.local" ]] && source "${HOME}/.bashrc.local"
