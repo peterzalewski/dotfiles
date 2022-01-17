@@ -223,7 +223,7 @@ function link_bash_plugins {
 ################################################################################
 function link_dot_config {
   local config_dirs dest_dir
-  read -r -a config_dirs < <(find "${PWD}/config" -maxdepth 1 -mindepth 1 -type d -printf "%f\n")
+  read -r -a config_dirs < <(find "${PWD}/config" -maxdepth 1 -mindepth 1 -type d -print0 | xargs -0 -n1 basename)
   readonly config_dirs
   for source_dir in "${config_dirs[@]}"; do
     dest_dir="${HOME}/.config/${source_dir}"
