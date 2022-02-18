@@ -25,10 +25,12 @@
     ~/.vimrc: vimrc
     ~/.zsh.d/:
       glob: true
+      create: true
       path: zsh.d/*
     ~/.zshenv: zshenv
-    ~/.zshrc: zshrc
+    ~/.zshrc:
+      path: zshrc
+      force: true
     ~/.local/share/nvim/site/autoload/plug.vim:
       create: true
-      force: true
       path: nvim/vim-plug/plug.vim

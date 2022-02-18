@@ -32,6 +32,9 @@ bind-key f resize-pane -t 2 -y 8
 # Number windows from 1, not 0
 set-option -g base-index 1
 
+# Use zsh
+set-option -g default-shell /bin/zsh
+
 # Set TERM to this value in new windows
 set-option -g default-terminal "tmux-256color"
 

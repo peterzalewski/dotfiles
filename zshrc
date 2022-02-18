@@ -214,23 +214,6 @@ $(_prompt_virtualenv)\
 $(_prompt_color_symbol_by_exit_status) '
 
 # }}}
-# Load other scripts {{{
-
-function _try_load {
-  local -r file="${1:-}"
-  # shellcheck source=/dev/null
-  [[ -s "${file}" ]] && . "${file}"
-}
-
-# _try_load /usr/local/etc/bash_completion.d/git-prompt.sh
-# _try_load /usr/local/etc/bash_completion.d/git-completion.bash
-# _try_load /usr/local/etc/profile.d/z.sh
-
-for config_file in "${HOME}"/.zsh.d/*; do
-  _try_load "${config_file}"
-done
-
-# }}}
 # Functions {{{
 
 # rbenv init is slow because it requires eval and rehash. I know I want
@@ -332,7 +315,18 @@ function print_colors() {
 }
 
 # }}}
+# Load other scripts {{{
 
- # export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
- # export WORKON_HOME="$HOME/.virtualenvs"
-# source /usr/local/bin/virtualenvwrapper.sh
+function _try_load {
+  local -r file="${1:-}"
+  # shellcheck source=/dev/null
+  [[ -s "${file}" ]] && . "${file}"
+}
+
+_try_load "${HOME}/.nix-profile/etc/profile.d/nix.sh"
+
+for config_file in "${HOME}"/.zsh.d/*; do
+  _try_load "${config_file}"
+done
+
+# }}}
