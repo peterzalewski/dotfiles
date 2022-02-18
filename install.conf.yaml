@@ -27,6 +27,7 @@
       glob: true
       create: true
       path: zsh.d/*
+    ~/.zsh.d/zsh-syntax-highlighting.zsh: zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     ~/.zshenv: zshenv
     ~/.zshrc:
       path: zshrc
