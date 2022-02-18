@@ -50,15 +50,9 @@ if [[ -n "$(command -v nvim)" ]]; then
 fi
 
 # Use vi-like bindings instead of emacs-like bindings to edit
-set -o vi
+bindkey -v
 
-if type shopt &>/dev/null; then
-  # Attempt to enable Bash 4 '**' recursive globbing
-  shopt -s globstar >/dev/null 2>&1
-  alias ..='cd ..'
-elif type setopt &>/dev/null; then
-  setopt AUTO_CD
-fi
+setopt AUTO_CD
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
