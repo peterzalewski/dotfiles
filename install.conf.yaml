@@ -1,0 +1,34 @@
+---
+- clean:
+    '~': {}
+    ~/.config:
+      recursive: true
+    ~/.zsh.d:
+      recursive: true
+    ~/.vim/autoload: {}
+    ~/.local/share/nvim/site:
+      recursive: true
+
+- shell:
+    - [git submodule update --init --recursive nvim/vim-plug, 'Cloning vim-plug']
+
+- link:
+    ~/.config/:
+      glob: true
+      create: true
+      path: config/*
+    ~/.gitconfig: gitconfig
+    ~/.inputrc: inputrc
+    ~/.psqlrc: psqlrc
+    ~/.ripgreprc: ripgreprc
+    ~/.tmux.conf: tmux-conf
+    ~/.vimrc: vimrc
+    ~/.zsh.d/:
+      glob: true
+      path: zsh.d/*
+    ~/.zshenv: zshenv
+    ~/.zshrc: zshrc
+    ~/.local/share/nvim/site/autoload/plug.vim:
+      create: true
+      force: true
+      path: nvim/vim-plug/plug.vim
