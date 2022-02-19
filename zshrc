@@ -27,7 +27,7 @@ alias gh10='git hist -10'
 alias got='git'
 alias grep='grep --color=auto'
 alias gs='git st'
-alias ll='ls -al'
+alias ll='ls -alg'
 alias map='xargs -n 1'
 alias tpout='tput'
 alias venv='python -m venv'
@@ -102,21 +102,25 @@ else
   export LSCOLORS='ExFxcxdxBxegedabagacad'
 fi
 
+if command -v bat &>/dev/null; then
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+else
 # `less` checks for LESS_TERMCAP_* environment variables before checking the
 # termcap database for the corresponding control characters. `man` uses only
 # bold, standout, and underline formatting, so if we override those control
 # characters, we can add color to man pages. More at:
 # https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables
 
-function man() {
-  LESS_TERMCAP_md="$(tput bold; tput setaf 6)" \
-  LESS_TERMCAP_me="$(tput sgr0)" \
-  LESS_TERMCAP_so="$(tput bold ; tput setaf 1)" \
-  LESS_TERMCAP_se="$(tput sgr0)" \
-  LESS_TERMCAP_us="$(tput bold ; tput setaf 3)" \
-  LESS_TERMCAP_ue="$(tput sgr0)" \
-  command man "$@"
-}
+  function man() {
+    LESS_TERMCAP_md="$(tput bold; tput setaf 6)" \
+    LESS_TERMCAP_me="$(tput sgr0)" \
+    LESS_TERMCAP_so="$(tput bold ; tput setaf 1)" \
+    LESS_TERMCAP_se="$(tput sgr0)" \
+    LESS_TERMCAP_us="$(tput bold ; tput setaf 3)" \
+    LESS_TERMCAP_ue="$(tput sgr0)" \
+    command man "$@"
+  }
+fi
 
 if [[ -n "$(command -v grc)" ]]; then
   alias colorify="grc -es --colour=auto"
