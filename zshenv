@@ -9,12 +9,9 @@ export GOROOT="/usr/local/go"
 
 declare -a extra_paths
 extra_paths=(
+  "${HOME}/bin"
   "${RBENV_ROOT}/shims"
-  "${HOME}/Code/php/arcanist/bin"
   "${GOROOT}/bin"
-  "/usr/local/opt/mysql@5.6/bin"
-  "/usr/local/opt/postgresql@9.5/bin"
-  "${HOME}/Code/shell/bin"
   "${HOME}/.cargo/bin"
 )
 declare -r extra_paths

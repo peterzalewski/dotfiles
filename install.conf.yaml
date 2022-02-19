@@ -13,6 +13,9 @@
     - [git submodule update --init --recursive nvim/vim-plug, 'Cloning vim-plug']
     - [tic tmux.terminfo, 'Installing terminfo entry']
 
+- create:
+    ~/bin: {}
+
 - link:
     ~/.config/:
       glob: true

@@ -254,15 +254,18 @@ function pyenv {
 
 # Open an executable by name in vim
 function vimc {
-  if [[ "$#" != 1 ]]; then
+  if [[ "$#" != 1 || -z "${1:-}" ]]; then
     return 1
   fi
 
-  local -r target="${1}"
+  local -r target="${HOME}/bin/${1}"
+  if command -v "$1" >/dev/null 2>&1 && [[ ! -e "${target}" ]]; then
+    echo "Executable $1 already exists in another path. Choose another name."
+    return 2
+  fi
 
-  if ! command -v "${target}" >/dev/null 2>&1; then
-    local -r filename="${HOME}/Code/shell/bin/${target}"
-    cat > "${filename}" <<- EOM
+  if [[ ! -x "${target}" ]]; then
+    cat > "${target}" <<- EOM
 			#!/usr/bin/env bash
 
 			set -euo pipefail
@@ -275,11 +278,10 @@ function vimc {
 
 			# vim: ft=sh:sw=2:ts=2:et
 		EOM
-    chmod +x "${filename}"
-    hash -r
+    chmod +x "${target}"
   fi
 
-  vim "$(command -v "${target}")"
+  vim "${target}"
 }
 
 # cd to the path of the foremost Finder window
