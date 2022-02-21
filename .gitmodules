@@ -1,10 +1,10 @@
-[submodule "dotbot"]
-	path = dotbot
+[submodule "third_party/dotbot"]
+	path = third_party/dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "nvim/vim-plug"]
-	path = nvim/vim-plug
+[submodule "third_party/vim-plug"]
+	path = third_party/vim-plug
 	url = https://github.com/junegunn/vim-plug.git
-[submodule "zsh/zsh-syntax-highlighting"]
-	path = zsh/zsh-syntax-highlighting
+[submodule "third_party/zsh-syntax-highlighting"]
+	path = third_party/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting

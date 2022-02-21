@@ -10,8 +10,8 @@
       recursive: true
 
 - shell:
-    - [git submodule update --init --recursive nvim/vim-plug, 'Cloning vim-plug']
-    - [tic tmux.terminfo, 'Installing terminfo entry']
+    - [git submodule update --init --recursive third_party, Cloning dependencies]
+    - [tic tmux.terminfo, Installing terminfo entry]
 
 - create:
     ~/bin: {}
@@ -31,11 +31,11 @@
       glob: true
       create: true
       path: zsh.d/*
-    ~/.zsh.d/zsh-syntax-highlighting.zsh: zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    ~/.zsh.d/zsh-syntax-highlighting.zsh: third_party/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     ~/.zshenv: zshenv
     ~/.zshrc:
       path: zshrc
       force: true
     ~/.local/share/nvim/site/autoload/plug.vim:
       create: true
-      path: nvim/vim-plug/plug.vim
+      path: third_party/vim-plug/plug.vim
