@@ -13,6 +13,7 @@ extra_paths=(
   "${RBENV_ROOT}/shims"
   "${GOROOT}/bin"
   "${HOME}/.cargo/bin"
+  "/opt/local/bin"
 )
 declare -r extra_paths
 
