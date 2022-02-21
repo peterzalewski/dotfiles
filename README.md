@@ -26,7 +26,7 @@
               Г                     DOTFILES (C) Peter Zalewski 2022                       Г
               РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
               кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФТФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП
-              Г  Supplier(s) : peterZalewski         Г  Release Date : 2022-02-20          Г
+              Г  Supplier(s) : peterZalewski         Г  Release Date : 2022-02-21          Г
               Г  Cracker(s)  : ^pZaLeWsKi^           Г  Protection   : CD CHECKS           Г
               Г  Packager(s) : git hub (dot) com     Г  Repo Genre   : CONFIGURATION !     Г
               Г  File Format : .git                  Г  # of Files   : 1438                Г
