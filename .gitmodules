@@ -8,3 +8,9 @@
 [submodule "third_party/zsh-syntax-highlighting"]
 	path = third_party/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "third_party/tpm"]
+	path = third_party/tpm
+	url = https://github.com/tmux-plugins/tpm
+[submodule "third_party/diff-so-fancy"]
+	path = third_party/diff-so-fancy
+	url = git@github.com:so-fancy/diff-so-fancy.git

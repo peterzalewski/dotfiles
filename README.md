@@ -29,7 +29,7 @@
               Г  Supplier(s) : peterZalewski         Г  Release Date : 2022-02-20          Г
               Г  Cracker(s)  : ^pZaLeWsKi^           Г  Protection   : CD CHECKS           Г
               Г  Packager(s) : git hub (dot) com     Г  Repo Genre   : CONFIGURATION !     Г
-              Г  File Format : .git                  Г  # of Files   : 1123                Г
+              Г  File Format : .git                  Г  # of Files   : 1438                Г
               УФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФСФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФД
               Г  Requirements: W9x, P2 300Hz, 32MB ram, Sound Card, DX7.x , 3D card        Г
               РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй

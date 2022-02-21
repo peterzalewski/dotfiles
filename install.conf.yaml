@@ -8,6 +8,7 @@
     ~/.vim/autoload: {}
     ~/.local/share/nvim/site:
       recursive: true
+    ~/.tmux/plugins: {}
 
 - shell:
     - [git submodule update --init --recursive third_party, Cloning dependencies]
@@ -39,3 +40,7 @@
     ~/.local/share/nvim/site/autoload/plug.vim:
       create: true
       path: third_party/vim-plug/plug.vim
+    ~/.tmux/plugins/tpm:
+      create: true
+      path: third_party/tpm
+    ~/bin/diff-so-fancy: third_party/diff-so-fancy/diff-so-fancy
