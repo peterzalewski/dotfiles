@@ -11,6 +11,9 @@ compinit -C
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 autoload -U colors
 colors
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
 
 # Aliases {{{
 
