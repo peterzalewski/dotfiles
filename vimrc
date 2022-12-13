@@ -69,6 +69,9 @@ Plug 'machakann/vim-highlightedyank'
 " Display a nice startup screen with MRU files
 Plug 'mhinz/vim-startify'
 
+" Fade inactive buffers so it's easier to see which is active
+Plug 'TaDaa/vimade'
+
 " }}}
 " IDE {{{
 
@@ -97,6 +100,9 @@ Plug 'junegunn/fzf.vim'
 " Visualize and navigate the undo tree
 Plug 'sjl/gundo.vim'
 
+" Does what it says on the tin
+Plug 'pedrohdz/vim-yaml-folds'
+
 " }}}
 " Python {{{
 
@@ -111,6 +117,11 @@ Plug 'davidhalter/jedi-vim'
 
 " PEP8-compliant Python indenting
 Plug 'Vimjas/vim-python-pep8-indent'
+
+" }}}
+" Go {{{
+
+Plug 'neovim/nvim-lspconfig'
 
 " }}}
 " Syntax {{{
@@ -144,6 +155,12 @@ Plug 'peterzalewski/vim-todo'
 
 " Syntax for nix
 Plug 'LnL7/vim-nix'
+
+" Syntax for Jsonnet
+Plug 'google/vim-jsonnet'
+
+" Syntax for Helm charts
+Plug 'towolf/vim-helm'
 
 " }}}
 
