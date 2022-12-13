@@ -38,7 +38,16 @@ fi
 
 export FZF_DEFAULT_COMMAND='rg --files --follow --glob=!{.git,node_modules}'
 export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
-export FZF_DEFAULT_OPTS='--color=dark --color=fg:15,bg:0,hl:1,fg+:#FFFFFF,bg+:0,hl+:1,prompt:3,pointer:3,marker:5,spinner:11,header:-1,info:6 --layout=reverse --info=hidden --prompt="❯ "'
+declare -a fzf_options
+fzf_options=(
+  --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284
+  --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf
+  --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284
+  --layout=reverse
+  --info=hidden
+  --prompt="❯ "
+)
+export FZF_DEFAULT_OPTS="${fzf_options[*]}"
 export LANG='en_US.UTF-8'
 declare -a less_options
 less_options=(

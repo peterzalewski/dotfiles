@@ -103,7 +103,7 @@ else
 fi
 
 if command -v bat &>/dev/null; then
-  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat -l man -p'"
 else
 # `less` checks for LESS_TERMCAP_* environment variables before checking the
 # termcap database for the corresponding control characters. `man` uses only

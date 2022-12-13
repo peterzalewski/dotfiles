@@ -48,6 +48,9 @@ Plug 'peterzalewski/vim-boxdraw'
 " Oceanic-Next color scheme
 Plug 'mhartington/oceanic-next'
 
+" Try something new
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+
 " Lightweight status line
 Plug 'itchyny/lightline.vim'
 
@@ -162,15 +165,14 @@ endif
 
 " itchyny/lightline.vim
 let g:lightline = {
-    \ 'colorscheme': 'oceanicnext',
+            \ 'colorscheme': 'catppuccin',
     \ 'active': {
         \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ]
     \ }
 \ }
 
 " Use this color scheme
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext
+colorscheme catppuccin-frappe
 
 " Use italic for comments
 highlight Comment cterm=italic
