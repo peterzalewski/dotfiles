@@ -1,0 +1,12 @@
+{
+    "workspace.library": [
+        "/Users/petezalewski/.local/share/nvim/site/pack/packer/start/neodev.nvim/types/stable",
+        "/opt/local/share/nvim/runtime/lua",
+        "/Users/petezalewski/.local/share/nvim/site/pack/packer/start/catppuccin/lua",
+        "/Users/petezalewski/.local/share/nvim/site/pack/packer/start/neodev.nvim/lua",
+        "/Users/petezalewski/.local/share/nvim/site/pack/packer/start/nvim-lspconfig/lua",
+        "/Users/petezalewski/.local/share/nvim/site/pack/packer/start/packer.nvim/lua",
+        "/Users/petezalewski/Code/shell/dotfiles/config/nvim/lua",
+        "${3rd}/luv/library"
+    ]
+}
