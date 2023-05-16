@@ -37,9 +37,6 @@
     ~/.zshrc:
       path: zshrc
       force: true
-    ~/.local/share/nvim/site/autoload/plug.vim:
-      create: true
-      path: third_party/vim-plug/plug.vim
     ~/.tmux/plugins/tpm:
       create: true
       path: third_party/tpm

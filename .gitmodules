@@ -2,9 +2,6 @@
 	path = third_party/dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "third_party/vim-plug"]
-	path = third_party/vim-plug
-	url = https://github.com/junegunn/vim-plug.git
 [submodule "third_party/zsh-syntax-highlighting"]
 	path = third_party/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
