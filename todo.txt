@@ -28,7 +28,7 @@ x 2020-06-21 Use pills in `vim` statusline like [elenapan](https://github.com/el
 2023-05-12 Set exa autocomplete in zsh
 x 2023-05-12 Use neovim native LSP if possible
 2023-05-13 Consistent mouse click behavior when using tmux (and inside a container)
-2023-05-13 Try treesitter
+x 2023-05-13 Try treesitter
 2023-05-13 Hitting <Tab> when only one item is selected in autocomplete will complete
 2023-05-13 Snippet for my bash script template
 2023-05-13 Resize splits easily to 25%/50%/75%
@@ -37,3 +37,26 @@ x 2023-05-12 Use neovim native LSP if possible
 x 2023-05-13 Jump to next error/lint warning
 2023-05-13 Do not autocomplete in comments except emoji
 2023-05-13 Slightly dim unfocused panes in tmux
+2023-05-16 Vim syntax file and JIRA autocomplete for git commit messages
+2023-05-19 Persist sessions per project/branch
+2023-05-19 Lua plugin to grab current BUILD target
+
+NITPICKS
+
+More autocomplete (like keywords in the file)
+More treesitter navigation
+Easier navigation in workspace (like current directory instead of whole repo?)
+  Maybe tree a file navigator finally?
+Yank highlight
+No Lualine for NvimTree or Aerial windows
+CodeIcons should work
+Python get references/incoming calls should work across all workspace
+  Is this from another LSP server?
+Prettier floating windows with borders
+Highlight current line number in ruler
+
+MOUSE
+Should scroll output in terminal not command history
+Should scroll file in vim
+Should handle UI clicks but NOT link clicks
+Let Kitty handle copy & paste and link clicks

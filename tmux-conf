@@ -33,7 +33,7 @@ set-option -g default-shell /bin/zsh
 set-option -g default-terminal "tmux-256color"
 
 # Turn on true colors
-set-option -ag terminal-overrides ",tmux-256color:Tc"
+set-option -sg terminal-overrides ",*:RGB"
 
 # Wait less than the default 500s after a metacharacter
 set-option -s escape-time 10
@@ -60,7 +60,10 @@ set-option -g status-left ""
 set-option -g status-right ""
 
 # Display the status line with a dark gray background
-set-option -g status-style bg=black,fg=brightwhite
+set-option -g status-style "bg=#292c3c, fg=brightwhite"
+
+# Not entirely sure
+set-option -g focus-events on
 
 # }}}
 # Window options {{{
@@ -81,10 +84,10 @@ set-window-option -g mode-keys vi
 set-window-option -g pane-base-index 1
 
 # Display the current window tab in white on magenta
-set-window-option -g window-status-current-format "#[fg=brightblack]#[fg=yellow,bg=brightblack]\uf069 #W #[fg=brightblack,bg=black]"
+set-window-option -g window-status-current-format "#[fg=#8CAAEE]#[fg=#414559,bg=#8CAAEE]🌸 #W #[fg=#8CAAEE,bg=#292c3c]"
 
 # Display inactive window tabs in white on blue
-set-window-option -g window-status-format "#[fg=brightblack]#[fg=magenta,bg=brightblack]#I #W #[fg=brightblack,bg=black]"
+set-window-option -g window-status-format "#[fg=#BABBf1]#[fg=#838BA7,bg=#BABBf1]#I#[fg=#626880,bg=#BABBf1] #W #[fg=#BABBf1,bg=#292c3c]"
 
 # }}}
 # Plugins {{{
@@ -95,5 +98,10 @@ set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'catppuccin/tmux'
 run '~/.tmux/plugins/tpm/tpm'
+
+set -g pane-border-style 'fg=#2B2E3F,bg=#2B2E3F'
+set -g pane-active-border-style 'fg=#2B2E3F,bg=#2B2E3F'
+set -g window-style 'bg=#2B2E3F'
+set -g window-active-style 'bg=#303446'
 
 # }}}
