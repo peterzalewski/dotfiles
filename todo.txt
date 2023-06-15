@@ -42,20 +42,23 @@ x 2023-05-13 Jump to next error/lint warning
 2023-05-19 Lua plugin to grab current BUILD target
 
 NITPICKS
-
+--------
 More autocomplete (like keywords in the file)
-More treesitter navigation
-Easier navigation in workspace (like current directory instead of whole repo?)
-  Maybe tree a file navigator finally?
+x More treesitter navigation
+x Easier navigation in workspace (like current directory instead of whole repo?)
+x  Maybe tree a file navigator finally?
 Yank highlight
-No Lualine for NvimTree or Aerial windows
-CodeIcons should work
+x No Lualine for NvimTree or Aerial windows
+x CodeIcons should work
 Python get references/incoming calls should work across all workspace
   Is this from another LSP server?
 Prettier floating windows with borders
-Highlight current line number in ruler
+x Highlight current line number in ruler
+x Try Harpoon?
+x Set up swap files
 
 MOUSE
+-----
 Should scroll output in terminal not command history
 Should scroll file in vim
 Should handle UI clicks but NOT link clicks

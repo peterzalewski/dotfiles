@@ -278,7 +278,8 @@ return require("packer").startup({
 				})
 			end,
 		})
-		use("metakirby5/codi.vim")
+		use({ "metakirby5/codi.vim" })
+		use({ "shortcuts/no-neck-pain.nvim", tag = "*" })
 	end,
 
 	-- https://github.com/wbthomason/packer.nvim#custom-initialization
