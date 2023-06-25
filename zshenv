@@ -5,7 +5,8 @@ fi
 
 # Roots
 export RBENV_ROOT="${HOME}/.rbenv"
-export GOROOT="/usr/local/go"
+export GOROOT="/opt/local/lib/go"
+export GO111MODULE="on"
 
 declare -a extra_paths
 extra_paths=(
@@ -14,6 +15,7 @@ extra_paths=(
   "${GOROOT}/bin"
   "${HOME}/.cargo/bin"
   "/opt/local/bin"
+  "${HOME}/.rd/bin"
 )
 declare -r extra_paths
 

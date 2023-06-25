@@ -41,3 +41,5 @@
 	version = 2
 [credential]
 	helper = cache --timeout 2592000
+[init]
+	defaultBranch = main

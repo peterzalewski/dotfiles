@@ -8,9 +8,6 @@ require("plugins")
 require("bindings")
 require("options")
 
-require("languages.lua")
-require("languages.python")
-
 active_bg = "#303446"
 inactive_bg = "#2B2E3F"
 
@@ -42,6 +39,14 @@ autocmd("FocusGained", {
 		-- guifg=#c6d0f5 guibg=#303446
 		vim.api.nvim_set_hl(0, "Normal", { fg = "#c6d0f5", bg = active_bg })
 		vim.api.nvim_set_hl(0, "lualine_c_normal", { fg = "#c6d0f5", bg = active_bg })
+	end,
+})
+
+autocmd("TextYankPost", {
+	group = general,
+	pattern = { "*" },
+	callback = function()
+		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 700 })
 	end,
 })
 

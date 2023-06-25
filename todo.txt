@@ -40,6 +40,7 @@ x 2023-05-13 Jump to next error/lint warning
 2023-05-16 Vim syntax file and JIRA autocomplete for git commit messages
 2023-05-19 Persist sessions per project/branch
 2023-05-19 Lua plugin to grab current BUILD target
+2023-06-14 Rename Tmux panes after git root or, if not on `master`, branch name
 
 NITPICKS
 --------
@@ -56,6 +57,9 @@ Prettier floating windows with borders
 x Highlight current line number in ruler
 x Try Harpoon?
 x Set up swap files
+Update my todo plugin to Lua
+Show description as bottom of `fzf` popup
+Install `kitty` via `curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin` on Darwin?
 
 MOUSE
 -----
@@ -63,3 +67,7 @@ Should scroll output in terminal not command history
 Should scroll file in vim
 Should handle UI clicks but NOT link clicks
 Let Kitty handle copy & paste and link clicks
+
+Add time and battery to tmux
+  time when fullscreened, battery when unplugged?
+Run :PackerCompile when modifying plugins.lua
