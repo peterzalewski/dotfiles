@@ -33,6 +33,7 @@
       create: true
       path: zsh.d/*
     ~/.zsh.d/zsh-syntax-highlighting.zsh: third_party/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    ~/.zsh.d/fzf-tab.plugin.zsh: third_party/fzf-tab/fzf-tab.plugin.zsh
     ~/.zshenv: zshenv
     ~/.zshrc:
       path: zshrc

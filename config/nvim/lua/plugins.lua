@@ -101,17 +101,6 @@ return require("packer").startup({
 				require("plugins.cmp")
 			end,
 		})
-
-		-- use({
-		-- 	"ray-x/navigator.lua",
-		-- 	requires = {
-		-- 		{ "ray-x/guihua.lua", run = "cd lua/fzy && make" },
-		-- 		{ "neovim/nvim-lspconfig" },
-		-- 	},
-		-- 	config = function()
-		-- 		require("navigator").setup()
-		-- 	end,
-		-- })
 		use({
 			"jose-elias-alvarez/null-ls.nvim",
 			config = function()
@@ -230,7 +219,6 @@ return require("packer").startup({
 				require("trouble").setup({})
 			end,
 		})
-		-- use({ "f-person/git-blame.nvim" })
 		use({ "Bekaboo/deadcolumn.nvim" })
 
 		use({ "fladson/vim-kitty" })
@@ -280,6 +268,59 @@ return require("packer").startup({
 		})
 		use({ "metakirby5/codi.vim" })
 		use({ "shortcuts/no-neck-pain.nvim", tag = "*" })
+		use({
+			"folke/which-key.nvim",
+			config = function()
+				vim.o.timeout = true
+				vim.o.timeoutlen = 300
+				require("which-key").setup({
+					window = {
+						border = "single",
+					},
+				})
+			end,
+		})
+		use({
+			"goolord/alpha-nvim",
+			requires = { "nvim-tree/nvim-web-devicons" },
+			config = function()
+				local alpha = require("alpha")
+				local startify = require("alpha.themes.startify")
+
+				startify.section.header.val = {
+					[[            ■                                                                   ]],
+					[[             ▀▄▄▄▄                                                              ]],
+					[[          ▄▄█████████▄▄                ▄                                        ]],
+					[[      ░  █████▀   ▀█████          ▄▄██▀▄                    ▄■                  ]],
+					[[    ░   ▐████▌  ░  ▐████▌        ▐██████▌    ▄ ▀ ■▄     ▄▄██▄                   ]],
+					[[   ░    █████  ░  ▄▄█████         ▀████▀▄   ■      █   ▐███▄█▌         ░        ]],
+					[[  ░░░   █████   ▄▀  ██████▄     ■▄   ▀   ■       ▄██▌ ▄▀████▀            ░      ]],
+					[[   ░░  ▐████▌ ░ ▐   ▐████▐██▄     ▀▀▀███▀▄   ▄  ▐██▀█▄   ▀▀  █▄           ░░    ]],
+					[[    ░░ ▐████▌░░░ ▀■ ▐████▌███▄ ▄███▀▄ █▌  ■▄█▀█▄████▌ ▀████▀▄▐█▌▄▄███▄▄    ░░   ]],
+					[[   ░░░░▐████▌░░░░░  ▐████▌▐████▀▀████▌█  ▄██▌  ▀████  ▐███▌ ▄████▀  ██▄█ ░░     ]],
+					[[    ░░░▐████▌░░░░░░ ▐████▌ ███▌ ████▀ █ ▐███ ░ ▐███▌  ████  ████  ░ ▐███▌  ■    ]],
+					[[   ░░ ░▐████▌░░░░░░░▐████▌▐███   ▀  ▄██ ████ ░ ████  ▐███▌  ▐███▌ ░ █████▄▀ ░   ]],
+					[[   ░   ▐████▌ ░░░░░ ▐████▌████  ░  ███▌ ████ ░ ████  ████▄▀■▄████  ▐█████▌   ░░ ]],
+					[[    ░   █████  ░░░  █████ ████▌ ▄ ▐███  ▐███ ░ ████▄▀▐███▌  ▐████▌  █████   ░░  ]],
+					[[        █████ ░░░   █████ █████▀  ████▌  ███▌  ▐███▌  ███ ░ █████▌  ▐██▀   ░    ]],
+					[[        ▐████▌ ░   ▐████▌ ████▌ ░ ▐████  ■▀██▄ ▄▀███ ▄█▀   ▐█████  ▄▀█          ]],
+					[[         █████▄   ▄█████ ▐████   ▄▄████▄▀   ▀▀▀ ▐███  ▌     ▀█▀▀     ▌    ░     ]],
+					[[          ▀▀████▄████▀▀  ▐██▀   ▀  ██▀      ▄▀■ ███▌ ■               ■          ]],
+					[[               ▀▀█▀   ▀▄▄▀▀    ■   █      ▄▀█  ▐███       roy/sac               ]],
+					[[                  ▀■               ▌     ▐██▌  ███▌                             ]],
+					[[                                         ▀███▄ ██▀                              ]],
+					[[                                            ▀▀█▀                                ]],
+				}
+
+				alpha.setup(startify.config)
+			end,
+		})
+		use({
+			"olimorris/persisted.nvim",
+			config = function()
+				require("persisted").setup()
+			end,
+		})
 	end,
 
 	-- https://github.com/wbthomason/packer.nvim#custom-initialization
