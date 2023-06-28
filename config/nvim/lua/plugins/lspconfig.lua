@@ -40,13 +40,20 @@ local server_settings = {
 }
 
 local on_attach = function(_, bufnr)
-	local opts = { buffer = bufnr }
-
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-	vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-	vim.keymap.set("n", "gpr", vim.lsp.buf.rename, opts)
-	vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
-	vim.keymap.set({ "n", "v" }, "<leader>f", vim.lsp.buf.format, opts)
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to symbol definition" })
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = bufnr, desc = "Find references to symbol" })
+	vim.keymap.set("n", "gpr", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename symbol" })
+	vim.keymap.set(
+		"i",
+		"<C-k>",
+		vim.lsp.buf.signature_help,
+		{ buffer = bufnr, desc = "Show function signature inline" }
+	)
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation under cursor" })
+	vim.keymap.set({ "n", "v" }, "<leader>f", vim.lsp.buf.format, { buffer = bufnr, desc = "Format current file" })
+	vim.keymap.set("n", "<leader>c", function()
+		require("fzf-lua").lsp_document_symbols()
+	end, { desc = "Fuzzy find symbols in the current document" })
 end
 
 require("mason").setup({
@@ -67,6 +74,3 @@ mason_lspconfig.setup_handlers({
 		})
 	end,
 })
-
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
