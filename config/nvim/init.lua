@@ -65,3 +65,24 @@ vim.fn.sign_define("DiagnosticSignHint", {
 	numhl = "DiagnosticHint",
 	texthl = "DiagnosticHint",
 })
+
+autocmd("FileType", {
+	group = general,
+	pattern = {
+		"PlenaryTestPopup",
+		"fugitiveblame",
+		"help",
+		"httpResult",
+		"lspinfo",
+		"notify",
+		"qf",
+		"spectre_panel",
+		"startuptime",
+		"tsplayground",
+	},
+	callback = function(event)
+		vim.bo[event.buf].buflisted = false
+		-- stylua: ignore
+		vim.keymap.set('n', 'q', '<cmd>close<CR>', { buffer = event.buf, silent = true })
+	end,
+})
