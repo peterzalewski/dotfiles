@@ -41,12 +41,6 @@ set-option -s escape-time 10
 # Keep 10k lines of history
 set-option -g history-limit 10000
 
-# Surround the active pane with a dark orange line
-set-option -g pane-active-border-style fg=yellow
-
-# Separate panes with light orange line
-set-option -g pane-border-style fg=blue
-
 # When closing a window, renumber the ones to the right
 set-option -g renumber-windows on
 
@@ -56,11 +50,15 @@ set-option -g status-interval 0
 # Do not display anything on the left end
 set-option -g status-left ""
 
+set -g @status-bg "#292C3C"
+set -g @active-bg "blue"
+set -g @inactive-bg "#BABBF1"
+
 # Do not display anything on the right end
 set-option -g status-right ""
 
 # Display the status line with a dark gray background
-set-option -g status-style "bg=#292c3c, fg=brightwhite"
+set-option -g status-style "bg=#{@status-bg}, fg=brightwhite"
 
 # Not entirely sure
 set-option -g focus-events on
@@ -84,10 +82,10 @@ set-window-option -g mode-keys vi
 set-window-option -g pane-base-index 1
 
 # Display the current window tab in white on magenta
-set-window-option -g window-status-current-format "#[fg=#8CAAEE]#[fg=#414559,bg=#8CAAEE]🌸 #W #[fg=#8CAAEE,bg=#292c3c]"
+set-window-option -g window-status-current-format "#[fg=#{@active-bg}]#[fg=#414559,bg=#{@active-bg}]🌸 #W #[fg=#{@active-bg},bg=#{@status-bg}]"
 
 # Display inactive window tabs in white on blue
-set-window-option -g window-status-format "#[fg=#BABBf1]#[fg=#838BA7,bg=#BABBf1]#I#[fg=#626880,bg=#BABBf1] #W #[fg=#BABBf1,bg=#292c3c]"
+set-window-option -g window-status-format "#[fg=#{@inactive-bg}]#[fg=#838BA7,bg=#{@inactive-bg}]#I#[fg=#626880,bg=#{@inactive-bg}] #W #[fg=#{@inactive-bg},bg=#{@status-bg}]"
 
 # }}}
 # Plugins {{{
