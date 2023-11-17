@@ -5,12 +5,19 @@
 # Source: https://github.com/peterzalewski/dotfiles/blob/master/bashrc
 # ############################################################################
 
+# https://zsh.sourceforge.io/Doc/Release/Zsh-Modules.html#The-zsh_002fparameter-Module
 zmodload zsh/parameter
+
+# Tab completion
 autoload -Uz compinit
 compinit -C
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+# Colors
 autoload -U colors
 colors
+
+# vi-mode
 autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
@@ -321,6 +328,20 @@ function print_colors() {
         printf "\n";
     fi
   done
+}
+
+alias gco='git checkout $(choose_git_branch)'
+function choose_git_branch() {
+  git for-each-ref --format='%(refname:short)%09%(contents:subject)' 'refs/heads' |\
+    sort |\
+    cut -b 1-80 |\
+    column -t -s '	' |\
+    fzf \
+      --prompt="Choose branch: " \
+      --pointer='ᐅ' \
+      --height 40% \
+      --reverse |\
+    cut -d ' ' -f 1
 }
 
 # }}}

@@ -18,6 +18,7 @@ autocmd("ColorScheme", {
 	pattern = { "*" },
 	callback = function()
 		vim.api.nvim_set_hl(0, "WinSeparator", { bg = inactive_bg })
+		vim.api.nvim_set_hl(0, "WinSeparatorNC", { bg = active_bg })
 		vim.api.nvim_set_hl(0, "MsgArea", { bg = inactive_bg })
 		vim.api.nvim_set_hl(0, "FidgetTitle", { fg = "#f2d5cf", bg = active_bg })
 		vim.api.nvim_set_hl(0, "FidgetTask", { fg = "#f2d5cf", bg = active_bg })

@@ -160,6 +160,8 @@ return require("packer").startup({
 				require("lualine").setup({
 					options = {
 						disabled_filetypes = {
+							"no-neck-pain",
+							"alpha",
 							"aerial",
 							"NvimTree",
 							"Trouble",
@@ -335,6 +337,7 @@ return require("packer").startup({
 				require("persisted").setup()
 			end,
 		})
+		use({ "google/vim-jsonnet" })
 	end,
 
 	-- https://github.com/wbthomason/packer.nvim#custom-initialization
