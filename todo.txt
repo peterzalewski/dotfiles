@@ -9,7 +9,6 @@ x 2018-09-09 Bash completions for `txopen`
 x 2018-09-10 Use grc to colorify things like ping and ifconfig
 x 2018-09-11 Write a syntax file for todo.txt "for fun"
 2018-09-13 Change color of tmux tab if any foreground processes exit abnormally
-2019-02-17 Install `diff-so-fancy` to common `bin` directory
 2019-02-17 Verify `en_US.UTF-8` locale generation is enabled in `/etc/locale.gen`
 2019-02-24 Capture email address to populate .gitconfig.local
 x 2019-02-28 Vim binding to select added/modified files in the Git working directory
@@ -60,6 +59,8 @@ x Set up swap files
 Update my todo plugin to Lua
 Show description as bottom of `fzf` popup
 Install `kitty` via `curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin` on Darwin?
+Python autoimport
+catppuccin colorscheme for iPython
 
 MOUSE
 -----

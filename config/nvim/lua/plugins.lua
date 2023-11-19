@@ -129,6 +129,20 @@ return require("packer").startup({
 		use({
 			"ibhagwan/fzf-lua",
 			requires = { "nvim-tree/nvim-web-devicons" },
+			config = function()
+				local actions = require("fzf-lua.actions")
+				require("fzf-lua").setup({
+					actions = {
+						files = {
+							["default"] = actions.file_edit,
+							["ctrl-h"] = actions.file_split,
+							["ctrl-v"] = actions.file_vsplit,
+							["alt-q"] = actions.file_sel_to_qf,
+							["alt-l"] = actions.file_sel_to_ll,
+						},
+					},
+				})
+			end,
 		})
 		use({
 			"nvim-lualine/lualine.nvim",
