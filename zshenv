@@ -3,15 +3,9 @@ if [[ -x /usr/libexec/path_helper ]]; then
   eval "$(/usr/libexec/path_helper -s)"
 fi
 
-# Roots
-export RBENV_ROOT="${HOME}/.rbenv"
-export GOROOT="/opt/local/lib/go"
-export GO111MODULE="on"
-
 declare -a extra_paths
 extra_paths=(
   "${HOME}/bin"
-  "${RBENV_ROOT}/shims"
   "${GOROOT}/bin"
   "${HOME}/.cargo/bin"
   "/opt/local/bin"
