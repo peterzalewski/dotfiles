@@ -1,4 +1,9 @@
 ---
+- defaults:
+    link:
+      create: true
+      force: true
+
 - clean:
     '~': {}
     ~/.config:
@@ -20,7 +25,6 @@
 - link:
     ~/.config/:
       glob: true
-      create: true
       path: config/*
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
@@ -30,15 +34,12 @@
     ~/.vimrc: vimrc
     ~/.zsh.d/:
       glob: true
-      create: true
       path: zsh.d/*
     ~/.zsh.d/zsh-syntax-highlighting.zsh: third_party/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     ~/.zsh.d/fzf-tab.plugin.zsh: third_party/fzf-tab/fzf-tab.plugin.zsh
     ~/.zshenv: zshenv
     ~/.zshrc:
       path: zshrc
-      force: true
     ~/.tmux/plugins/tpm:
-      create: true
       path: third_party/tpm
     ~/bin/diff-so-fancy: third_party/diff-so-fancy/diff-so-fancy
