@@ -97,10 +97,10 @@ export HISTTIMEFORMAT='%Y-%m-%dT%H:%M:%S%z '
 # }}}
 # Colors and appearance {{{
 
-# Colorize ls/exa
-if [[ -n "$(command -v exa)" ]]; then
-  alias ls='exa'
-  alias tree='exa -T'
+# Colorize ls/eza
+if [[ -n "$(command -v eza)" ]]; then
+  alias ls='eza'
+  alias tree='eza -T'
 else
   case "$(uname)" in
     Darwin) alias ls="ls -hG" ;;
