@@ -25,6 +25,7 @@
     ~/.config/:
       glob: true
       path: config/*
+    ~/.config/nvim: nvim/
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
     ~/.psqlrc: psqlrc
