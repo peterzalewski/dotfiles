@@ -8,9 +8,6 @@
 [submodule "third_party/tpm"]
 	path = third_party/tpm
 	url = https://github.com/tmux-plugins/tpm
-[submodule "third_party/diff-so-fancy"]
-	path = third_party/diff-so-fancy
-	url = git@github.com:so-fancy/diff-so-fancy.git
 [submodule "third_party/fzf-tab"]
 	path = third_party/fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab
