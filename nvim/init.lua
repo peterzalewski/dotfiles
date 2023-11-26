@@ -1,89 +1,22 @@
-local autogrp = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable",
+		lazypath,
+	})
+end
+vim.opt.rtp:prepend(lazypath)
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.mapleader = ","
 
-require("plugins")
-require("bindings")
-require("options")
-
-active_bg = "#303446"
-inactive_bg = "#2B2E3F"
-
-local general = autogrp("General Settings", { clear = true })
-
-autocmd("ColorScheme", {
-	group = general,
-	pattern = { "*" },
-	callback = function()
-		vim.api.nvim_set_hl(0, "WinSeparator", { bg = inactive_bg })
-		vim.api.nvim_set_hl(0, "WinSeparatorNC", { bg = active_bg })
-		vim.api.nvim_set_hl(0, "MsgArea", { bg = inactive_bg })
-		vim.api.nvim_set_hl(0, "FidgetTitle", { fg = "#f2d5cf", bg = active_bg })
-		vim.api.nvim_set_hl(0, "FidgetTask", { fg = "#f2d5cf", bg = active_bg })
-	end,
-})
-
-autocmd("FocusLost", {
-	group = general,
-	callback = function()
-		-- guifg=#c6d0f5 guibg=#303446
-		vim.api.nvim_set_hl(0, "Normal", { fg = "#c6d0f5", bg = inactive_bg })
-		vim.api.nvim_set_hl(0, "lualine_c_normal", { fg = "#c6d0f5", bg = inactive_bg })
-	end,
-})
-
-autocmd("FocusGained", {
-	group = general,
-	callback = function()
-		-- guifg=#c6d0f5 guibg=#303446
-		vim.api.nvim_set_hl(0, "Normal", { fg = "#c6d0f5", bg = active_bg })
-		vim.api.nvim_set_hl(0, "lualine_c_normal", { fg = "#c6d0f5", bg = active_bg })
-	end,
-})
-
-autocmd("TextYankPost", {
-	group = general,
-	pattern = { "*" },
-	callback = function()
-		vim.highlight.on_yank({ higroup = "IncSearch", timeout = 700 })
-	end,
-})
-
-vim.fn.sign_define(
-	"DiagnosticSignInfo",
-	{ text = "", numhl = "DiagnosticInformation", texthl = "DiagnosticInformation" }
-)
-vim.fn.sign_define("DiagnosticSignWarn", { text = "⚠", numhl = "DiagnosticWarn", texthl = "DiagnosticWarn" })
-vim.fn.sign_define("DiagnosticSignError", {
-	text = "",
-	numhl = "DiagnosticError",
-	texthl = "DiagnosticError",
-})
-vim.fn.sign_define("DiagnosticSignHint", {
-	text = "",
-	numhl = "DiagnosticHint",
-	texthl = "DiagnosticHint",
-})
-
-autocmd("FileType", {
-	group = general,
-	pattern = {
-		"PlenaryTestPopup",
-		"fugitiveblame",
-		"help",
-		"httpResult",
-		"lspinfo",
-		"notify",
-		"qf",
-		"spectre_panel",
-		"startuptime",
-		"tsplayground",
+require("lazy").setup({
+	spec = {
+		{ import = "pizza" },
 	},
-	callback = function(event)
-		vim.bo[event.buf].buflisted = false
-		-- stylua: ignore
-		vim.keymap.set('n', 'q', '<cmd>close<CR>', { buffer = event.buf, silent = true })
-	end,
 })

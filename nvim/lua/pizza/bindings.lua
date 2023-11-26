@@ -1,5 +1,3 @@
-vim.g.mapleader = ","
-
 vim.keymap.set("n", "<leader><space>", "za", { remap = true, desc = "Open a fold" })
 vim.keymap.set("n", "<leader>v", "<C-w>v<C-w>l", { desc = "Open vertical split to the right" })
 vim.keymap.set("n", "<leader>h", "<C-w>s<C-w>j", { desc = "Open horizontal split below" })
@@ -32,8 +30,6 @@ end, { desc = "Search for sessions" })
 vim.keymap.set("i", "<C-r>", function()
 	require("fzf-lua").registers()
 end, { desc = "Fuzzy find register contents" })
-vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>", { silent = true, desc = "Open the Aerial window" })
-vim.keymap.set("n", "<leader>d", ":TroubleToggle<CR>", { silent = true, desc = "Open diagnostics" })
 
 -- Navigation
 vim.keymap.set("n", "]b", ":bnext<CR>", { silent = true, desc = "Next buffer" })
@@ -61,8 +57,7 @@ vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true })
 vim.keymap.set("i", "<C-g>", function()
 	require("Comment.api").toggle.linewise()
 end, { desc = "Comment line while insert", silent = true })
-vim.keymap.set("n", "<leader>nf", function()
-	require("neogen").generate()
-end, { desc = "Manage annotation" })
 
 vim.keymap.set("n", "Q", "<nop>")
+
+return {}
