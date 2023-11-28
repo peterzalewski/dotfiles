@@ -2,35 +2,6 @@ vim.keymap.set("n", "<leader><space>", "za", { remap = true, desc = "Open a fold
 vim.keymap.set("n", "<leader>v", "<C-w>v<C-w>l", { desc = "Open vertical split to the right" })
 vim.keymap.set("n", "<leader>h", "<C-w>s<C-w>j", { desc = "Open horizontal split below" })
 
--- Fuzzy find
-vim.keymap.set("n", "<leader>t", function()
-	require("fzf-lua").files()
-end, { desc = "Fuzzy find files" })
-vim.keymap.set("n", "<leader>b", function()
-	require("fzf-lua").buffers()
-end, { desc = "Fuzzy find open buffers" })
-vim.keymap.set("n", "<leader>r", function()
-	require("fzf-lua").registers()
-end, { desc = "Fuzzy find register contents" })
-vim.keymap.set("n", "<leader>k", function()
-	require("fzf-lua").help_tags()
-end, { desc = "Fuzzy find keywords in Neovim help" })
-vim.keymap.set("n", "<leader>K", function()
-	require("fzf-lua").keymaps()
-end, { desc = "Fuzzy find keymaps" })
-vim.keymap.set("n", "<leader>g", function()
-	require("fzf-lua").live_grep_native()
-end, { desc = "Live grep through the current project" })
-vim.keymap.set("n", "<leader>G", function()
-	require("fzf-lua").grep_cword()
-end, { desc = "Live grep for the current word" })
-vim.keymap.set("n", "<leader>s", function()
-	require("fzf-lua").fzf_exec(require("persisted").list)
-end, { desc = "Search for sessions" })
-vim.keymap.set("i", "<C-r>", function()
-	require("fzf-lua").registers()
-end, { desc = "Fuzzy find register contents" })
-
 -- Navigation
 vim.keymap.set("n", "]b", ":bnext<CR>", { silent = true, desc = "Next buffer" })
 vim.keymap.set("n", "[b", ":bprevious<CR>", { silent = true, desc = "Previous buffer" })
@@ -53,10 +24,6 @@ vim.keymap.set("n", "]<space>", "o<esc>k", { silent = true, desc = "Insert a bla
 -- 'n' should always search forward and 'N' backward
 vim.keymap.set("n", "n", "'Nn'[v:searchforward]", { expr = true })
 vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true })
-
-vim.keymap.set("i", "<C-g>", function()
-	require("Comment.api").toggle.linewise()
-end, { desc = "Comment line while insert", silent = true })
 
 vim.keymap.set("n", "Q", "<nop>")
 

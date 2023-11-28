@@ -17,6 +17,13 @@ function lspconfig()
 						enable = false,
 					},
 				},
+				format = {
+					defaultConfig = {
+						indent_style = "space",
+						indent_size = "3",
+						continuation_indent_size = "3",
+					},
+				},
 			},
 		},
 		pylsp = {
@@ -50,17 +57,11 @@ function lspconfig()
 			{ buffer = bufnr, desc = "Show function signature inline" }
 		)
 		vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover documentation under cursor" })
-		vim.keymap.set({ "n", "v" }, "<leader>f", vim.lsp.buf.format, { buffer = bufnr, desc = "Format current file" })
 		vim.keymap.set("n", "<leader>c", function()
 			require("fzf-lua").lsp_document_symbols()
 		end, { desc = "Fuzzy find symbols in the current document" })
 	end
 
-	require("mason").setup({
-		pip = {
-			upgrade_pip = true,
-		},
-	})
 	local mason_lspconfig = require("mason-lspconfig")
 	mason_lspconfig.setup({
 		ensure_installed = vim.tbl_keys(server_settings),
@@ -78,12 +79,24 @@ end
 
 return {
 	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			"folke/neodev.nvim",
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
+		"williamboman/mason.nvim",
+		dependencies = { "williamboman/mason-lspconfig.nvim" },
+		lazy = true,
+		cmd = "Mason",
+		name = "mason",
+		opts = {
+			pip = {
+				upgrade_pip = true,
+			},
+			ui = {
+				border = "single",
+			},
 		},
+	},
+	{
+		"neovim/nvim-lspconfig",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+		dependencies = { "folke/neodev.nvim", "mason" },
 		config = lspconfig,
 	},
 	{

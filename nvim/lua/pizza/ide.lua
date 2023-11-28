@@ -27,7 +27,9 @@ return {
 	},
 	{
 		"hrsh7th/nvim-cmp",
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
+			"devicons",
 			"luasnip",
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
@@ -44,9 +46,12 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		name = "treesitter",
+		build = ":TSUpdate",
+		version = false,
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
+		event = { "BufReadPost", "BufNewFile" },
 		opts = {
 			highlight = {
 				enable = true,
@@ -69,14 +74,17 @@ return {
 						["]m"] = "@function.outer",
 						["]c"] = "@class.outer",
 						["]a"] = "@parameter.outer",
+						["]s"] = { query = "@scope", query_group = "locals" },
 					},
 					goto_previous_start = {
 						["[m"] = "@function.outer",
 						["[c"] = "@class.outer",
 						["[a"] = "@parameter.outer",
+						["[s"] = { query = "@scope", query_group = "locals" },
 					},
 				},
 			},
+			context_commentstring = { enable = true },
 			incremental_selection = {
 				enable = true,
 				keymaps = {
@@ -87,12 +95,14 @@ return {
 				},
 			},
 			ensure_installed = {
+				"bash",
 				"go",
+				"html",
+				"json",
 				"lua",
 				"rust",
 				"python",
 				"yaml",
-				"json",
 			},
 		},
 		config = function(_, opts)

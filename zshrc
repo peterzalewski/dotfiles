@@ -113,6 +113,7 @@ else
 fi
 
 if command -v bat &>/dev/null; then
+  export BAT_THEME="base16"
   export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat -l man -p'"
 else
 # `less` checks for LESS_TERMCAP_* environment variables before checking the

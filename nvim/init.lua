@@ -11,12 +11,23 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = ","
 
 require("lazy").setup({
 	spec = {
 		{ import = "pizza" },
+	},
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"netrwPlugin",
+				"tarPlugin",
+				"zipPlugin",
+			},
+		},
+	},
+	ui = {
+		border = "single",
 	},
 })

@@ -81,7 +81,7 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "devicons", "catppuccin" },
-		config = function()
+		opts = function()
 			local theme = require("catppuccin.utils.lualine")("frappe")
 			local colors = require("catppuccin.palettes").get_palette("frappe")
 			theme.normal.a.gui = nil
@@ -91,7 +91,7 @@ return {
 			theme.inactive.b.bg = inactive_bg
 			theme.inactive.c.bg = inactive_bg
 
-			require("lualine").setup({
+			return {
 				options = {
 					disabled_filetypes = {
 						"no-neck-pain",
@@ -102,6 +102,12 @@ return {
 						"quickfix",
 					},
 					theme = theme,
+					refresh = {
+						-- Is this too low?
+						statusline = 100,
+						tabline = 1000,
+						winbar = 1000,
+					},
 				},
 				sections = {
 					lualine_a = {
@@ -138,7 +144,7 @@ return {
 					lualine_b = {},
 					lualine_c = {},
 				},
-			})
+			}
 		end,
 	},
 	{

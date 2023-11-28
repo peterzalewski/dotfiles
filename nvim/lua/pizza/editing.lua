@@ -1,6 +1,20 @@
 return {
 	{ "peterzalewski/vim-surround", lazy = false },
-	{ "numToStr/Comment.nvim", lazy = false, opts = { ignore = "^\\s*$" } },
+	{
+		"numToStr/Comment.nvim",
+		lazy = false,
+		opts = { ignore = "^\\s*$" },
+		keys = {
+			{
+				"<C-g>",
+				function()
+					require("Comment.api").toggle.linewise()
+				end,
+				mode = "i",
+				desc = "Comment line while inserting",
+			},
+		},
+	},
 	{
 		"junegunn/vim-easy-align",
 		lazy = false,
