@@ -94,18 +94,20 @@ return {
 			return {
 				options = {
 					disabled_filetypes = {
-                  "dapui_scopes",
-                  "dapui_breakpoints",
-                  "dapui_stacks",
-                  "dapui_watches",
-                  "dap-repl",
-                  "dapui_console",
 						"no-neck-pain",
 						"alpha",
 						"aerial",
 						"NvimTree",
 						"Trouble",
 						"quickfix",
+					},
+					ignore_focus = {
+						"dapui_scopes",
+						"dapui_breakpoints",
+						"dapui_stacks",
+						"dapui_watches",
+						"dap-repl",
+						"dapui_console",
 					},
 					theme = theme,
 					refresh = {
@@ -145,6 +147,7 @@ return {
 							"filename",
 							separator = { left = "", right = "" },
 							right_padding = 2,
+							file_status = false,
 						},
 					},
 					lualine_b = {},
