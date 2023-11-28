@@ -94,6 +94,12 @@ return {
 			return {
 				options = {
 					disabled_filetypes = {
+                  "dapui_scopes",
+                  "dapui_breakpoints",
+                  "dapui_stacks",
+                  "dapui_watches",
+                  "dap-repl",
+                  "dapui_console",
 						"no-neck-pain",
 						"alpha",
 						"aerial",
