@@ -32,8 +32,9 @@ else
   export EDITOR='vim'
 fi
 
-export FZF_DEFAULT_COMMAND='rg --files --follow --glob=!{.git,node_modules}'
+export FZF_DEFAULT_COMMAND='rg --files --glob=!{.git,node_modules}'
 export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+export FZF_CTRL_Y_COMMAND="fd -td --color=never"
 declare -a fzf_options
 fzf_options=(
   --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284
