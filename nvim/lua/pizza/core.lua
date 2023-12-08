@@ -47,20 +47,22 @@ return {
          }
       end,
       keys = {
-         { "<leader>b", "<cmd>FzfLua buffers<cr>", desc = "Fuzzy find open buffers" },
-         { "<leader>fc", "<cmd>FzfLua git_branches<cr>", desc = "Fuzzy find and check out a git branch" },
-         { "<leader>fh", "<cmd>FzfLua help_tags<cr>", desc = "Fuzzy find keywords in Neovim help" },
-         { "<leader>fk", "<cmd>FzfLua keymaps<cr>", desc = "Fuzzy find keymaps" },
-         { "<leader>fo", "<cmd>FzfLua oldfiles<cr>", desc = "Fuzzy find recently opened files" },
-         { "<leader>fr", "<cmd>FzfLua registers<cr>", desc = "Fuzzy find register contents" },
-         { "<leader>t", "<cmd>FzfLua files<cr>", desc = "Fuzzy find files" },
-         { "<leader>gc", "<cmd>FzfLua grep_cword<cr>", desc = "Live grep for the current word" },
+         { "<leader>b",  "<cmd>FzfLua buffers<cr>",          desc = "Fuzzy find open buffers" },
+         { "<leader>fc", "<cmd>FzfLua git_branches<cr>",     desc = "Fuzzy find and check out a git branch" },
+         { "<leader>fh", "<cmd>FzfLua help_tags<cr>",        desc = "Fuzzy find keywords in Neovim help" },
+         { "<leader>fk", "<cmd>FzfLua keymaps<cr>",          desc = "Fuzzy find keymaps" },
+         { "<leader>fo", "<cmd>FzfLua oldfiles<cr>",         desc = "Fuzzy find recently opened files" },
+         { "<leader>fr", "<cmd>FzfLua registers<cr>",        desc = "Fuzzy find register contents" },
+         { "<leader>t",  "<cmd>FzfLua files<cr>",            desc = "Fuzzy find files" },
+         { "<leader>gc", "<cmd>FzfLua grep_cword<cr>",       desc = "Live grep for the current word" },
          { "<leader>gg", "<cmd>FzfLua live_grep_native<cr>", desc = "Live grep through the current project" },
-         { "<leader>gp", "<cmd>FzfLua grep_last<cr>", desc = "Live grep for the previous pattern" },
+         { "<leader>gp", "<cmd>FzfLua grep_last<cr>",        desc = "Live grep for the previous pattern" },
          {
             "<leader>fd",
             function()
-               require("fzf-lua").files({ cmd = [[git diff --name-only "$(git merge-base master HEAD).."]] })
+               require("fzf-lua").files({
+                  cmd = [[git diff --name-only --diff-filter=d "$(git merge-base master HEAD).."]],
+               })
             end,
             desc = "Fuzzy find files changed in this branch off master",
          },
