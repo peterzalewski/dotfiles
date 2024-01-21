@@ -1,7 +1,7 @@
 return {
    { "fladson/vim-kitty" },
    { "google/vim-jsonnet" },
-   { "L3MON4D3/LuaSnip", name = "luasnip", version = "v1.*", build = "make install_jsregexp" },
+   { "L3MON4D3/LuaSnip", lazy = true, name = "luasnip", version = "v1.*", build = "make install_jsregexp" },
    {
       "danymat/neogen",
       dependencies = { "treesitter", "luasnip" },

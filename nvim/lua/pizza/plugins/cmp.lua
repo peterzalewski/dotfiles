@@ -1,4 +1,3 @@
-local ls = require("luasnip")
 local cmp = require("cmp")
 local border = {
 	{ "╭", "CmpBorder" },

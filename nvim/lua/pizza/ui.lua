@@ -53,25 +53,12 @@ vim.fn.sign_define("DiagnosticSignHint", {
 return {
    { "nvim-tree/nvim-web-devicons", name = "devicons" },
    {
-      "j-hui/fidget.nvim",
-      opts = {
-         progress = {
-            ignore_done_already = true,
-         },
-         notification = {
-            window = {
-               winblend = 0,
-            },
-         },
-      },
-   },
-   {
       "nvim-tree/nvim-tree.lua",
-      lazy = false,
       dependencies = { "devicons" },
       keys = {
          { "gt", ":NvimTreeToggle<CR>", desc = "Open and focus file tree" },
       },
+      cmd = { "NvimTreeOpen", "NvimTreeToggle" },
       opts = {
          sort = {
             sorter = "case_sensitive",
@@ -80,6 +67,7 @@ return {
    },
    {
       "nvim-lualine/lualine.nvim",
+      event = "VeryLazy",
       dependencies = { "devicons", "catppuccin" },
       opts = function()
          local theme = require("catppuccin.utils.lualine")("frappe")

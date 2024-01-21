@@ -37,4 +37,6 @@ vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true })
 
 vim.keymap.set("n", "Q", "<nop>")
 
+vim.keymap.set("n", "<leader>nl", "<cmd>Lazy<cr>", { desc = "Lazy" })
+
 return {}

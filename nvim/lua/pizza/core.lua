@@ -2,7 +2,7 @@ local active_bg = "#303446"
 local inactive_bg = "#2B2E3F"
 
 return {
-   { "nvim-lua/plenary.nvim", lazy = false, priority = 1000 },
+   { "nvim-lua/plenary.nvim", lazy = false, priority = 1000, name = "plenary" },
    { "christoomey/vim-tmux-navigator" },
    {
       "ibhagwan/fzf-lua",
@@ -47,7 +47,7 @@ return {
          }
       end,
       keys = {
-         { "<leader>b",  "<cmd>FzfLua buffers<cr>",          desc = "Fuzzy find open buffers" },
+         { "<leader>fb", "<cmd>FzfLua buffers<cr>",          desc = "Fuzzy find open buffers" },
          { "<leader>fc", "<cmd>FzfLua git_branches<cr>",     desc = "Fuzzy find and check out a git branch" },
          { "<leader>fh", "<cmd>FzfLua help_tags<cr>",        desc = "Fuzzy find keywords in Neovim help" },
          { "<leader>fk", "<cmd>FzfLua keymaps<cr>",          desc = "Fuzzy find keymaps" },
@@ -78,6 +78,12 @@ return {
       "folke/which-key.nvim",
       event = "VeryLazy",
       opts = {
+         defaults = {
+            ["<leader>d"] = { name = "+debug" },
+            ["<leader>f"] = { name = "+fuzzy find" },
+            ["<leader>g"] = { name = "+grep" },
+            ["<leader>n"] = { name = "+neovim" },
+         },
          window = {
             border = "single",
          },
@@ -86,6 +92,11 @@ return {
          vim.o.timeout = true
          vim.o.timeoutlen = 300
          vim.api.nvim_set_hl(0, "WhichKeyFloat", { bg = active_bg })
+      end,
+      config = function(_, opts)
+         local wk = require("which-key")
+         wk.setup(opts)
+         wk.register(opts.defaults)
       end,
    },
    {
