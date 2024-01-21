@@ -43,10 +43,10 @@ vim.opt.writebackup = false
 vim.wo.signcolumn = "yes"
 
 vim.diagnostic.config({
-	float = { border = "rounded" },
-	signs = true,
-	underline = false,
-	virtual_text = false,
+   float = { border = "rounded" },
+   signs = true,
+   underline = true,
+   virtual_text = true,
 })
 
 return {}

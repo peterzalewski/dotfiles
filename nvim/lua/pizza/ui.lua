@@ -99,7 +99,7 @@ return {
                   "dapui_watches",
                   "dap-repl",
                   "dapui_console",
-                  "toggleterm",
+                  "help",
                },
                theme = theme,
                refresh = {
@@ -119,6 +119,7 @@ return {
                      separator = { left = "", right = "" },
                   },
                },
+               lualine_b = { "branch", "diagnostics" },
                lualine_c = { { "filename", path = 3 } },
                lualine_x = {
                   {

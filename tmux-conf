@@ -34,6 +34,8 @@ set-option -g default-terminal "tmux-256color"
 
 # Turn on true colors
 set-option -sg terminal-overrides ",*:RGB"
+set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
 
 # Wait less than the default 500s after a metacharacter
 set-option -s escape-time 10
