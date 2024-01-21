@@ -345,6 +345,10 @@ function choose_git_branch() {
     cut -d ' ' -f 1
 }
 
+function safe_unalias() {
+  unalias "$1" 2> /dev/null || true
+}
+
 # }}}
 # Load other scripts {{{
 
