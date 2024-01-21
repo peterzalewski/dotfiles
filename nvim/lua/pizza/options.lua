@@ -41,6 +41,9 @@ vim.opt.wildignore:append({ ".git", "node_modules" })
 vim.opt.wildmenu = true
 vim.opt.writebackup = false
 vim.wo.signcolumn = "yes"
+vim.opt.spelllang = { "en" }
+vim.opt.spell = true
+vim.opt.spelloptions = "camel"
 
 vim.diagnostic.config({
    float = { border = "rounded" },
