@@ -317,4 +317,23 @@ return {
          { "[[", desc = "Prev Reference" },
       },
    },
+   {
+      "lewis6991/gitsigns.nvim",
+      event = { "BufReadPost", "BufNewFile" },
+      keys = {
+         {
+            "]g",
+            function()
+               require("gitsigns").next_hunk()
+            end,
+         },
+         {
+            "[g",
+            function()
+               require("gitsigns").prev_hunk()
+            end,
+         },
+      },
+      opts = {},
+   },
 }
