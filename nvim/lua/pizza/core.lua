@@ -116,9 +116,20 @@ return {
    {
       "akinsho/toggleterm.nvim",
       version = "*",
+      keys = {
+         {
+            "<C-Space>",
+            function()
+               require("toggleterm").toggle()
+            end,
+            desc = "Toggle terminal",
+         },
+      },
+      cmd = { "ToggleTerm" },
       opts = {
          open_mapping = "<C-Space>",
          direction = "float",
+         shell = "zsh",
          float_opts = { border = "single" },
       },
    },
