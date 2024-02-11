@@ -4,6 +4,7 @@ return {
    { "L3MON4D3/LuaSnip", lazy = true, name = "luasnip", version = "v1.*", build = "make install_jsregexp" },
    {
       "danymat/neogen",
+      event = { "BufReadPost", "BufNewFile", "BufWritePre" },
       dependencies = { "treesitter", "luasnip" },
       keys = {
          {
@@ -283,7 +284,7 @@ return {
    },
    {
       "RRethy/vim-illuminate",
-      event = { "BufReadPost", "BufNewFile" },
+      event = { "BufReadPost", "BufNewFile", "BufWritePre" },
       opts = {
          delay = 200,
          large_file_cutoff = 2000,
@@ -319,7 +320,7 @@ return {
    },
    {
       "lewis6991/gitsigns.nvim",
-      event = { "BufReadPost", "BufNewFile" },
+      event = { "BufReadPost", "BufNewFile", "BufWritePre" },
       keys = {
          {
             "]g",
