@@ -158,7 +158,7 @@ return {
       },
       keys = {
          {
-            "<leader>F",
+            "<leader>cF",
             function()
                require("conform").format({ async = true, lsp_fallback = true })
             end,
