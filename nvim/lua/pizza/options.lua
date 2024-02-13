@@ -10,7 +10,7 @@ vim.opt.fillchars = { eob = " ", vert = " ", horiz = " " }
 vim.opt.foldlevelstart = 20
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldmethod = "expr"
-vim.opt.formatoptions = "qcj"
+vim.opt.formatoptions = "qcjt"
 vim.opt.gdefault = true
 vim.opt.hidden = true
 vim.opt.hlsearch = true
