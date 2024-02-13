@@ -145,6 +145,18 @@ return {
          if have_mason then
             mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
          end
+
+         require('lspconfig').yamlls.setup({
+            settings = {
+               yaml = {
+                  schemaStore = {
+                     enable = false,
+                     url = "",
+                  },
+                  schemas = require('schemastore').yaml.schemas(),
+               },
+            },
+         })
       end,
    },
    {
@@ -180,5 +192,8 @@ return {
             },
          },
       },
+   },
+   {
+      "b0o/schemastore.nvim",
    },
 }
