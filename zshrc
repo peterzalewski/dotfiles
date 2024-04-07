@@ -97,10 +97,10 @@ export HISTTIMEFORMAT='%Y-%m-%dT%H:%M:%S%z '
 # }}}
 # Colors and appearance {{{
 
-# Colorize ls/exa
-if [[ -n "$(command -v exa)" ]]; then
-  alias ls='exa'
-  alias tree='exa -T'
+# Colorize ls/eza
+if [[ -n "$(command -v eza)" ]]; then
+  alias ls='eza'
+  alias tree='eza -T'
 else
   case "$(uname)" in
     Darwin) alias ls="ls -hG" ;;
@@ -113,6 +113,7 @@ else
 fi
 
 if command -v bat &>/dev/null; then
+  export BAT_THEME="base16"
   export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat -l man -p'"
 else
 # `less` checks for LESS_TERMCAP_* environment variables before checking the
@@ -342,6 +343,10 @@ function choose_git_branch() {
       --height 40% \
       --reverse |\
     cut -d ' ' -f 1
+}
+
+function safe_unalias() {
+  unalias "$1" 2> /dev/null || true
 }
 
 # }}}

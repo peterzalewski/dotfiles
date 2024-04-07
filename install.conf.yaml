@@ -10,7 +10,6 @@
       recursive: true
     ~/.zsh.d:
       recursive: true
-    ~/.vim/autoload: {}
     ~/.local/share/nvim/site:
       recursive: true
     ~/.tmux/plugins: {}
@@ -26,12 +25,12 @@
     ~/.config/:
       glob: true
       path: config/*
+    ~/.config/nvim: nvim/
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
     ~/.psqlrc: psqlrc
     ~/.ripgreprc: ripgreprc
     ~/.tmux.conf: tmux-conf
-    ~/.vimrc: vimrc
     ~/.zsh.d/:
       glob: true
       path: zsh.d/*
@@ -42,4 +41,3 @@
       path: zshrc
     ~/.tmux/plugins/tpm:
       path: third_party/tpm
-    ~/bin/diff-so-fancy: third_party/diff-so-fancy/diff-so-fancy
