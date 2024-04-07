@@ -133,6 +133,10 @@ return {
          float_opts = { border = "single" },
       },
    },
+   {
+      'axkirillov/hbac.nvim',
+      config = true,
+   }
    -- {
    --   'smoka7/hop.nvim',
    --   version = "*",
