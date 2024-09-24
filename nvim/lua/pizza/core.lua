@@ -101,20 +101,6 @@ return {
       end,
    },
    {
-      "stevearc/overseer.nvim",
-      keys = {
-         { "<leader>ot", "<cmd>OverseerToggle!<CR>", desc = "Toggle Overseer window" },
-         { "<leader>or", "<cmd>OverseerRun<CR>", desc = "Run task with Overseer" },
-      },
-      opts = {
-         templates = { "builtin", "pants.test" },
-         forms = {
-            border = "single",
-            winblend = 0,
-         },
-      },
-   },
-   {
       "akinsho/toggleterm.nvim",
       version = "*",
       keys = {
