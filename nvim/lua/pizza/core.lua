@@ -78,13 +78,14 @@ return {
       "folke/which-key.nvim",
       event = "VeryLazy",
       opts = {
+         notify = false,
          defaults = {
-            ["<leader>d"] = { name = "+debug" },
-            ["<leader>f"] = { name = "+fuzzy find" },
-            ["<leader>g"] = { name = "+grep" },
-            ["<leader>n"] = { name = "+neovim" },
+            { "<leader>d", group = "debug" },
+            { "<leader>f", group = "fuzzy find" },
+            { "<leader>g", group = "grep", icon = { icon = " ", color = "red" } },
+            { "<leader>n", group = "neovim", icon = { icon = " ", color = "cyan" } },
          },
-         window = {
+         win = {
             border = "single",
          },
       },
@@ -96,7 +97,7 @@ return {
       config = function(_, opts)
          local wk = require("which-key")
          wk.setup(opts)
-         wk.register(opts.defaults)
+         wk.add(opts.defaults)
       end,
    },
    {
