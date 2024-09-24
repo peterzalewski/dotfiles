@@ -337,9 +337,4 @@ return {
       },
       opts = {},
    },
-   {
-      "echasnovski/mini.indentscope",
-      event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-      opts = {},
-   },
 }
