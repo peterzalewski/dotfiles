@@ -11,6 +11,9 @@ local border = {
 }
 
 cmp.setup({
+   completion = {
+      completeopt = "menu,menuone,noinsert",
+   },
    enabled = function()
       -- disable completion in comments
       local context = require("cmp.config.context")
@@ -41,15 +44,30 @@ cmp.setup({
          require("luasnip").lsp_expand(args.body)
       end,
    },
+   view = {
+      entries = {
+         name = "custom",
+         selection_order = "top_down",
+         follow_cursor = true,
+      },
+   },
    mapping = cmp.mapping.preset.insert({
-      ["<C-space>"] = cmp.mapping.complete(),
-      ["<CR>"] = cmp.mapping.confirm({
-         select = true,
-         behavior = cmp.ConfirmBehavior.Replace,
-      }),
-      ["<Tab>"] = function(fallback)
+      ["<C-space>"] = function (fallback)
          if cmp.visible() then
-            cmp.select_next_item()
+            cmp.close()
+         else
+            fallback()
+         end
+      end,
+      ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      ["<Tab>"] = function(fallback)
+         local entries = cmp.get_entries()
+         if cmp.visible() then
+            if #entries == 1 then
+               cmp.confirm({ select = true })
+            else
+               cmp.select_next_item()
+            end
          else
             fallback()
          end
@@ -62,23 +80,13 @@ cmp.setup({
          end
       end,
    }),
-   sources = cmp.config.sources({
-      { name = "nvim_lsp" },
-      { name = "luasnip" },
-      { name = "nvim_lua" },
-      {
-         name = "buffer",
-         option = {
-            get_bufnrs = function()
-               local bufs = {}
-               for _, win in ipairs(vim.api.nvim_list_wins()) do
-                  bufs[vim.api.nvim_win_get_buf(win)] = true
-               end
-               return vim.tbl_keys(bufs)
-            end,
-            keyword_pattern = [[\k\+]],
-         },
-      },
+   sources = cmp.config.sources({ name = "luasnip", priority = 50 }, { name = "lazydev" }, {
+      { name = "nvim_lsp", priority = 50 },
+      { name = "path", priority = 40 },
+      { name = "nvim_lua", priority = 40 },
+   }, {
+      { name = "buffer", priority = 50, keyword_length = 3 },
+      { name = "emoji", insert = true, priority = 20 },
    }),
    window = {
       documentation = {
