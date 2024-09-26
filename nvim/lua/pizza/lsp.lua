@@ -1,5 +1,14 @@
 return {
    {
+      "folke/lazydev.nvim",
+      ft = "lua",
+      opts = {
+         library = {
+            { path = "luvit-meta/library", words = { "vim%.uv" } },
+         },
+      },
+   },
+   {
       "williamboman/mason.nvim",
       cmd = "Mason",
       build = ":MasonUpdate",
@@ -19,7 +28,7 @@ return {
    {
       "neovim/nvim-lspconfig",
       event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-      dependencies = { { "folke/neodev.nvim", opts = {} }, "mason.nvim", "williamboman/mason-lspconfig.nvim" },
+      dependencies = { "mason.nvim", "williamboman/mason-lspconfig.nvim" },
       ---@class PluginLspOpts
       opts = {
          diagnostics = {
@@ -28,27 +37,6 @@ return {
          },
          servers = {
             gopls = { mason = false },
-            lua_ls = {
-               Lua = {
-                  workspace = {
-                     checkThirdParty = false,
-                     diagnostics = {
-                        globals = { "vim" },
-                     },
-                     library = { "${3rd}/luv/library" },
-                     semantic = {
-                        enable = false,
-                     },
-                  },
-                  format = {
-                     defaultConfig = {
-                        indent_style = "space",
-                        indent_size = "3",
-                        continuation_indent_size = "3",
-                     },
-                  },
-               },
-            },
          },
       },
       ---@param opts PluginLspOpts
