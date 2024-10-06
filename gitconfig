@@ -11,6 +11,7 @@
   br = branch
   ci = commit
   co = checkout
+  cx = config edit --local
   d = diff --color-words
   dump = cat-file -p
   hidden = !git ls-files -v | awk '$1 ~ \"^[[:lower:]]\" { print $2 }'
@@ -21,6 +22,7 @@
   st = status -s -uall
   type = cat-file -t
   unhide = update-index --no-assume-unchanged
+  whoami = !git var GIT_AUTHOR_IDENT | cut -d' ' -f -3
   whoopsie = commit --amend --no-edit
 [color]
   ui = true
