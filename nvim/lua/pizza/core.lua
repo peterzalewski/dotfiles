@@ -43,7 +43,6 @@ return {
                   scrollbar = "border",
                },
             },
-            nbsp = "\xc2\xa0",
          }
       end,
       keys = {
