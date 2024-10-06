@@ -357,10 +357,15 @@ function _try_load {
   [[ -s "${file}" ]] && . "${file}"
 }
 
+_try_load "${HOME}/.zshrc.user"
 _try_load "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
 for config_file in "${HOME}"/.zsh.d/*; do
   _try_load "${config_file}"
 done
+
+if [[ -n $(command -v direnv) ]]; then
+  eval "$(direnv hook zsh)"
+fi
 
 # }}}
