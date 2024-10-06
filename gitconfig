@@ -1,6 +1,5 @@
 [user]
-	name = Peter Zalewski
-	email = pzalewski@hioscar.com
+  name = Peter Zalewski
 [include]
   path = .gitconfig.local
 [core]
@@ -30,14 +29,12 @@
 [diff]
   algorithm = patience
   renames = copies
-	external = difft
-; [pager]
-;   difftool = true
-  ; diff = diff-so-fancy | less --tabs=1,5 -RFX
-  ; show = diff-so-fancy | less --tabs=1,5 -RFX
+  external = difft
 [http]
-	postBuffer = 524288000
+  postBuffer = 524288000
 [protocol]
-	version = 2
+  version = 2
 [init]
-	defaultBranch = main
+  defaultBranch = main
+[commit]
+  verbose = true
