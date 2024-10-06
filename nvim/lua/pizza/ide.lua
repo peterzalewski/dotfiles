@@ -50,41 +50,10 @@ return {
       name = "treesitter",
       build = ":TSUpdate",
       version = false,
-      dependencies = {
-         "nvim-treesitter/nvim-treesitter-textobjects",
-      },
       event = { "BufReadPost", "BufNewFile" },
       opts = {
          highlight = {
             enable = true,
-         },
-         textobjects = {
-            select = {
-               enable = true,
-               lookahead = true,
-               keymaps = {
-                  ["af"] = "@function.outer",
-                  ["if"] = "@function.inner",
-                  ["ac"] = "@class.outer",
-                  ["ic"] = "@class.inner",
-               },
-            },
-            move = {
-               enable = true,
-               set_jumps = true,
-               goto_next_start = {
-                  ["]m"] = "@function.outer",
-                  ["]c"] = "@class.outer",
-                  ["]a"] = "@parameter.outer",
-                  ["]s"] = { query = "@scope", query_group = "locals" },
-               },
-               goto_previous_start = {
-                  ["[m"] = "@function.outer",
-                  ["[c"] = "@class.outer",
-                  ["[a"] = "@parameter.outer",
-                  ["[s"] = { query = "@scope", query_group = "locals" },
-               },
-            },
          },
          context_commentstring = { enable = true },
          incremental_selection = {
@@ -109,6 +78,34 @@ return {
       },
       config = function(_, opts)
          require("nvim-treesitter.configs").setup(opts)
+      end,
+   },
+   {
+      "AndrewRadev/dsf.vim",
+      keys = {
+         { "dsf", "<Plug>DsfDelete", noremap = true, desc = "Delete Surrounding Function" },
+         { "csf", "<Plug>DsfChange", noremap = true, desc = "Change Surrounding Function" },
+      },
+   },
+   {
+      "echasnovski/mini.ai",
+      version = false,
+      dependencies = {
+         "nvim-treesitter/nvim-treesitter-textobjects",
+      },
+      opts = function()
+         local ai = require("mini.ai")
+         return {
+            custom_textobjects = {
+               o = ai.gen_spec.treesitter({ -- code block
+                  a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+                  i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+               }),
+               F = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+               c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
+               C = ai.gen_spec.treesitter({ a = "@comment.outer", i = "@comment.outer" }),
+            },
+         }
       end,
    },
    {
