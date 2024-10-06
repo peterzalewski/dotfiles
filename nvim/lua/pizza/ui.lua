@@ -83,7 +83,7 @@ return {
             options = {
                disabled_filetypes = {
                   "no-neck-pain",
-                  "alpha",
+                  "dashboard",
                   "aerial",
                   "NvimTree",
                   "Trouble",
@@ -185,12 +185,12 @@ return {
                   [[                 ▀■               ▌     ▐██▌  ███▌                             ]],
                   [[                                        ▀███▄ ██▀                              ]],
                   [[                                           ▀▀█▀                                ]],
-                  [[ ]],
+                  [[                                                                               ]],
                },
             },
          })
       end,
-      dependencies = { { "nvim-tree/nvim-web-devicons" } },
+      dependencies = { { "devicons" } },
    },
    { "Bekaboo/deadcolumn.nvim" },
    { "shortcuts/no-neck-pain.nvim" },
