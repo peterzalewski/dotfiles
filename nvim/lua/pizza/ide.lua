@@ -321,18 +321,48 @@ return {
       event = { "BufReadPost", "BufNewFile", "BufWritePre" },
       keys = {
          {
-            "]g",
+            "]h",
             function()
                require("gitsigns").next_hunk()
             end,
+            desc = "Next Git hunk",
          },
          {
-            "[g",
+            "[h",
             function()
                require("gitsigns").prev_hunk()
             end,
+            desc = "Previous Git hunk",
+         },
+         {
+            "<leader>cb",
+            function()
+               require("gitsigns").toggle_current_line_blame()
+            end,
+            desc = "Toggle git blame",
          },
       },
       opts = {},
+   },
+   {
+      "NeogitOrg/neogit",
+      dependencies = {
+         "nvim-lua/plenary.nvim",
+         "ibhagwan/fzf-lua",
+      },
+      keys = {
+         {
+            "<leader>cg",
+            function()
+               require("neogit").open()
+            end,
+            desc = "Open Neogit",
+         },
+      },
+      ---@type NeogitConfig
+      opts = {
+         disable_signs = true,
+         graph_style = "unicode",
+      },
    },
 }
