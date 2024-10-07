@@ -1,9 +1,4 @@
-local active_bg = "#303446"
-local inactive_bg = "#2B2E3F"
-
 return {
-   { "nvim-lua/plenary.nvim", lazy = false, priority = 1000, name = "plenary" },
-   { "christoomey/vim-tmux-navigator" },
    {
       "ibhagwan/fzf-lua",
       lazy = true,
@@ -71,76 +66,6 @@ return {
             mode = "i",
             desc = "Fuzzy find register contents",
          },
-      },
-   },
-   {
-      "folke/which-key.nvim",
-      event = "VeryLazy",
-      opts = {
-         notify = false,
-         defaults = {
-            { "<leader>d", group = "debug" },
-            { "<leader>f", group = "fuzzy find" },
-            { "<leader>g", group = "grep", icon = { icon = " ", color = "red" } },
-            { "<leader>n", group = "neovim", icon = { icon = " ", color = "cyan" } },
-         },
-         win = {
-            border = "single",
-         },
-      },
-      init = function()
-         vim.o.timeout = true
-         vim.o.timeoutlen = 300
-         vim.api.nvim_set_hl(0, "WhichKeyFloat", { bg = active_bg })
-      end,
-      config = function(_, opts)
-         local wk = require("which-key")
-         wk.setup(opts)
-         wk.add(opts.defaults)
-      end,
-   },
-   {
-      "akinsho/toggleterm.nvim",
-      version = "*",
-      keys = {
-         {
-            "<C-Space>",
-            function()
-               require("toggleterm").toggle()
-            end,
-            desc = "Toggle terminal",
-         },
-      },
-      cmd = { "ToggleTerm" },
-      opts = {
-         open_mapping = "<C-Space>",
-         direction = "float",
-         shell = "zsh",
-         float_opts = { border = "single" },
-      },
-   },
-   {
-      "axkirillov/hbac.nvim",
-      config = true,
-   },
-   {
-      "folke/flash.nvim",
-      event = "VeryLazy",
-      ---@type Flash.Config
-      opts = {
-         modes = {
-            char = {
-               enabled = false,
-            },
-         },
-      },
-      -- stylua: ignore
-      keys = {
-         { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-         { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-         { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-         { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-         { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
       },
    },
 }

@@ -1,31 +1,5 @@
 return {
    {
-      "folke/lazydev.nvim",
-      ft = "lua",
-      opts = {
-         library = {
-            { path = "luvit-meta/library", words = { "vim%.uv" } },
-         },
-      },
-   },
-   {
-      "williamboman/mason.nvim",
-      cmd = "Mason",
-      build = ":MasonUpdate",
-      keys = {
-         { "<leader>nm", "<cmd>Mason<cr>", desc = "Mason" },
-      },
-      ---@class MasonSettings
-      opts = {
-         pip = {
-            upgrade_pip = true,
-         },
-         ui = {
-            border = "single",
-         },
-      },
-   },
-   {
       "neovim/nvim-lspconfig",
       event = { "BufReadPost", "BufNewFile", "BufWritePre" },
       dependencies = { "mason.nvim", "williamboman/mason-lspconfig.nvim" },
@@ -108,41 +82,5 @@ return {
 
          require("mason-lspconfig").setup({ ensure_installed = ensure_installed, handlers = { setup } })
       end,
-   },
-   {
-      "stevearc/conform.nvim",
-      dependencies = { "mason.nvim" },
-      opts = {
-         formatters_by_ft = {
-            lua = { "stylua" },
-            python = { "isort", "black" },
-         },
-      },
-      keys = {
-         {
-            "<leader>cF",
-            function()
-               require("conform").format({ async = true, lsp_fallback = true })
-            end,
-            desc = "Format buffer",
-         },
-      },
-   },
-   {
-      "j-hui/fidget.nvim",
-      name = "fidget",
-      opts = {
-         progress = {
-            ignore_done_already = true,
-         },
-         notification = {
-            window = {
-               winblend = 0,
-            },
-         },
-      },
-   },
-   {
-      "b0o/schemastore.nvim",
    },
 }
