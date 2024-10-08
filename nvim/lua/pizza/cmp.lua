@@ -28,9 +28,6 @@ return {
       config = function()
          local cmp = require("cmp")
          cmp.setup({
-            completion = {
-               completeopt = "menu,menuone,noinsert",
-            },
             enabled = function()
                -- disable completion in comments
                local context = require("cmp.config.context")
