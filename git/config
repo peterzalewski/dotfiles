@@ -11,7 +11,7 @@
   br = branch
   ci = commit
   co = checkout
-  cx = config edit --local
+  cx = config --edit --local
   d = diff --color-words
   dump = cat-file -p
   hidden = !git ls-files -v | awk '$1 ~ \"^[[:lower:]]\" { print $2 }'
@@ -40,3 +40,5 @@
   defaultBranch = main
 [commit]
   verbose = true
+
+# vim: ft=gitconfig:sw=2:ts=2:et

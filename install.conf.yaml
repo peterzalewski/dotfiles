@@ -24,10 +24,10 @@
 - link:
     ~/.config/bat: bat/
     ~/.config/ghostty: ghostty/
+    ~/.config/git: git/
     ~/.config/nvim: nvim/
     ~/.config/ripgrep: ripgrep/
     ~/.config/tmux: tmux/
-    ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
     ~/.psqlrc: psqlrc
     ~/.zsh.d/:
