@@ -26,10 +26,10 @@
     ~/.config/ghostty: ghostty/
     ~/.config/nvim: nvim/
     ~/.config/ripgrep: ripgrep/
+    ~/.config/tmux: tmux/
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
     ~/.psqlrc: psqlrc
-    ~/.tmux.conf: tmux-conf
     ~/.zsh.d/:
       glob: true
       path: zsh.d/*
