@@ -22,8 +22,9 @@
     ~/bin: {}
 
 - link:
-    ~/.config/nvim: nvim/
+    ~/.config/bat: bat/
     ~/.config/ghostty: ghostty/
+    ~/.config/nvim: nvim/
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
     ~/.psqlrc: psqlrc
