@@ -62,6 +62,10 @@ if [[ -n "$(command -v nvim)" ]]; then
   alias nvum='nvim'
 fi
 
+if command -v rg &>/dev/null; then
+  export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
+fi
+
 # Use vi-like bindings instead of emacs-like bindings to edit
 bindkey -v
 

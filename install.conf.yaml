@@ -25,10 +25,10 @@
     ~/.config/bat: bat/
     ~/.config/ghostty: ghostty/
     ~/.config/nvim: nvim/
+    ~/.config/ripgrep: ripgrep/
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
     ~/.psqlrc: psqlrc
-    ~/.ripgreprc: ripgreprc
     ~/.tmux.conf: tmux-conf
     ~/.zsh.d/:
       glob: true
