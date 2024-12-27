@@ -22,10 +22,6 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-if [[ -z "${XDG_CONFIG_HOME}" ]]; then
-  export XDG_CONFIG_HOME="${HOME}/.config/"
-fi
-
 # Aliases {{{
 
 alias bc='bc --mathlib'
@@ -61,13 +57,11 @@ done
 # }}}
 # Default programs and settings {{{
 
-if [[ -n "$(command -v nvim)" ]]; then
+if command -v nvim &>/dev/null; then
+  alias v='nvim'
+  alias vi='nvim'
   alias vim='nvim'
   alias nvum='nvim'
-fi
-
-if command -v rg &>/dev/null; then
-  export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
 fi
 
 # Use vi-like bindings instead of emacs-like bindings to edit
@@ -109,7 +103,7 @@ export HISTTIMEFORMAT='%Y-%m-%dT%H:%M:%S%z '
 # Colors and appearance {{{
 
 # Colorize ls/eza
-if [[ -n "$(command -v eza)" ]]; then
+if command -v eza &>/dev/null; then
   alias ls='eza'
   alias tree='eza -T'
 else
@@ -117,30 +111,6 @@ else
     Darwin) alias ls="ls -hG" ;;
     *) alias ls='ls --group-directories-first --color -h' ;;
   esac
-
-  # Set custom colors for `ls`: bold blue for directories,
-  # bold magenta for links, bold red for executables
-  export LSCOLORS='ExFxcxdxBxegedabagacad'
-fi
-
-if command -v bat &>/dev/null; then
-  export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat -l man -p'"
-else
-# `less` checks for LESS_TERMCAP_* environment variables before checking the
-# termcap database for the corresponding control characters. `man` uses only
-# bold, standout, and underline formatting, so if we override those control
-# characters, we can add color to man pages. More at:
-# https://unix.stackexchange.com/questions/108699/documentation-on-less-termcap-variables
-
-  function man() {
-    LESS_TERMCAP_md="$(tput bold; tput setaf 6)" \
-    LESS_TERMCAP_me="$(tput sgr0)" \
-    LESS_TERMCAP_so="$(tput bold ; tput setaf 1)" \
-    LESS_TERMCAP_se="$(tput sgr0)" \
-    LESS_TERMCAP_us="$(tput bold ; tput setaf 3)" \
-    LESS_TERMCAP_ue="$(tput sgr0)" \
-    command man "$@"
-  }
 fi
 
 if [[ -n "$(command -v grc)" ]]; then

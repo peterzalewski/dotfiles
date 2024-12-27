@@ -1,3 +1,5 @@
+export XDG_CONFIG_HOME="${HOME}/.config/"
+
 if [[ -x /usr/libexec/path_helper ]]; then
   export PATH=
   eval "$(/usr/libexec/path_helper -s)"
@@ -20,7 +22,8 @@ for p in "${extra_paths[@]}"; do
 done
 export PATH
 
-export KITTY_HOSTNAME="Peter-Zalewski"
+export OMITTED_USER="petezalewski"
+export OMITTED_HOSTNAME="PizzaOsobista.local"
 
 if [[ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]]; then
   source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
@@ -63,5 +66,12 @@ declare -r less_options
 export LESS="${less_options[*]}"
 export LESSHISTFILE='-'
 export PAGER='less'
-export RIPGREP_CONFIG_PATH="${HOME}/.ripgreprc"
+export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
 export VISUAL="${EDITOR}"
+#
+# Set custom colors for `ls`: bold blue for directories,
+# bold magenta for links, bold red for executables
+export LSCOLORS='ExFxcxdxBxegedabagacad'
+if command -v bat &>/dev/null; then
+  export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat -l man -p'"
+fi
