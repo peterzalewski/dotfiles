@@ -22,6 +22,10 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
+if [[ -z "${XDG_CONFIG_HOME}" ]]; then
+  export XDG_CONFIG_HOME="${HOME}/.config/"
+fi
+
 # Aliases {{{
 
 alias bc='bc --mathlib'
