@@ -1,0 +1,5 @@
+font-family = "Operator Mono"
+font-style = "Book"
+theme = catppuccin-frappe
+window-padding-x = 8
+window-padding-y = 8

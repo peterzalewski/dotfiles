@@ -42,6 +42,10 @@ alias tpout='tput'
 alias venv='python -m venv'
 alias view='view -M'
 
+if [[ "$(uname)" == "Darwin" ]]; then
+  alias ghostty="/Applications/Ghostty.app/Contents/MacOS/ghostty"
+fi
+
 # Let me swear at the command prompt to sudo the previous command
 declare -a fun_words
 fun_words=(shit damnit fuck please)
@@ -171,7 +175,7 @@ declare PROMPT_FAILURE="$fg_bold[red]"
 declare PROMPT_VIRTUALENV="$fg_bold[green]"
 
 function _prompt_user {
-  if [[ "${USER}" = "${KITTY_USER}" ]]; then
+  if [[ "${USER}" = "${OMITTED_USER}" ]]; then
     echo "%{$PROMPT_USER%}I%{$COLOR_OFF%}%{$PROMPT_WORD%} am %{$COLOR_OFF%}"
   else
     echo "%{${PROMPT_USER}%}%n%{${COLOR_OFF}%}%{${PROMPT_WORD}%} is %{${COLOR_OFF}%}"
@@ -179,7 +183,7 @@ function _prompt_user {
 }
 
 function _prompt_hostname_if_not_own {
-  if [[ "${HOSTNAME:-"${HOST}"}" != "${KITTY_HOSTNAME}" ]]; then
+  if [[ "${HOSTNAME:-"${HOST}"}" != "${OMITTED_HOSTNAME}" ]]; then
     echo "%{${PROMPT_WORD}%}at%{${COLOR_OFF}%} %{${PROMPT_HOST}%}%m%{${COLOR_OFF}%} "
   else
     echo ""

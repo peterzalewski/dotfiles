@@ -45,7 +45,6 @@ return {
    },
    { "nvim-lua/plenary.nvim", lazy = false, priority = 1000, name = "plenary" },
    { "christoomey/vim-tmux-navigator" },
-   { "fladson/vim-kitty" },
    { "google/vim-jsonnet" },
    { "peterzalewski/vim-surround", lazy = false },
    {

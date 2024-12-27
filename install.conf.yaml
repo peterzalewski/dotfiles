@@ -22,10 +22,8 @@
     ~/bin: {}
 
 - link:
-    ~/.config/:
-      glob: true
-      path: config/*
     ~/.config/nvim: nvim/
+    ~/.config/ghostty: ghostty/
     ~/.gitconfig: gitconfig
     ~/.inputrc: inputrc
     ~/.psqlrc: psqlrc
