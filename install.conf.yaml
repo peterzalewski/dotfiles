@@ -28,15 +28,8 @@
     ~/.config/nvim: nvim/
     ~/.config/ripgrep: ripgrep/
     ~/.config/tmux: tmux/
-    ~/.inputrc: inputrc
-    ~/.psqlrc: psqlrc
-    ~/.zsh.d/:
-      glob: true
-      path: zsh.d/*
-    ~/.zsh.d/zsh-syntax-highlighting.zsh: third_party/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-    ~/.zsh.d/fzf-tab.plugin.zsh: third_party/fzf-tab/fzf-tab.plugin.zsh
+    ~/.config/zsh: zsh/ 
     ~/.zshenv: zshenv
-    ~/.zshrc:
-      path: zshrc
+    ~/.psqlrc: psqlrc
     ~/.tmux/plugins/tpm:
       path: third_party/tpm

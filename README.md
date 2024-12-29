@@ -26,10 +26,10 @@
               Г                     DOTFILES (C) Peter Zalewski 2024                       Г
               РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
               кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФТФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП
-              Г  Supplier(s) : peterZalewski         Г  Release Date : 2024-12-26          Г
+              Г  Supplier(s) : peterZalewski         Г  Release Date : 2024-12-29          Г
               Г  Cracker(s)  : ^pZaLeWsKi^           Г  Protection   : CD CHECKS           Г
               Г  Packager(s) : git hub (dot) com     Г  Repo Genre   : CONFIGURATION !     Г
-              Г  File Format : .git                  Г  # of Files   : 38                  Г
+              Г  File Format : .git                  Г  # of Files   : 498                 Г
               УФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФСФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФД
               Г  Requirements: W9x, P2 300Hz, 32MB ram, Sound Card, DX7.x , 3D card        Г
               РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй

@@ -5,12 +5,19 @@
 # Source: https://github.com/peterzalewski/dotfiles/blob/master/bashrc
 # ############################################################################
 
+if [[ -d "/opt/local/share/zsh/site-functions" ]]; then
+  fpath=( "/opt/local/share/zsh/site-functions" $fpath )
+fi
+
 # https://zsh.sourceforge.io/Doc/Release/Zsh-Modules.html#The-zsh_002fparameter-Module
 zmodload zsh/parameter
 
 # Tab completion
+autoload -Uz zrecompile
 autoload -Uz compinit
-compinit -C
+export ZSH_COMPDUMP="${XDG_CACHE_HOME}/zcompdump"
+export INPUTRC="${ZDOTDIR}/inputrc"
+compinit -i -d ${ZSH_COMPDUMP}
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # Colors
@@ -22,7 +29,7 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 
-# Aliases {{{
+# Aliases 
 
 alias bc='bc --mathlib'
 alias g='git'
@@ -54,8 +61,8 @@ for word in "${fun_words[@]}"; do
   alias "${word}"='sudo $(fc -ln -1)'
 done
 
-# }}}
-# Default programs and settings {{{
+
+# Default programs and settings 
 
 if command -v nvim &>/dev/null; then
   alias v='nvim'
@@ -72,8 +79,8 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
-# }}}
-# History {{{
+
+# History 
 
 # Do not log adjacent duplicates
 setopt HIST_IGNORE_DUPS
@@ -85,7 +92,7 @@ setopt HIST_IGNORE_SPACE
 setopt INC_APPEND_HISTORY
 
 # Why doesn't zsh set a history file by default?
-export HISTFILE="${HOME}/.zsh_history"
+export HISTFILE="${XDG_CACHE_HOME}/zsh_history"
 
 # Let's keep lots of history overall
 export SAVEHIST=1000000
@@ -99,8 +106,8 @@ export HISTORY_IGNORE='(ls|ll|bg|fg|history|clear|jobs|exit|gd|gs|reset)'
 # Use ISO8601 for history timestamps
 export HISTTIMEFORMAT='%Y-%m-%dT%H:%M:%S%z '
 
-# }}}
-# Colors and appearance {{{
+
+# Colors and appearance 
 
 # Colorize ls/eza
 if command -v eza &>/dev/null; then
@@ -120,8 +127,8 @@ if [[ -n "$(command -v grc)" ]]; then
   done
 fi
 
-# }}}
-# Prompt {{{
+
+# Prompt 
 
 # Perform expansion of %m for hostname, %n for username, etc in the prompt string
 setopt PROMPT_PERCENT
@@ -208,8 +215,8 @@ $(_prompt_rcs_status)\
 $(_prompt_virtualenv)\
 $(_prompt_color_symbol_by_exit_status) '
 
-# }}}
-# Functions {{{
+
+# Functions 
 
 # rbenv init is slow because it requires eval and rehash. I know I want
 # to use it, so just declare the same function that init does, here, and
@@ -329,8 +336,8 @@ function safe_unalias() {
   unalias "$1" 2> /dev/null || true
 }
 
-# }}}
-# Load other scripts {{{
+
+# Load other scripts 
 
 function _try_load {
   local -r file="${1:-}"
@@ -338,15 +345,17 @@ function _try_load {
   [[ -s "${file}" ]] && . "${file}"
 }
 
-_try_load "${HOME}/.zshrc.user"
-_try_load "${HOME}/.nix-profile/etc/profile.d/nix.sh"
-
-for config_file in "${HOME}"/.zsh.d/*; do
+for config_file in "${ZDOTDIR}"/autoload/*; do
   _try_load "${config_file}"
 done
+
+_try_load "${ZDOTDIR}/autoload/fzf-tab/fzf-tab.plugin.zsh"
+_try_load "${ZDOTDIR}/autoload/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+_try_load "${HOME}/.zshrc.user"
+_try_load "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
 if [[ -n $(command -v direnv) ]]; then
   eval "$(direnv hook zsh)"
 fi
 
-# }}}
+
