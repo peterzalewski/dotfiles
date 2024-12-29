@@ -24,8 +24,8 @@
     ~/.config/ghostty: ghostty/
     ~/.config/git: git/
     ~/.config/nvim: nvim/
+    ~/.config/psql: psql/
     ~/.config/ripgrep: ripgrep/
     ~/.config/tmux: tmux/
     ~/.config/zsh: zsh/ 
     ~/.zshenv: zshenv
-    ~/.psqlrc: psqlrc

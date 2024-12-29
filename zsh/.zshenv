@@ -74,4 +74,5 @@ if command -v bat &>/dev/null; then
   export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat -l man -p'"
 fi
 export PYTHON_HISTORY="${XDG_CACHE_HOME}/python_history"
+export PSQLRC="${XDG_CONFIG_HOME}/psql/config"
 . "$HOME/.cargo/env"
