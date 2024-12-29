@@ -2,12 +2,9 @@
 	path = third_party/dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "third_party/zsh-syntax-highlighting"]
+[submodule "zsh/autoload/zsh-syntax-highlighting"]
 	path = zsh/autoload/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting
-[submodule "third_party/tpm"]
-	path = third_party/tpm
-	url = https://github.com/tmux-plugins/tpm
-[submodule "third_party/fzf-tab"]
+[submodule "zsh/autoload/fzf-tab"]
 	path = zsh/autoload/fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab

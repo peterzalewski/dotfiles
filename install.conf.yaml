@@ -12,11 +12,9 @@
       recursive: true
     ~/.local/share/nvim/site:
       recursive: true
-    ~/.tmux/plugins: {}
 
 - shell:
     - [git submodule update --init --recursive third_party, Cloning dependencies]
-    - [tic tmux.terminfo, Installing terminfo entry]
 
 - create:
     ~/bin: {}
@@ -31,5 +29,3 @@
     ~/.config/zsh: zsh/ 
     ~/.zshenv: zshenv
     ~/.psqlrc: psqlrc
-    ~/.tmux/plugins/tpm:
-      path: third_party/tpm
