@@ -14,7 +14,7 @@
       recursive: true
 
 - shell:
-    - [git submodule update --init --recursive third_party, Cloning dependencies]
+    - [git submodule update --init --recursive, Cloning dependencies]
 
 - create:
     ~/bin: {}

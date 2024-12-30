@@ -1,5 +1,5 @@
-[submodule "third_party/dotbot"]
-	path = third_party/dotbot
+[submodule "dotbot"]
+	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
 [submodule "zsh/autoload/zsh-syntax-highlighting"]
