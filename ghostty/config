@@ -1,4 +1,12 @@
+font-family = "Operator Mono Lig"
 font-family = "Operator Mono"
+font-family-italic = "Operator Mono Lig"
+font-family-italic = "Operator Mono"
+font-family-bold = "Operator Mono"
+font-family-bold-italic = "Operator Mono"
+font-feature = calt
+font-feature = liga
+font-feature = dlig
 font-style = "Book"
 theme = catppuccin-frappe
 window-padding-x = 8
