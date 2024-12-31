@@ -23,6 +23,7 @@
     ~/.config/bat: bat/
     ~/.config/ghostty: ghostty/
     ~/.config/git: git/
+    ~/.config/npm: npm/
     ~/.config/nvim: nvim/
     ~/.config/psql: psql/
     ~/.config/ripgrep: ripgrep/
