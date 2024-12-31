@@ -76,3 +76,7 @@ fi
 export PYTHON_HISTORY="${XDG_CACHE_HOME}/python_history"
 export PSQLRC="${XDG_CONFIG_HOME}/psql/config"
 . "$HOME/.cargo/env"
+
+if [[ -e "${XDG_CONFIG_HOME}/zsh/.zshenv.local" ]]; then
+  . "${XDG_CONFIG_HOME}/zsh/.zshenv.local"
+fi
