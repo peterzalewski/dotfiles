@@ -103,13 +103,15 @@ return {
                require("toggleterm").toggle()
             end,
             desc = "Toggle terminal",
+            mode = "n",
          },
       },
       cmd = { "ToggleTerm" },
       opts = {
          open_mapping = "<C-Space>",
-         direction = "float",
+         insert_mapping = false,
          shell = "zsh",
+         direction = "float",
          float_opts = { border = "single" },
       },
    },
