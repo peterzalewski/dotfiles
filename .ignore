@@ -1,1 +1,4 @@
-third_party/
+bat/themes
+dotbot/
+zsh/autoload/zsh-syntax-highlighting
+zsh/autoload/fzf-tab
