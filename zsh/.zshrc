@@ -33,21 +33,22 @@ bindkey -M vicmd v edit-command-line
 
 alias bc='bc --mathlib'
 alias g='git'
+alias ga='git add'
+alias gap='git add --patch'
 alias gb='git branch -vv'
 alias gc='git checkout'
 alias gd='git d'
-alias gdm='git d "$(git merge-base master HEAD)"..'
-alias get='git'
-alias gh5='git hist -5'
-alias gh10='git hist -10'
-alias got='git'
+alias gdc='git d --cached'
+alias gdm='git d "$(git merge-base refs/remotes/origin/HEAD HEAD)"..'
+alias gl="git hist"
+alias gl5='git hist -5'
+alias gl10='git hist -10'
 alias grep='grep --color=auto'
 alias gs='git st'
 alias ll='ls -alg'
 alias map='xargs -n 1'
 alias tpout='tput'
-alias venv='python -m venv'
-alias view='view -M'
+alias venv='python3 -m venv'
 
 if [[ "$(uname)" == "Darwin" ]]; then
   alias ghostty="/Applications/Ghostty.app/Contents/MacOS/ghostty"
@@ -65,10 +66,9 @@ done
 # Default programs and settings 
 
 if command -v nvim &>/dev/null; then
-  alias v='nvim'
-  alias vi='nvim'
-  alias vim='nvim'
-  alias nvum='nvim'
+  for word in "v" "vi" "vim" "nv" "nvum"; do
+    alias "${word}"="nvim"
+  done
 fi
 
 # Use vi-like bindings instead of emacs-like bindings to edit
