@@ -358,4 +358,7 @@ if [[ -n $(command -v direnv) ]]; then
   eval "$(direnv hook zsh)"
 fi
 
+if command -v atuin &>/dev/null; then
+  eval "$(atuin init zsh)"
+fi
 

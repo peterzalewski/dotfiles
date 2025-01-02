@@ -1,0 +1,7 @@
+dialect = "us"
+style = "compact"
+auto_sync = false
+filter_mode = "session"
+invert = true
+show_help = false
+keymap_mode = "vim-insert"
