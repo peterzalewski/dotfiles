@@ -10,15 +10,15 @@ vo.colorcolumn = "+1"
 
 augroup("FtpluginPython", { clear = true })
 autocmd("BufWritePre", {
-	group = "FtpluginPython",
-	pattern = { "*.py" },
-	callback = function() end,
+   group = "FtpluginPython",
+   pattern = { "*.py" },
+   callback = function() end,
 })
 autocmd({ "BufNewFile", "BufRead" }, {
-	group = "FtpluginPython",
-	pattern = { "*.aurora" },
-	callback = function()
-		local buf = vim.api.nvim_get_current_buf()
-		vim.api.nvim_buf_set_option(buf, "filetype", "python")
-	end,
+   group = "FtpluginPython",
+   pattern = { "*.aurora" },
+   callback = function()
+      local buf = vim.api.nvim_get_current_buf()
+      vim.api.nvim_set_option_value("filetype", "python", { buf = buf })
+   end,
 })

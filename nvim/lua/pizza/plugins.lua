@@ -1,4 +1,5 @@
 local active_bg = "#303446"
+---@diagnostic disable-next-line: unused-local
 local inactive_bg = "#2B2E3F"
 
 return {
@@ -259,14 +260,14 @@ return {
          {
             "]h",
             function()
-               require("gitsigns").next_hunk()
+               require("gitsigns").nav_hunk("next")
             end,
             desc = "Next Git hunk",
          },
          {
             "[h",
             function()
-               require("gitsigns").prev_hunk()
+               require("gitsigns").nav_hunk("prev")
             end,
             desc = "Previous Git hunk",
          },

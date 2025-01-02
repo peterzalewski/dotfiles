@@ -5,7 +5,6 @@ return {
       cmd = "FzfLua",
       dependencies = { "devicons" },
       opts = function()
-         local catppuccin = require("catppuccin.palettes.frappe")
          local actions = require("fzf-lua.actions")
          return {
             actions = {

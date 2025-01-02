@@ -82,7 +82,11 @@ return {
             end
          end
 
-         require("mason-lspconfig").setup({ ensure_installed = ensure_installed, handlers = { setup } })
+         require("mason-lspconfig").setup({
+            automatic_installation = true,
+            ensure_installed = ensure_installed,
+            handlers = { setup },
+         })
       end,
    },
 }
