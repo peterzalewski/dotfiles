@@ -24,18 +24,12 @@ for p in "${extra_paths[@]}"; do
 done
 export PATH
 
-export OMITTED_USER="petezalewski"
-export OMITTED_HOSTNAME="PizzaOsobista.local"
-
-if [[ -e "${HOME}/.nix-profile/etc/profile.d/nix.sh" ]]; then
-  source "${HOME}/.nix-profile/etc/profile.d/nix.sh"
-fi
-
-if [[ -n "$(command -v nvim)" ]]; then
+if command -v nvim &>/dev/null; then
   export EDITOR='nvim'
 else
   export EDITOR='vim'
 fi
+export VISUAL="${EDITOR}"
 
 export FZF_DEFAULT_COMMAND='rg --files --glob=!{.git,node_modules}'
 export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
@@ -69,17 +63,36 @@ export LESS="${less_options[*]}"
 export LESSHISTFILE='-'
 export PAGER='less'
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
-export VISUAL="${EDITOR}"
-#
-# Set custom colors for `ls`: bold blue for directories,
-# bold magenta for links, bold red for executables
-export LSCOLORS='ExFxcxdxBxegedabagacad'
+
 if command -v bat &>/dev/null; then
   export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat -l man -p'"
 fi
+
+# Python ecosystem
 export PYTHON_HISTORY="${XDG_CACHE_HOME}/python_history"
+# pip config?
+
+# Postgres
 export PSQLRC="${XDG_CONFIG_HOME}/psql/config"
-. "$HOME/.cargo/env"
+export PSQL_HISTORY="${XDG_CACHE_HOME}/psql_history"
+
+# Node ecosystem
+export NODE_REPL_HISTORY="${XDG_CACHE_HOME}/node_repl_history"
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+
+# Rust ecosystem
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
+
+if [[ -e "${CARGO_HOME}/env" ]]; then
+  . "${CARGO_HOME}/env"
+fi
+
+if command -v vivid &>/dev/null; then
+  export LS_COLORS="$(vivid generate catppuccin-frappe)"
+else
+  export LS_COLORS='ExFxcxdxBxegedabagacad'
+fi
 
 if [[ -e "${XDG_CONFIG_HOME}/zsh/.zshenv.local" ]]; then
   . "${XDG_CONFIG_HOME}/zsh/.zshenv.local"
