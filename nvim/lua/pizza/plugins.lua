@@ -144,30 +144,6 @@ return {
    },
    { "L3MON4D3/LuaSnip", lazy = true, name = "luasnip", version = "v1.*", build = "make install_jsregexp" },
    {
-      "danymat/neogen",
-      event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-      dependencies = { "treesitter", "luasnip" },
-      keys = {
-         {
-            "<leader>nf",
-            function()
-               require("neogen").generate()
-            end,
-         },
-      },
-      opts = {
-         enabled = true,
-         snippet_engine = "luasnip",
-         languages = {
-            python = {
-               template = {
-                  annotation_convention = "reST",
-               },
-            },
-         },
-      },
-   },
-   {
       "AndrewRadev/dsf.vim",
       keys = {
          { "dsf", "<Plug>DsfDelete", noremap = true, desc = "Delete Surrounding Function" },
