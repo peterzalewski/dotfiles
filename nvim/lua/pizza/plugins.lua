@@ -279,7 +279,6 @@ return {
       },
    },
    { "Bekaboo/deadcolumn.nvim" },
-   { "shortcuts/no-neck-pain.nvim" },
    { "rcarriga/nvim-notify", config = true },
    {
       "stevearc/conform.nvim",
