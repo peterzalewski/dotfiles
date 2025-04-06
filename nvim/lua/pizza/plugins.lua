@@ -99,7 +99,7 @@ return {
       version = "*",
       keys = {
          {
-            "<C-Space>",
+            [[<c-\>]],
             function()
                require("toggleterm").toggle()
             end,
@@ -109,8 +109,8 @@ return {
       },
       cmd = { "ToggleTerm" },
       opts = {
-         open_mapping = "<C-Space>",
-         insert_mapping = false,
+         open_mapping = [[<c-\>]],
+         insert_mappings = false,
          shell = "zsh",
          direction = "float",
          float_opts = { border = "single" },
