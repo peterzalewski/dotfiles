@@ -372,4 +372,14 @@ return {
       end,
       dependencies = { { "devicons" } },
    },
+   {
+      "folke/snacks.nvim",
+      priority = 1000,
+      lazy = false,
+      ---@type snacks.Config
+      opts = {
+         dim = { enabled = true },
+         notifier = { enabled = true },
+      },
+   },
 }
