@@ -152,6 +152,8 @@ return {
    },
    {
       "echasnovski/mini.ai",
+      lazy = true,
+      event = { "BufReadPost", "BufNewFile", "BufWritePre" },
       version = false,
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects",
