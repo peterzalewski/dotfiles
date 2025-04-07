@@ -28,6 +28,7 @@
   ui = true
 [push]
   default = simple
+  autoSetupRemote = true
 [diff]
   algorithm = patience
   renames = copies
@@ -40,5 +41,14 @@
   defaultBranch = main
 [commit]
   verbose = true
-
+[column]
+  ui = auto
+[branch]
+  sort = -committerdate
+[tag]
+  sort = version:refname
+[fetch]
+  prune = true
+  pruneTags = true
+  all = true
 # vim: ft=gitconfig:sw=2:ts=2:et
