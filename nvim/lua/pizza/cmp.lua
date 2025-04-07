@@ -38,6 +38,13 @@ return {
                   return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
                end
             end,
+            matching = {
+               disallow_fuzzy_matching = true,
+               disallow_fullfuzzy_matching = true,
+               disallow_partial_fuzzy_matching = true,
+               disallow_partial_matching = false,
+               disallow_prefix_unmatching = true,
+            },
             formatting = {
                expandable_indicator = true,
                fields = { "kind", "abbr", "menu" },
@@ -109,6 +116,10 @@ return {
                completion = {
                   border = border,
                },
+            },
+            performance = {
+               debounce = 0, -- default is 60ms
+               throttle = 0, -- default is 30ms
             },
          })
          -- Tab when there's only one match left also completes
