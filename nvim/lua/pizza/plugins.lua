@@ -12,23 +12,6 @@ return {
          },
       },
    },
-   {
-      "williamboman/mason.nvim",
-      cmd = "Mason",
-      build = ":MasonUpdate",
-      keys = {
-         { "<leader>nm", "<cmd>Mason<cr>", desc = "Mason" },
-      },
-      ---@class MasonSettings
-      opts = {
-         pip = {
-            upgrade_pip = true,
-         },
-         ui = {
-            border = "single",
-         },
-      },
-   },
    { "nvim-tree/nvim-web-devicons", name = "devicons" },
    {
       "nvim-tree/nvim-tree.lua",

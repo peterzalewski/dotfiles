@@ -19,7 +19,6 @@ vim.g.mapleader = ","
 require("lazy").setup({
    spec = {
       { import = "pizza" },
-      { import = "pizza.lang.python" },
    },
    performance = {
       rtp = {
