@@ -33,7 +33,7 @@ return {
             winopts = {
                border = "single",
                preview = {
-                  border = "sharp",
+                  border = "single",
                   scrollbar = "border",
                },
             },

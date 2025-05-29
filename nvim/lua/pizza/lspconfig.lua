@@ -37,7 +37,7 @@ return {
    {
       "neovim/nvim-lspconfig",
       keys = {
-         { "<leader>ns", "<cmd>LspInfo<cr>", desc = "LSP Info" },
+         { "<leader>nl", "<cmd>LspInfo<cr>", desc = "LSP Info" },
       },
    },
    {

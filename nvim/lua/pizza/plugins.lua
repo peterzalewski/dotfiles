@@ -1,4 +1,3 @@
-local active_bg = "#303446"
 ---@diagnostic disable-next-line: unused-local
 local inactive_bg = "#2B2E3F"
 
@@ -28,7 +27,6 @@ return {
       },
    },
    { "nvim-lua/plenary.nvim", lazy = false, priority = 1000, name = "plenary" },
-   { "christoomey/vim-tmux-navigator" },
    { "google/vim-jsonnet" },
    { "peterzalewski/vim-surround", lazy = false },
    {
@@ -79,7 +77,7 @@ return {
    },
    {
       "akinsho/toggleterm.nvim",
-      version = "*",
+      lazy = true,
       keys = {
          {
             [[<c-\>]],
@@ -98,32 +96,6 @@ return {
          direction = "float",
          float_opts = { border = "single" },
       },
-   },
-   {
-      "folke/which-key.nvim",
-      event = "VeryLazy",
-      opts = {
-         notify = false,
-         defaults = {
-            { "<leader>d", group = "debug" },
-            { "<leader>f", group = "fuzzy find" },
-            { "<leader>g", group = "grep", icon = { icon = " ", color = "red" } },
-            { "<leader>n", group = "neovim", icon = { icon = " ", color = "cyan" } },
-         },
-         win = {
-            border = "single",
-         },
-      },
-      init = function()
-         vim.o.timeout = true
-         vim.o.timeoutlen = 300
-         vim.api.nvim_set_hl(0, "WhichKeyFloat", { bg = active_bg })
-      end,
-      config = function(_, opts)
-         local wk = require("which-key")
-         wk.setup(opts)
-         wk.add(opts.defaults)
-      end,
    },
    { "L3MON4D3/LuaSnip", lazy = true, name = "luasnip", version = "v1.*", build = "make install_jsregexp" },
    {
@@ -158,22 +130,21 @@ return {
    },
    {
       "folke/trouble.nvim",
+      lazy = true,
+      cmd = "Trouble",
+      opts = {},
       dependencies = { "devicons" },
       keys = {
-         { "<leader>D", ":TroubleToggle<CR>", desc = "Open diagnostics" },
+         { "<leader>cd", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<CR>", desc = "Toggle diagnostics" },
       },
    },
    {
       "stevearc/aerial.nvim",
       lazy = true,
       keys = {
-         { "<leader>a", "<cmd>AerialToggle!<CR>", desc = "Open the Aerial window" },
+         { "<leader>co", "<cmd>AerialToggle<CR>", desc = "Toggle code outline" },
       },
       opts = {
-         on_attach = function(bufnr)
-            vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { silent = true, buffer = bufnr })
-            vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { silent = true, buffer = bufnr })
-         end,
          attach_mode = "global",
          highlight_on_jump = false,
       },
@@ -276,7 +247,7 @@ return {
       },
       keys = {
          {
-            "<leader>cF",
+            "<leader>cf",
             function()
                require("conform").format({ async = true, lsp_fallback = true })
             end,
@@ -286,8 +257,7 @@ return {
    },
    {
       "j-hui/fidget.nvim",
-      lazy = true,
-      name = "fidget",
+      event = "LspAttach",
       opts = {
          progress = {
             ignore_done_already = true,
@@ -295,6 +265,7 @@ return {
          notification = {
             window = {
                winblend = 0,
+               border = "single",
             },
          },
       },

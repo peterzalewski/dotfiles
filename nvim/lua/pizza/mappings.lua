@@ -1,6 +1,4 @@
-vim.keymap.set("n", "<leader><space>", "za", { remap = true, desc = "Open a fold" })
-vim.keymap.set("n", "<leader>v", "<C-w>v<C-w>l", { desc = "Open vertical split to the right" })
-vim.keymap.set("n", "<leader>h", "<C-w>s<C-w>j", { desc = "Open horizontal split below" })
+local active_bg = "#303446"
 
 -- Navigation
 vim.keymap.set("n", "]b", ":bnext<CR>", { silent = true, desc = "Next buffer" })
@@ -37,6 +35,44 @@ vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true })
 
 vim.keymap.set("n", "Q", "<nop>")
 
-vim.keymap.set("n", "<leader>nl", "<cmd>Lazy<cr>", { desc = "Lazy" })
+vim.keymap.set("n", "<leader>nz", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
-return {}
+return {
+   "folke/which-key.nvim",
+   event = "VeryLazy",
+   opts = {
+      notify = false,
+      defaults = {
+         { "<leader>c", group = "code", icon = { icon = " ", color = "orange" } },
+         { "<leader>d", group = "debug" },
+         { "<leader>f", group = "fuzzy find", icon = { icon = " ", color = "green" } },
+         { "<leader>g", group = "grep", icon = { icon = "󱡠 ", color = "red" } },
+         { "<leader>n", group = "neovim", icon = { icon = " ", color = "cyan" } },
+      },
+      sort = { "alphanum" },
+      win = {
+         border = "single",
+      },
+   },
+   init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+      vim.api.nvim_set_hl(0, "WhichKeyFloat", { bg = active_bg })
+   end,
+   config = function(_, opts)
+      local wk = require("which-key")
+      wk.setup(opts)
+
+      wk.add({
+         { "<leader>h",       "<C-w>s<C-w>j", mode = "n", desc = "Split below",        icon = { icon = "" } },
+         { "<leader>v",       "<C-w>v<C-w>l", mode = "n", desc = "Split right",        icon = { icon = "" } },
+         { "<leader><space>", "za",           mode = "n", desc = "Open fold",          icon = { icon = "" } },
+         { "<c-h>",           "<C-w>h",       mode = "n", desc = "Navigate pane left"  },
+         { "<c-j>",           "<C-w>j",       mode = "n", desc = "Navigate pane down"  },
+         { "<c-k>",           "<C-w>k",       mode = "n", desc = "Navigate pane up"    },
+         { "<c-l>",           "<C-w>l",       mode = "n", desc = "Navigate pane right" },
+      })
+
+      wk.add(opts.defaults)
+   end,
+}
