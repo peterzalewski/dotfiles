@@ -64,13 +64,15 @@ return {
       wk.setup(opts)
 
       wk.add({
-         { "<leader>h",       "<C-w>s<C-w>j", mode = "n", desc = "Split below",        icon = { icon = "" } },
-         { "<leader>v",       "<C-w>v<C-w>l", mode = "n", desc = "Split right",        icon = { icon = "" } },
-         { "<leader><space>", "za",           mode = "n", desc = "Open fold",          icon = { icon = "" } },
-         { "<c-h>",           "<C-w>h",       mode = "n", desc = "Navigate pane left"  },
-         { "<c-j>",           "<C-w>j",       mode = "n", desc = "Navigate pane down"  },
-         { "<c-k>",           "<C-w>k",       mode = "n", desc = "Navigate pane up"    },
-         { "<c-l>",           "<C-w>l",       mode = "n", desc = "Navigate pane right" },
+         { "<leader>h",       "<C-w>s<C-w>j",      mode = "n", desc = "Split below",        icon = { icon = "" } },
+         { "<leader>v",       "<C-w>v<C-w>l",      mode = "n", desc = "Split right",        icon = { icon = "" } },
+         { "<leader><space>", "za",                mode = "n", desc = "Open fold",          icon = { icon = "" } },
+         { "<c-h>",           "<C-w>h",            mode = "n", desc = "Navigate pane left"  },
+         { "<c-j>",           "<C-w>j",            mode = "n", desc = "Navigate pane down"  },
+         { "<c-k>",           "<C-w>k",            mode = "n", desc = "Navigate pane up"    },
+         { "<c-l>",           "<C-w>l",            mode = "n", desc = "Navigate pane right" },
+         { "<leader>j",       "<cmd>TSJJoin<cr>",  mode = "n", desc = "Smart join",         icon = { icon = "" } },
+         { "<leader>s",       "<cmd>TSJSplit<cr>", mode = "n", desc = "Smart split",        icon = { icon = "󰃻" } },
       })
 
       wk.add(opts.defaults)
