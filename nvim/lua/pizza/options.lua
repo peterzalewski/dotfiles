@@ -1,3 +1,6 @@
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
 vim.opt.autoindent = true
 vim.opt.autoread = true
 vim.opt.backspace = { "eol", "indent", "start" }
@@ -50,6 +53,14 @@ vim.diagnostic.config({
    signs = true,
    underline = true,
    virtual_text = true,
+})
+
+autocmd("FileType", {
+   group = augroup("pizza: Disable spellcheck", { clear = true }),
+   pattern = {
+      "qf",
+   },
+   command = "setlocal nospell",
 })
 
 return {}
