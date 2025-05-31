@@ -12,7 +12,7 @@ return {
                   ["default"] = actions.file_edit,
                   ["ctrl-h"] = actions.file_split,
                   ["ctrl-v"] = actions.file_vsplit,
-                  ["alt-q"] = actions.file_sel_to_qf,
+                  ["ctrl-q"] = actions.file_sel_to_qf,
                   ["alt-l"] = actions.file_sel_to_ll,
                },
             },

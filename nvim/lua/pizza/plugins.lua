@@ -343,4 +343,20 @@ return {
          max_join_length = 150,
       },
    },
+   {
+      "stevearc/quicker.nvim",
+      event = "FileType qf",
+      ---@module "quicker"
+      ---@type quicker.SetupOptions
+      opts = {},
+      keys = {
+         {
+            "<leader>q",
+            function()
+               require("quicker").toggle({ focus = true })
+            end,
+            desc = "Toggle quickfix",
+         },
+      },
+   },
 }
