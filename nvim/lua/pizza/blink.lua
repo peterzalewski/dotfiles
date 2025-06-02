@@ -18,7 +18,22 @@ return {
             nerd_font_variant = "mono",
          },
 
-         completion = { menu = { border = 'single' }, documentation = { auto_show = true, window = { border = 'single' } } },
+         completion = {
+            documentation = {
+               auto_show = true,
+               window = {
+                  border = "single",
+               },
+            },
+            list = {
+               selection = {
+                  preselect = false,
+               },
+            },
+            menu = {
+               border = "single",
+            },
+         },
 
          sources = {
             default = { "lsp", "path", "snippets", "buffer" },
@@ -42,6 +57,11 @@ return {
 
          cmdline = {
             completion = {
+               list = {
+                  selection = {
+                     preselect = false,
+                  },
+               },
                menu = {
                   auto_show = true,
                },
