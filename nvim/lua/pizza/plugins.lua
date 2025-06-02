@@ -62,11 +62,9 @@ return {
       },
    },
    {
-      "junegunn/vim-easy-align",
-      lazy = false,
-      config = function()
-         vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)", { silent = true, remap = true })
-      end,
+      "echasnovski/mini.align",
+      version = false,
+      config = true,
    },
    {
       "axkirillov/hbac.nvim",
