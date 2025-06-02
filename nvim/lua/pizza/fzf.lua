@@ -21,6 +21,7 @@ return {
                   ["--info"] = "hidden",
                },
             },
+            git_icons = false,
             hls = {
                border = "FloatBorder",
                cursorLine = "LineNr",

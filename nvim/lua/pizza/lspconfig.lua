@@ -36,6 +36,7 @@ autocmd("LspAttach", {
 return {
    {
       "neovim/nvim-lspconfig",
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
       keys = {
          { "<leader>nl", "<cmd>LspInfo<cr>", desc = "LSP Info" },
       },
@@ -56,10 +57,10 @@ return {
    },
    {
       "mason-org/mason-lspconfig.nvim",
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
       dependencies = {
          "neovim/nvim-lspconfig",
          "mason-org/mason.nvim",
-         "j-hui/fidget.nvim",
       },
       opts = {
          ensure_installed = {

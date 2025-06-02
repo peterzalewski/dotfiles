@@ -7,11 +7,18 @@ return {
       ft = "lua",
       opts = {
          library = {
-            { path = "luvit-meta/library", words = { "vim%.uv" } },
+            {
+               path = "luvit-meta/library",
+               words = { "vim%.uv" },
+            },
          },
       },
    },
-   { "nvim-tree/nvim-web-devicons", name = "devicons" },
+   {
+      "nvim-tree/nvim-web-devicons",
+      lazy = true,
+      name = "devicons",
+   },
    {
       "nvim-tree/nvim-tree.lua",
       lazy = true,
@@ -26,12 +33,22 @@ return {
          },
       },
    },
-   { "nvim-lua/plenary.nvim", lazy = false, priority = 1000, name = "plenary" },
-   { "google/vim-jsonnet" },
-   { "peterzalewski/vim-surround", lazy = false },
+   {
+      "nvim-lua/plenary.nvim",
+      lazy = false,
+      priority = 1000,
+      name = "plenary",
+   },
+   {
+      "google/vim-jsonnet",
+   },
+   {
+      "peterzalewski/vim-surround",
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+   },
    {
       "numToStr/Comment.nvim",
-      lazy = false,
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
       opts = { ignore = "^\\s*$" },
       keys = {
          {
@@ -97,7 +114,6 @@ return {
          float_opts = { border = "single" },
       },
    },
-   { "L3MON4D3/LuaSnip", lazy = true, name = "luasnip", version = "v1.*", build = "make install_jsregexp" },
    {
       "AndrewRadev/dsf.vim",
       keys = {
@@ -108,7 +124,7 @@ return {
    {
       "echasnovski/mini.ai",
       lazy = true,
-      event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
       version = false,
       dependencies = {
          "nvim-treesitter/nvim-treesitter-textobjects",
@@ -151,7 +167,7 @@ return {
    },
    {
       "RRethy/vim-illuminate",
-      event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
       opts = {
          delay = 200,
          large_file_cutoff = 2000,
@@ -187,7 +203,7 @@ return {
    },
    {
       "lewis6991/gitsigns.nvim",
-      event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
       keys = {
          {
             "]h",
@@ -234,8 +250,14 @@ return {
          graph_style = "unicode",
       },
    },
-   { "Bekaboo/deadcolumn.nvim" },
-   { "rcarriga/nvim-notify", config = true },
+   {
+      "Bekaboo/deadcolumn.nvim",
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+   },
+   {
+      "rcarriga/nvim-notify",
+      config = true,
+   },
    {
       "stevearc/conform.nvim",
       dependencies = { "mason.nvim" },
@@ -275,13 +297,16 @@ return {
    },
    {
       "stevearc/oil.nvim",
+      lazy = true,
+      dependencies = { "devicons" },
+      cmd = { "Oil" },
       ---@module 'oil'
       ---@type oil.SetupOpts
       opts = {},
-      dependencies = { { "devicons" } },
    },
    {
       "nvim-treesitter/nvim-treesitter-context",
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
       config = true,
    },
    {
@@ -330,14 +355,19 @@ return {
       "folke/snacks.nvim",
       priority = 1000,
       lazy = false,
+      ---@module "snacks"
       ---@type snacks.Config
       opts = {
          dim = { enabled = true },
+         input = { enabled = true },
          notifier = { enabled = true },
       },
    },
    {
       "Wansmer/treesj",
+      lazy = true,
+      dependencies = { "treesitter" },
+      cmd = { "TSJJoin", "TSJSplit" },
       opts = {
          use_default_keymaps = false,
          max_join_length = 150,
