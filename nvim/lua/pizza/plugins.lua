@@ -393,4 +393,11 @@ return {
       dependencies = { "MunifTanjim/nui.nvim" },
       opts = {},
    },
+   {
+      "sphamba/smear-cursor.nvim",
+      opts = {
+         smear_between_buffers = false,
+         smear_insert_mode = false,
+      },
+   },
 }
