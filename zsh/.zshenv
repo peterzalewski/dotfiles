@@ -11,6 +11,7 @@ declare -a extra_paths
 extra_paths=(
   "${HOME}/bin"
   "${GOROOT}/bin"
+  "${HOME}/go/bin"
   "${HOME}/.cargo/bin"
   "/opt/local/bin"
   "${HOME}/.rd/bin"
