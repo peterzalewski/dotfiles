@@ -15,6 +15,7 @@
 
 - shell:
     - [git submodule update --init --recursive, Cloning dependencies]
+    - [tic -x terminfo/ghostty.terminfo]
 
 - create:
     ~/bin: {}
