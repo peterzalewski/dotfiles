@@ -304,18 +304,23 @@ return {
       config = true,
    },
    {
-      "nvimdev/dashboard-nvim",
-      event = "VimEnter",
-      config = function()
-         require("dashboard").setup({
-            theme = "hyper",
-            config = {
-               shortcut = {},
-               change_to_vcs_root = true,
-               project = {
-                  action = "FzfLua files cwd=",
-               },
-               header = {
+      "folke/snacks.nvim",
+      priority = 1000,
+      lazy = false,
+      ---@module "snacks"
+      ---@type snacks.Config
+      opts = {
+         dim = { enabled = true },
+         input = { enabled = true },
+         notifier = { enabled = true },
+         dashboard = {
+            enabled = true,
+            width = 80,
+            preset = {
+               pick = function (cmd, opts)
+                  require("fzf-lua")[cmd](opts)
+               end,
+               header = table.concat({
                   [[           ■                                                                   ]],
                   [[            ▀▄▄▄▄                                                              ]],
                   [[         ▄▄█████████▄▄                ▄                                        ]],
@@ -339,22 +344,21 @@ return {
                   [[                                        ▀███▄ ██▀                              ]],
                   [[                                           ▀▀█▀                                ]],
                   [[                                                                               ]],
+               }, "\n"),
+               keys = {
+                  { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+                  { icon = "󱡠 ", key = "g", desc = "Grep", action = ":lua Snacks.dashboard.pick('live_grep_native')" },
+                  { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+                  { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })" },
+                  { icon = " ", key = "q", desc = "Quit", action = ":qa" },
                },
             },
-         })
-      end,
-      dependencies = { { "devicons" } },
-   },
-   {
-      "folke/snacks.nvim",
-      priority = 1000,
-      lazy = false,
-      ---@module "snacks"
-      ---@type snacks.Config
-      opts = {
-         dim = { enabled = true },
-         input = { enabled = true },
-         notifier = { enabled = true },
+            sections = {
+               { section = "header" },
+               { section = "keys", gap = 0, padding = 1 },
+               { section = "startup" },
+            },
+         },
       },
    },
    {

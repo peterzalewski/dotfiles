@@ -67,7 +67,6 @@ return {
          flavour = "frappe",
          integrations = {
             aerial = true,
-            alpha = true,
             cmp = true,
             fidget = true,
             gitsigns = true,

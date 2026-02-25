@@ -20,7 +20,7 @@ return {
             options = {
                disabled_filetypes = {
                   "no-neck-pain",
-                  "dashboard",
+                  "snacks_dashboard",
                   "aerial",
                   "NvimTree",
                   "Trouble",
