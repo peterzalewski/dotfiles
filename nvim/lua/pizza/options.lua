@@ -1,6 +1,7 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
+vim.g.python3_host_prog = vim.env.HOME .. "/.virtualenvs/nvim/bin/python"
 vim.opt.autoindent = true
 vim.opt.autoread = true
 vim.opt.backspace = { "eol", "indent", "start" }
