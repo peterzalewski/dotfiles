@@ -1,5 +1,6 @@
-local active_bg = "#303446"
-local inactive_bg = "#2B2E3F"
+local theme = require("theme")
+local active_bg = theme.active_bg
+local inactive_bg = theme.inactive_bg
 
 return {
    {
@@ -10,11 +11,18 @@ return {
          local theme = require("catppuccin.utils.lualine")("frappe")
          local colors = require("catppuccin.palettes").get_palette("frappe")
          theme.normal.a.gui = nil
+         theme.normal.b.bg = "#414559"
          theme.normal.c.bg = active_bg
+         theme.normal.y = { bg = "#414559", fg = colors.subtext0 }
+         theme.normal.z = { bg = theme.normal.a.bg, fg = active_bg, gui = "bold" }
          theme.inactive.a.bg = colors.lavender
          theme.inactive.a.fg = colors.base
          theme.inactive.b.bg = inactive_bg
+         theme.inactive.b.fg = colors.subtext0
          theme.inactive.c.bg = inactive_bg
+         theme.inactive.c.fg = colors.subtext0
+         theme.inactive.y = { bg = inactive_bg, fg = colors.subtext0 }
+         theme.inactive.z = { bg = inactive_bg, fg = colors.subtext0 }
 
          return {
             options = {
@@ -26,6 +34,7 @@ return {
                   "Trouble",
                   "quickfix",
                   "OverseerList",
+                  "snacks_terminal",
                   "toggleterm",
                   "qf",
                },

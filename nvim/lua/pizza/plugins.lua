@@ -1,5 +1,5 @@
 ---@diagnostic disable-next-line: unused-local
-local inactive_bg = "#2B2E3F"
+local inactive_bg = require("theme").inactive_bg
 
 return {
    {
@@ -71,6 +71,32 @@ return {
          update_focused_file = {
             enable = true,
          },
+         on_attach = function(bufnr)
+            require("nvim-tree.api").config.mappings.default_on_attach(bufnr)
+            vim.schedule(function()
+               local winid = vim.fn.bufwinid(bufnr)
+               if winid ~= -1 then
+                  vim.wo[winid].statusline = " "
+               end
+            end)
+
+            local theme = require("theme")
+            local grp = vim.api.nvim_create_augroup("pizza: NvimTree sign column", { clear = true })
+            vim.api.nvim_create_autocmd("WinEnter", {
+               group = grp,
+               buffer = bufnr,
+               callback = function()
+                  vim.api.nvim_set_hl(0, "NvimTreeSignColumn", { bg = theme.active_bg })
+               end,
+            })
+            vim.api.nvim_create_autocmd("WinLeave", {
+               group = grp,
+               buffer = bufnr,
+               callback = function()
+                  vim.api.nvim_set_hl(0, "NvimTreeSignColumn", { bg = theme.inactive_bg })
+               end,
+            })
+         end,
       },
    },
    {
@@ -444,6 +470,12 @@ return {
             split_width_percentage = 0.35,
             provider = "snacks",
             git_repo_cwd = true,
+            snacks_win_opts = {
+               wo = {
+                  number = false,
+                  relativenumber = false,
+               },
+            },
          },
          diff_opts = {
             open_in_new_tab = true,

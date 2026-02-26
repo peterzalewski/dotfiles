@@ -1,4 +1,4 @@
-local active_bg = "#303446"
+local active_bg = require("theme").active_bg
 
 -- Navigation
 vim.keymap.set("n", "]b", ":bnext<CR>", { silent = true, desc = "Next buffer" })

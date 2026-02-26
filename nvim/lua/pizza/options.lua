@@ -65,6 +65,19 @@ autocmd("BufWinEnter", {
    end,
 })
 
+-- vim.schedule defers until after snacks finishes setting up the window,
+-- which otherwise overwrites wo options set via snacks_win_opts.
+autocmd("FileType", {
+   group = augroup("pizza: Style snacks_terminal", { clear = true }),
+   pattern = { "snacks_terminal" },
+   callback = function()
+      vim.schedule(function()
+         vim.wo.statusline = " "
+         vim.wo.winhighlight = "Normal:ClaudeTermNormal,NormalNC:ClaudeTermNormalNC,StatusLine:ClaudeTermStatusLine,StatusLineNC:ClaudeTermStatusLineNC"
+      end)
+   end,
+})
+
 autocmd("FileType", {
    group = augroup("pizza: Disable spellcheck", { clear = true }),
    pattern = {
