@@ -56,7 +56,7 @@ return {
                      separator = { left = "", right = "" },
                   },
                },
-               lualine_b = { "branch", "diagnostics" },
+               lualine_b = { "branch", "diagnostics", "lsp_status" },
                lualine_c = { { "filename", path = 3 } },
                lualine_x = {
                   {

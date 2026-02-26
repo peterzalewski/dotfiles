@@ -22,3 +22,8 @@ autocmd({ "BufNewFile", "BufRead" }, {
       vim.api.nvim_set_option_value("filetype", "python", { buf = buf })
    end,
 })
+
+require('lspconfig').basedpyright = {
+   cmd = { "basedpyright-langserver" ,"--stdio" },
+   settings = { python = {} },
+}

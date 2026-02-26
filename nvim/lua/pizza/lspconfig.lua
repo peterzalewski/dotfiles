@@ -40,6 +40,9 @@ return {
       keys = {
          { "<leader>nl", "<cmd>LspInfo<cr>", desc = "LSP Info" },
       },
+      config = function (_, opts)
+         vim.lsp.enable("basedpyright")
+      end
    },
    {
       "mason-org/mason.nvim",
@@ -64,7 +67,7 @@ return {
       },
       opts = {
          ensure_installed = {
-            "basedpyright",
+            -- "basedpyright",
             "bashls",
             "lua_ls",
          },
