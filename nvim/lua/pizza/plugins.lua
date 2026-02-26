@@ -427,4 +427,11 @@ return {
          },
       },
    },
+   {
+      "norcalli/nvim-colorizer.lua",
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+      config = function()
+         require("colorizer").setup()
+      end,
+   },
 }
