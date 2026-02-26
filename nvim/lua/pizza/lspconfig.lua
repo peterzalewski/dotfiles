@@ -66,6 +66,9 @@ return {
          "mason-org/mason.nvim",
       },
       opts = {
+         automatic_enable = {
+            exclude = { "stylua" },
+         },
          ensure_installed = {
             -- "basedpyright",
             "bashls",
