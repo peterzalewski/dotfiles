@@ -434,4 +434,36 @@ return {
          require("colorizer").setup()
       end,
    },
+   {
+      "coder/claudecode.nvim",
+      dependencies = { "folke/snacks.nvim" },
+      config = true,
+      opts = {
+         terminal = {
+            split_side = "right",
+            split_width_percentage = 0.35,
+            provider = "snacks",
+            git_repo_cwd = true,
+         },
+         diff_opts = {
+            open_in_new_tab = true,
+            hide_terminal_in_new_tab = true,
+         },
+      },
+      keys = {
+         { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+         { "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+         { "<leader>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+         { "<leader>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+         { "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+         { "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+         { "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+         {
+            "<leader>as",
+            "<cmd>ClaudeCodeTreeAdd<cr>",
+            desc = "Add file from tree",
+            ft = { "NvimTree" },
+         },
+      },
+   },
 }
