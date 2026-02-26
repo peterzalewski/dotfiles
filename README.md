@@ -23,13 +23,13 @@
                                                         пплп
               кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП
               Г                          - PZALEWSKI PRESENTS -                            Г
-              Г                     DOTFILES (C) Peter Zalewski 2025                       Г
+              Г                     DOTFILES (C) Peter Zalewski 2026                       Г
               РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
               кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФТФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП
-              Г  Supplier(s) : peterZalewski         Г  Release Date : 2025-09-13          Г
+              Г  Supplier(s) : peterZalewski         Г  Release Date : 2026-02-25          Г
               Г  Cracker(s)  : ^pZaLeWsKi^           Г  Protection   : CD CHECKS           Г
               Г  Packager(s) : git hub (dot) com     Г  Repo Genre   : CONFIGURATION !     Г
-              Г  File Format : .git                  Г  # of Files   : 38                  Г
+              Г  File Format : .git                  Г  # of Files   : 37                  Г
               УФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФСФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФД
               Г  Requirements: W9x, P2 300Hz, 32MB ram, Sound Card, DX7.x , 3D card        Г
               РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
