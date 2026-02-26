@@ -9,12 +9,12 @@ fi
 
 declare -a extra_paths
 extra_paths=(
-  "${HOME}/bin"
+  "${HOME}/.local/bin"
   "${GOROOT}/bin"
   "${HOME}/go/bin"
-  "${HOME}/.cargo/bin"
+  "${CARGO_HOME}/bin"
   "/opt/local/bin"
-  "${HOME}/.rd/bin"
+  "${HOME}/.local/share/npm/bin"
 )
 declare -r extra_paths
 
