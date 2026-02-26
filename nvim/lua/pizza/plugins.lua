@@ -24,12 +24,52 @@ return {
       lazy = true,
       dependencies = { "devicons" },
       keys = {
-         { "gt", ":NvimTreeToggle<CR>", desc = "Open and focus file tree" },
+         { "gt",
+            function()
+               local api = require("nvim-tree.api")
+               local view = require("nvim-tree.view")
+
+               if view.is_visible() then
+                  api.tree.close()
+                  return
+               end -- Wide display: sidebar. Narrow: float.
+
+               if vim.o.columns > 160 then
+                  api.tree.open({ find_file = true })
+               else
+                  api.tree.open({ find_file = true, float = { enable = true } })
+               end
+            end,
+            desc = "Toggle file tree (adaptive)",
+         },
       },
       cmd = { "NvimTreeOpen", "NvimTreeToggle" },
       opts = {
          sort = {
             sorter = "case_sensitive",
+         },
+         view = {
+            width = 40,
+            float = {
+               enable = false, -- default off; the keymap enables it dynamically
+               open_win_config = function()
+                  local screen_w = vim.o.columns
+                  local screen_h = vim.o.lines
+                  local w = math.floor(screen_w * 0.5)
+                  local h = math.floor(screen_h * 0.7)
+                  return {
+                     relative = "editor",
+                     border = "single",
+                     width = w,
+                     height = h,
+                     row = math.floor((screen_h - h) / 2),
+                     col = math.floor((screen_w - w) / 2),
+                  }
+               end,
+            },
+         },
+         update_focused_file = {
+            enable = true,
          },
       },
    },
