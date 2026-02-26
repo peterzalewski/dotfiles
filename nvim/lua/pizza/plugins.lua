@@ -24,7 +24,7 @@ return {
       lazy = true,
       dependencies = { "devicons" },
       keys = {
-         { "gt",
+         { "<leader>e",
             function()
                local api = require("nvim-tree.api")
                local view = require("nvim-tree.view")

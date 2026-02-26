@@ -9,6 +9,8 @@ vim.keymap.set("n", "]z", "zj", { remap = true, desc = "Next fold" })
 vim.keymap.set("n", "[z", "zk", { remap = true, desc = "Previous fold" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic item" })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic item" })
+vim.keymap.set("n", "]t", "<cmd>tabnext<cr>", { silent = true, desc = "Next tab" })
+vim.keymap.set("n", "[t", "<cmd>tabprevious<cr>", { silent = true, desc = "Previous tab" })
 
 -- Disable arrow key navigation in insert mode
 vim.keymap.set("i", "<up>", "<nop>")
@@ -35,6 +37,21 @@ vim.keymap.set("n", "N", "'nN'[v:searchforward]", { expr = true })
 
 vim.keymap.set("n", "Q", "<nop>")
 
+-- Exit terminal mode and navigate to an adjacent pane in one step (splits only, not floats)
+local function term_nav(dir)
+   return function()
+      if vim.api.nvim_win_get_config(0).relative == "" then
+         vim.cmd.stopinsert()
+         vim.cmd.wincmd(dir)
+      end
+   end
+end
+
+vim.keymap.set("t", "<C-h>", term_nav("h"))
+vim.keymap.set("t", "<C-j>", term_nav("j"))
+vim.keymap.set("t", "<C-k>", term_nav("k"))
+vim.keymap.set("t", "<C-l>", term_nav("l"))
+
 vim.keymap.set("n", "<leader>nz", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 return {
@@ -48,6 +65,7 @@ return {
          { "<leader>d", group = "debug" },
          { "<leader>f", group = "fuzzy find", icon = { icon = " ", color = "green" } },
          { "<leader>g", group = "grep", icon = { icon = "󱡠 ", color = "red" } },
+         { "<leader>e", group = "explorer", icon = { icon = " ", color = "purple" } },
          { "<leader>n", group = "neovim", icon = { icon = " ", color = "cyan" } },
       },
       sort = { "alphanum" },
