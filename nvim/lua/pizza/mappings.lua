@@ -43,6 +43,7 @@ return {
    opts = {
       notify = false,
       defaults = {
+         { "<leader>a", group = "AI", icon = { icon = "", color = "red" } },
          { "<leader>c", group = "code", icon = { icon = " ", color = "orange" } },
          { "<leader>d", group = "debug" },
          { "<leader>f", group = "fuzzy find", icon = { icon = " ", color = "green" } },
