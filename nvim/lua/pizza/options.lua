@@ -12,7 +12,7 @@ vim.opt.expandtab = true
 vim.opt.fileformats = { "unix", "mac", "dos" }
 vim.opt.fillchars = { eob = " ", vert = " ", horiz = " " }
 vim.opt.foldlevelstart = 20
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldmethod = "expr"
 vim.opt.formatoptions = "qcjt"
 vim.opt.gdefault = true
@@ -54,6 +54,15 @@ vim.diagnostic.config({
    signs = true,
    underline = true,
    virtual_text = true,
+})
+
+autocmd("BufWinEnter", {
+   group = augroup("pizza: Detect filetype", { clear = true }),
+   callback = function(args)
+      if vim.bo[args.buf].filetype == "" and vim.bo[args.buf].buftype == "" and vim.api.nvim_buf_get_name(args.buf) ~= "" then
+         vim.cmd.filetype("detect")
+      end
+   end,
 })
 
 autocmd("FileType", {
