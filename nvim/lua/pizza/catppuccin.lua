@@ -48,6 +48,7 @@ return {
                   NormalNC = { bg = inactive_bg },
                   StatusLine = { bg = active_bg },
                   StatusLineNC = { bg = inactive_bg, fg = inactive_bg },
+                  TabLineFill = { bg = active_bg },
                   MsgArea = { bg = active_bg },
                   WinSeparator = { fg = inactive_bg, bg = inactive_bg },
 

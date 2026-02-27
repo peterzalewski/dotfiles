@@ -7,6 +7,52 @@ return {
       "nvim-lualine/lualine.nvim",
       event = "VeryLazy",
       dependencies = { "devicons", "catppuccin" },
+      config = function(_, opts)
+         local lualine = require("lualine")
+         local colors = require("catppuccin.palettes").get_palette("frappe")
+         local lualine_theme = require("catppuccin.utils.lualine")("frappe")
+
+         lualine.setup(opts)
+         lualine.hide({ place = { "tabline" } })
+
+         local tabline_installed = false
+         local function toggle_tabline()
+            local tabs = vim.fn.tabpagenr("$")
+            if tabs > 1 and not tabline_installed then
+               lualine.setup({
+                  tabline = {
+                     lualine_a = {
+                        {
+                           "tabs",
+                           mode = 2,
+                           max_length = vim.o.columns,
+                           separator = { left = "", right = "" },
+                           color = { fg = active_bg },
+                           tabs_color = {
+                              active = { bg = lualine_theme.normal.a.bg, fg = active_bg, gui = "bold" },
+                              inactive = { bg = "#414559", fg = colors.subtext0 },
+                           },
+                        },
+                     },
+                     lualine_b = {},
+                     lualine_c = {},
+                     lualine_x = {},
+                     lualine_y = {},
+                     lualine_z = {},
+                  },
+               })
+               tabline_installed = true
+            elseif tabs <= 1 and tabline_installed then
+               lualine.hide({ place = { "tabline" } })
+               tabline_installed = false
+            end
+         end
+
+         vim.api.nvim_create_autocmd({ "TabNew", "TabClosed" }, {
+            group = vim.api.nvim_create_augroup("pizza: Toggle tabline", { clear = true }),
+            callback = toggle_tabline,
+         })
+      end,
       opts = function()
          local theme = require("catppuccin.utils.lualine")("frappe")
          local colors = require("catppuccin.palettes").get_palette("frappe")
@@ -62,7 +108,7 @@ return {
                      color = {
                         fg = active_bg,
                      },
-                     separator = { left = "", right = "" },
+                     separator = { left = "", right = "" },
                   },
                },
                lualine_b = { "branch", "diagnostics", "lsp_status" },
@@ -76,7 +122,7 @@ return {
                lualine_z = {
                   {
                      "location",
-                     separator = { right = "" },
+                     separator = { right = "" },
                   },
                },
             },
@@ -85,7 +131,7 @@ return {
                lualine_a = {
                   {
                      "filename",
-                     separator = { left = "", right = "" },
+                     separator = { left = "", right = "" },
                      right_padding = 2,
                      file_status = false,
                   },
