@@ -1,7 +1,4 @@
 --glob=!*.svg
-
-# Pants BUILD definitions and dependencies
---type-add=pants:{BUILD,OWNERS}
-
-# Aurora service configuration
---type-add=aurora:*.aurora
+--glob=!*.lock
+--smart-case
+--max-columns-preview
