@@ -14,23 +14,30 @@
   cx = config --edit --local
   d = diff --color-words
   dump = cat-file -p
-  hidden = !git ls-files -v | awk '$1 ~ \"^[[:lower:]]\" { print $2 }'
+  hidden = !git ls-files -v | awk '$1 ~ /^[[:lower:]]/ { print $2 }'
   hide = update-index --assume-unchanged
-  hist = log --pretty=format:\"%C(auto) %h %ad | %s%d [%an]\" --graph --date=short
+  hist = log --pretty=format:'%C(auto) %h %ad | %s%d [%an]' --graph --date=short
   root = rev-parse --show-toplevel
   praise = blame
   st = status -s -uall
   type = cat-file -t
   unhide = update-index --no-assume-unchanged
   whoami = !git var GIT_AUTHOR_IDENT | cut -d' ' -f -3
+  gone = !git branch -vv | awk '/: gone]/ { print $1 }' | xargs git branch -D
+  undo = reset HEAD~1 --mixed
   whoopsie = commit --amend --no-edit
 [color]
   ui = true
 [push]
   default = simple
   autoSetupRemote = true
+[merge]
+  conflictstyle = zdiff3
+[rerere]
+  enabled = true
 [diff]
   algorithm = patience
+  colorMoved = default
   renames = copies
   external = difft
 [http]
