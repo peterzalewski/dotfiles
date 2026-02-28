@@ -2,6 +2,13 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"${HOME}/.config"}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-"${HOME}/.cache"}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-"${HOME}/.local/share"}"
 
+export CARGO_HOME="${XDG_DATA_HOME}/cargo"
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
+
+if [[ -e "${CARGO_HOME}/env" ]]; then
+  . "${CARGO_HOME}/env"
+fi
+
 if [[ -x /usr/libexec/path_helper ]]; then
   export PATH=
   eval "$(/usr/libexec/path_helper -s)"
@@ -81,16 +88,14 @@ export PSQL_HISTORY="${XDG_CACHE_HOME}/psql_history"
 export NODE_REPL_HISTORY="${XDG_CACHE_HOME}/node_repl_history"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
 
-# Rust ecosystem
-export CARGO_HOME="${XDG_DATA_HOME}/cargo"
-export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
-
-if [[ -e "${CARGO_HOME}/env" ]]; then
-  . "${CARGO_HOME}/env"
-fi
-
 if command -v vivid &>/dev/null; then
-  export LS_COLORS="$(vivid generate catppuccin-frappe)"
+  _vivid_cache="${XDG_CACHE_HOME}/vivid_ls_colors"
+  _vivid_bin="$(command -v vivid)"
+  if [[ ! -s "$_vivid_cache" || "$_vivid_bin" -nt "$_vivid_cache" ]]; then
+    vivid generate catppuccin-frappe > "$_vivid_cache"
+  fi
+  export LS_COLORS="$(<"$_vivid_cache")"
+  unset _vivid_cache _vivid_bin
 else
   export LS_COLORS='ExFxcxdxBxegedabagacad'
 fi

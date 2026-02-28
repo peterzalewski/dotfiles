@@ -17,7 +17,15 @@ autoload -Uz zrecompile
 autoload -Uz compinit
 export ZSH_COMPDUMP="${XDG_CACHE_HOME}/zcompdump"
 export INPUTRC="${ZDOTDIR}/inputrc"
-compinit -i -d ${ZSH_COMPDUMP}
+# Only regenerate compdump once a day
+() {
+  setopt localoptions extendedglob
+  if [[ -n ${ZSH_COMPDUMP}(#qN.mh+24) ]]; then
+    compinit -d "${ZSH_COMPDUMP}"
+  else
+    compinit -C -d "${ZSH_COMPDUMP}"
+  fi
+}
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
 # Colors
@@ -354,11 +362,19 @@ _try_load "${ZDOTDIR}/autoload/zsh-syntax-highlighting/zsh-syntax-highlighting.z
 _try_load "${HOME}/.zshrc.user"
 _try_load "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
-if [[ -n $(command -v direnv) ]]; then
-  eval "$(direnv hook zsh)"
-fi
+# Cache eval output from slow init commands. Regenerate when the binary changes.
+function _cached_eval {
+  local cmd="$1" cache="${XDG_CACHE_HOME}/zsh_${1}_init.zsh"
+  local bin="$(command -v "$cmd" 2>/dev/null)" || return
+  if [[ ! -s "$cache" || "$bin" -nt "$cache" ]]; then
+    case "$cmd" in
+      direnv) "$bin" hook zsh > "$cache" ;;
+      atuin)  "$bin" init zsh > "$cache" ;;
+    esac
+  fi
+  . "$cache"
+}
 
-if command -v atuin &>/dev/null; then
-  eval "$(atuin init zsh)"
-fi
+command -v direnv &>/dev/null && _cached_eval direnv
+command -v atuin &>/dev/null && _cached_eval atuin
 
