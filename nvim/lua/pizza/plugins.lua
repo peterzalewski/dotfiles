@@ -22,7 +22,7 @@ return {
    {
       "nvim-tree/nvim-tree.lua",
       lazy = true,
-      dependencies = { "devicons" },
+      dependencies = { "devicons", "ThePrimeagen/harpoon" },
       keys = {
          { "<leader>e",
             function()
@@ -44,10 +44,19 @@ return {
          },
       },
       cmd = { "NvimTreeOpen", "NvimTreeToggle" },
-      opts = {
-         sort = {
-            sorter = "case_sensitive",
-         },
+      opts = function()
+         local HarpoonDecorator = require("harpoon-tree")
+         return {
+            renderer = {
+               decorators = {
+                  "Git", "Open", "Hidden", "Modified", "Bookmark",
+                  "Diagnostics", "Copied", "Cut",
+                  HarpoonDecorator,
+               },
+            },
+            sort = {
+               sorter = "case_sensitive",
+            },
          view = {
             width = 40,
             float = {
@@ -97,7 +106,8 @@ return {
                end,
             })
          end,
-      },
+      }
+      end,
    },
    {
       "nvim-lua/plenary.nvim",
@@ -107,6 +117,37 @@ return {
    },
    {
       "google/vim-jsonnet",
+   },
+   {
+      "ThePrimeagen/harpoon",
+      branch = "harpoon2",
+      lazy = true,
+      dependencies = { "plenary" },
+      keys = {
+         { "<leader>.", function() require("harpoon"):list():add() end, desc = "Harpoon file" },
+         { "<leader>m", function() local h = require("harpoon") h.ui:toggle_quick_menu(h:list()) end, desc = "Harpoon menu" },
+         { "<leader>1", function() require("harpoon"):list():select(1) end, desc = "Harpoon 1" },
+         { "<leader>2", function() require("harpoon"):list():select(2) end, desc = "Harpoon 2" },
+         { "<leader>3", function() require("harpoon"):list():select(3) end, desc = "Harpoon 3" },
+         { "<leader>4", function() require("harpoon"):list():select(4) end, desc = "Harpoon 4" },
+      },
+      config = function()
+         local harpoon = require("harpoon")
+         harpoon:setup()
+
+         local function refresh_tree()
+            local ok, api = pcall(require, "nvim-tree.api")
+            if ok and api.tree.is_visible() then
+               api.tree.reload()
+            end
+         end
+
+         harpoon:extend({
+            ADD = refresh_tree,
+            REMOVE = refresh_tree,
+            LIST_CHANGE = refresh_tree,
+         })
+      end,
    },
    {
       "peterzalewski/vim-surround",
