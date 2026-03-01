@@ -66,6 +66,8 @@ return {
                   NvimTreeWindowPicker = { fg = "#ededed", bg = accent, bold = true },
                   NvimTreeWinSeparator = { fg = inactive_bg, bg = inactive_bg },
                   NvimTreeSignColumn = { bg = inactive_bg },
+                  NvimTreeHarpoonIcon = { fg = colors.peach, bold = true },
+                  NvimTreeHarpoonFile = { fg = colors.peach },
 
                   -- Claude Code terminal
                   ClaudeTermNormal = { bg = active_bg },
