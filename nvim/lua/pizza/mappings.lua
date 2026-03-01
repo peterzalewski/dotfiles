@@ -7,10 +7,11 @@ vim.keymap.set("n", "]q", ":cnext<CR>", { silent = true, desc = "Next quickfix i
 vim.keymap.set("n", "[q", ":cprevious<CR>", { silent = true, desc = "Previous quickfix item" })
 vim.keymap.set("n", "]z", "zj", { remap = true, desc = "Next fold" })
 vim.keymap.set("n", "[z", "zk", { remap = true, desc = "Previous fold" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic item" })
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic item" })
+vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1 }) end, { desc = "Next diagnostic item" })
+vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1 }) end, { desc = "Previous diagnostic item" })
 vim.keymap.set("n", "]t", "<cmd>tabnext<cr>", { silent = true, desc = "Next tab" })
 vim.keymap.set("n", "[t", "<cmd>tabprevious<cr>", { silent = true, desc = "Previous tab" })
+vim.keymap.set("n", "<leader>x", "<cmd>tabclose<cr>", { silent = true, desc = "Close tab" })
 
 -- Disable arrow key navigation in insert mode
 vim.keymap.set("i", "<up>", "<nop>")

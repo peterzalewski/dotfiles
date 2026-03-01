@@ -1,7 +1,9 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-vim.g.python3_host_prog = vim.env.HOME .. "/.virtualenvs/nvim/bin/python"
+if vim.env.NVIM_PYTHON and vim.uv.fs_stat(vim.env.NVIM_PYTHON) then
+   vim.g.python3_host_prog = vim.env.NVIM_PYTHON
+end
 vim.opt.autoindent = true
 vim.opt.autoread = true
 vim.opt.backspace = { "eol", "indent", "start" }
@@ -40,18 +42,30 @@ vim.opt.splitright = true
 vim.opt.startofline = false
 vim.opt.swapfile = false
 vim.opt.tabstop = 2
-vim.opt.ttyfast = true
 vim.opt.wildignore:append({ ".git", "node_modules" })
 vim.opt.wildmenu = true
 vim.opt.writebackup = false
-vim.wo.signcolumn = "yes"
+vim.opt.signcolumn = "yes"
 vim.opt.spelllang = { "en" }
 -- vim.opt.spell = true
 vim.opt.spelloptions = "camel"
 
 vim.diagnostic.config({
    float = { border = "rounded" },
-   signs = true,
+   signs = {
+      text = {
+         [vim.diagnostic.severity.INFO] = "",
+         [vim.diagnostic.severity.WARN] = "⚠",
+         [vim.diagnostic.severity.ERROR] = "",
+         [vim.diagnostic.severity.HINT] = "",
+      },
+      numhl = {
+         [vim.diagnostic.severity.INFO] = "DiagnosticInformation",
+         [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+         [vim.diagnostic.severity.ERROR] = "DiagnosticError",
+         [vim.diagnostic.severity.HINT] = "DiagnosticHint",
+      },
+   },
    underline = true,
    virtual_text = true,
 })
