@@ -510,4 +510,25 @@ return {
          },
       },
    },
+   {
+      "folke/todo-comments.nvim",
+      event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+      dependencies = { "plenary" },
+      opts = {},
+      keys = {
+         { "]x", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+         { "[x", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+         { "<leader>ft", "<cmd>TodoFzfLua<cr>", desc = "Fuzzy find todos" },
+      },
+   },
+   {
+      "sindrets/diffview.nvim",
+      lazy = true,
+      cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+      keys = {
+         { "<leader>cv", "<cmd>DiffviewOpen<cr>", desc = "Open diff view" },
+         { "<leader>ch", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
+      },
+      opts = {},
+   },
 }
