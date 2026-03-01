@@ -31,20 +31,4 @@ autocmd("FileType", {
    end,
 })
 
-vim.fn.sign_define(
-   "DiagnosticSignInfo",
-   { text = "", numhl = "DiagnosticInformation", texthl = "DiagnosticInformation" }
-)
-vim.fn.sign_define("DiagnosticSignWarn", { text = "⚠", numhl = "DiagnosticWarn", texthl = "DiagnosticWarn" })
-vim.fn.sign_define("DiagnosticSignError", {
-   text = "",
-   numhl = "DiagnosticError",
-   texthl = "DiagnosticError",
-})
-vim.fn.sign_define("DiagnosticSignHint", {
-   text = "",
-   numhl = "DiagnosticHint",
-   texthl = "DiagnosticHint",
-})
-
 return {}

@@ -1,6 +1,3 @@
----@diagnostic disable-next-line: unused-local
-local inactive_bg = require("theme").inactive_bg
-
 return {
    {
       "folke/lazydev.nvim",
@@ -111,8 +108,7 @@ return {
    },
    {
       "nvim-lua/plenary.nvim",
-      lazy = false,
-      priority = 1000,
+      lazy = true,
       name = "plenary",
    },
    {
@@ -331,33 +327,8 @@ return {
       opts = {},
    },
    {
-      "NeogitOrg/neogit",
-      dependencies = {
-         "nvim-lua/plenary.nvim",
-         "ibhagwan/fzf-lua",
-      },
-      keys = {
-         {
-            "<leader>cg",
-            function()
-               require("neogit").open()
-            end,
-            desc = "Open Neogit",
-         },
-      },
-      ---@type NeogitConfig
-      opts = {
-         disable_signs = true,
-         graph_style = "unicode",
-      },
-   },
-   {
       "Bekaboo/deadcolumn.nvim",
       event = { "BufReadPost", "BufWritePost", "BufNewFile" },
-   },
-   {
-      "rcarriga/nvim-notify",
-      config = true,
    },
    {
       "stevearc/conform.nvim",
@@ -372,7 +343,7 @@ return {
          {
             "<leader>cf",
             function()
-               require("conform").format({ async = true, lsp_fallback = true })
+               require("conform").format({ async = true, lsp_format = "fallback" })
             end,
             desc = "Format buffer",
          },

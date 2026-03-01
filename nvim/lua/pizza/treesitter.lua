@@ -6,7 +6,6 @@ return {
       version = false,
       lazy = false,
       opts = {
-         context_commentstring = { enable = true },
          incremental_selection = {
             enable = true,
             keymaps = {

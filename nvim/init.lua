@@ -32,6 +32,7 @@ require("lazy").setup({
          },
       },
    },
+   change_detection = { enabled = false },
    ui = {
       border = "single",
    },

@@ -27,7 +27,7 @@ autocmd("TextYankPost", {
    group = general,
    pattern = { "*" },
    callback = function()
-      vim.highlight.on_yank({ higroup = "IncSearch", timeout = 700 })
+      vim.hl.on_yank({ higroup = "IncSearch", timeout = 700 })
    end,
 })
 
@@ -80,11 +80,9 @@ return {
          flavour = "frappe",
          integrations = {
             aerial = true,
-            cmp = true,
             fidget = true,
             gitsigns = true,
             mason = true,
-            noice = true,
             nvimtree = true,
             treesitter = true,
             which_key = true,

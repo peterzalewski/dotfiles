@@ -54,21 +54,21 @@ return {
          })
       end,
       opts = function()
-         local theme = require("catppuccin.utils.lualine")("frappe")
+         local ll_theme = require("catppuccin.utils.lualine")("frappe")
          local colors = require("catppuccin.palettes").get_palette("frappe")
-         theme.normal.a.gui = nil
-         theme.normal.b.bg = "#414559"
-         theme.normal.c.bg = active_bg
-         theme.normal.y = { bg = "#414559", fg = colors.subtext0 }
-         theme.normal.z = { bg = theme.normal.a.bg, fg = active_bg, gui = "bold" }
-         theme.inactive.a.bg = colors.lavender
-         theme.inactive.a.fg = colors.base
-         theme.inactive.b.bg = inactive_bg
-         theme.inactive.b.fg = colors.subtext0
-         theme.inactive.c.bg = inactive_bg
-         theme.inactive.c.fg = colors.subtext0
-         theme.inactive.y = { bg = inactive_bg, fg = colors.subtext0 }
-         theme.inactive.z = { bg = inactive_bg, fg = colors.subtext0 }
+         ll_theme.normal.a.gui = nil
+         ll_theme.normal.b.bg = "#414559"
+         ll_theme.normal.c.bg = active_bg
+         ll_theme.normal.y = { bg = "#414559", fg = colors.subtext0 }
+         ll_theme.normal.z = { bg = ll_theme.normal.a.bg, fg = active_bg, gui = "bold" }
+         ll_theme.inactive.a.bg = colors.lavender
+         ll_theme.inactive.a.fg = colors.base
+         ll_theme.inactive.b.bg = inactive_bg
+         ll_theme.inactive.b.fg = colors.subtext0
+         ll_theme.inactive.c.bg = inactive_bg
+         ll_theme.inactive.c.fg = colors.subtext0
+         ll_theme.inactive.y = { bg = inactive_bg, fg = colors.subtext0 }
+         ll_theme.inactive.z = { bg = inactive_bg, fg = colors.subtext0 }
 
          return {
             options = {
@@ -93,7 +93,7 @@ return {
                   "dapui_console",
                   "help",
                },
-               theme = theme,
+               theme = ll_theme,
                refresh = {
                   -- Is this too low?
                   statusline = 100,

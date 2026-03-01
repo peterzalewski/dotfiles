@@ -48,6 +48,7 @@ return {
          { "<leader>fo", "<cmd>FzfLua oldfiles<cr>", desc = "Fuzzy find recently opened files" },
          { "<leader>fr", "<cmd>FzfLua registers<cr>", desc = "Fuzzy find register contents" },
          { "<leader>t", "<cmd>FzfLua files<cr>", desc = "Fuzzy find files" },
+         { "<leader>ff", "<cmd>FzfLua resume<cr>", desc = "Resume last picker" },
          { "<leader>gc", "<cmd>FzfLua grep_cword<cr>", desc = "Live grep for the current word" },
          { "<leader>gg", "<cmd>FzfLua live_grep_native<cr>", desc = "Live grep through the current project" },
          { "<leader>gp", "<cmd>FzfLua grep_last<cr>", desc = "Live grep for the previous pattern" },
