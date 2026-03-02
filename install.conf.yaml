@@ -17,6 +17,7 @@
     - [git submodule update --init --recursive, Cloning dependencies]
     - [tic -x terminfo/ghostty.terminfo]
     - [command -v port >/dev/null && xargs sudo port -N install < macports/Portfile.txt, Installing MacPorts packages]
+    - [command -v mise >/dev/null || curl -sSf https://mise.jdx.dev/install.sh | sh, Installing mise]
 
 - create:
     ~/bin: {}

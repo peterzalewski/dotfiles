@@ -226,41 +226,6 @@ $(_prompt_color_symbol_by_exit_status) '
 
 # Functions 
 
-# rbenv init is slow because it requires eval and rehash. I know I want
-# to use it, so just declare the same function that init does, here, and
-# add the shims directory to the PATH in .bash_profile. Works out the same.
-function rbenv {
-  local -r subcommand="${1:-}"
-  if [ "$#" -gt 0 ]; then
-    shift
-  fi
-
-  case "${subcommand}" in
-  rehash|shell)
-    eval "$(rbenv "sh-${subcommand}" "$@")"
-    ;;
-  *)
-    command rbenv "${subcommand}" "$@"
-    ;;
-  esac
-}
-
-# Same thing goes for pyenv.
-function pyenv {
-  local -r subcommand="${1:-}"
-  if [ "$#" -gt 0 ]; then
-    shift
-  fi
-
-  case "${subcommand}" in
-  rehash|shell)
-    eval "$(pyenv "sh-${subcommand}" "$@")"
-    ;;
-  *)
-    command pyenv "${subcommand}" "$@"
-    ;;
-  esac
-}
 
 # Open an executable by name in vim
 function vimc {
@@ -368,13 +333,12 @@ function _cached_eval {
   local bin="$(command -v "$cmd" 2>/dev/null)" || return
   if [[ ! -s "$cache" || "$bin" -nt "$cache" ]]; then
     case "$cmd" in
-      direnv) "$bin" hook zsh > "$cache" ;;
-      atuin)  "$bin" init zsh > "$cache" ;;
+      atuin) "$bin" init zsh > "$cache" ;;
     esac
   fi
   . "$cache"
 }
 
-command -v direnv &>/dev/null && _cached_eval direnv
+command -v mise &>/dev/null && eval "$(mise activate zsh)"
 command -v atuin &>/dev/null && _cached_eval atuin
 
