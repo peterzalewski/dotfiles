@@ -46,6 +46,8 @@ vim.opt.wildignore:append({ ".git", "node_modules" })
 vim.opt.wildmenu = true
 vim.opt.writebackup = false
 vim.opt.signcolumn = "yes"
+vim.opt.title = true
+vim.opt.titlestring = "nvim %{fnamemodify(getcwd(), ':t')}/%f"
 vim.opt.spelllang = { "en" }
 -- vim.opt.spell = true
 vim.opt.spelloptions = "camel"

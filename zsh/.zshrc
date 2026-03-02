@@ -223,8 +223,23 @@ $(_prompt_rcs_status)\
 $(_prompt_virtualenv)\
 $(_prompt_color_symbol_by_exit_status) '
 
+# Terminal title: show git repo root + cwd when idle, command when running
+function _title_precmd {
+  local repo
+  repo="$(git rev-parse --show-toplevel 2>/dev/null)" && repo="${repo:t}" || repo="${PWD:t}"
+  print -Pn "\e]0;${repo}\a"
+}
 
-# Functions 
+function _title_preexec {
+  local repo
+  repo="$(git rev-parse --show-toplevel 2>/dev/null)" && repo="${repo:t}" || repo="${PWD:t}"
+  print -Pn "\e]0;${1%% *} ${repo}\a"
+}
+
+precmd_functions+=(_title_precmd)
+preexec_functions+=(_title_preexec)
+
+# Functions
 
 
 # Open an executable by name in vim
