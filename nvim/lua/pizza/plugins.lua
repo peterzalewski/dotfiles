@@ -434,9 +434,9 @@ return {
                   [[                                                                               ]],
                }, "\n"),
                keys = {
-                  { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+                  { icon = " ", key = "t", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
                   { icon = "󱡠 ", key = "g", desc = "Grep", action = ":lua Snacks.dashboard.pick('live_grep_native')" },
-                  { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+                  { icon = " ", key = "o", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
                   { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })" },
                   { icon = " ", key = "q", desc = "Quit", action = ":qa" },
                },
@@ -502,6 +502,7 @@ return {
          diff_opts = {
             open_in_new_tab = true,
             hide_terminal_in_new_tab = true,
+            on_new_file_reject = "close_window",
          },
       },
       keys = {

@@ -69,6 +69,10 @@ return {
                   NvimTreeHarpoonIcon = { fg = colors.peach, bold = true },
                   NvimTreeHarpoonFile = { fg = colors.peach },
 
+                  -- Snacks dashboard
+                  SnacksDashboardIcon = { fg = colors.peach },
+                  SnacksDashboardKey = { fg = colors.sapphire },
+
                   -- Claude Code terminal
                   ClaudeTermNormal = { bg = active_bg },
                   ClaudeTermNormalNC = { bg = inactive_bg },
