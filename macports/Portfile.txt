@@ -1,0 +1,13 @@
+bat
+difftastic
+eza
+fd
+fzf
+gh
+glow
+httpie
+neovim
+ripgrep
+stylua
+uv
+zsh
