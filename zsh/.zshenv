@@ -72,8 +72,8 @@ export LESSHISTFILE='-'
 export PAGER='less'
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
 
-if command -v bat &>/dev/null; then
-  export MANPAGER="sh -c 'sed -e s/.\\\\x08//g | bat -l man -p'"
+if command -v nvim &>/dev/null; then
+  export MANPAGER='nvim +Man!'
 fi
 
 # Python ecosystem
