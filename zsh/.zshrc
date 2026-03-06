@@ -199,12 +199,7 @@ function _prompt_pwd {
 function _prompt_rcs_status {
   local branch
   branch="$(git symbolic-ref --short HEAD 2>/dev/null)" || return
-  local color="${PROMPT_RCS_CLEAN}"
-  if ! git diff --quiet --ignore-submodules HEAD 2>/dev/null \
-    || [[ -n "$(git ls-files --others --exclude-standard 2>/dev/null)" ]]; then
-    color="${PROMPT_RCS_DIRTY}"
-  fi
-  echo " %{${color}%} ${branch}%{${COLOR_OFF}%}"
+  echo " %{${PROMPT_RCS_DIRTY}%} ${branch}%{${COLOR_OFF}%}"
 }
 
 # Show [exit_code] or [SIGNAME] in red before ❯ if the last command failed.
