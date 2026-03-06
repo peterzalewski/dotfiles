@@ -355,6 +355,7 @@ function _cached_eval {
   if [[ ! -s "$cache" || "$bin" -nt "$cache" ]]; then
     case "$cmd" in
       atuin) "$bin" init zsh > "$cache" ;;
+      zoxide) "$bin" init zsh > "$cache" ;;
     esac
   fi
   . "$cache"
@@ -362,4 +363,4 @@ function _cached_eval {
 
 command -v mise &>/dev/null && eval "$(mise activate zsh)"
 command -v atuin &>/dev/null && _cached_eval atuin
-
+command -v zoxide &>/dev/null && _cached_eval zoxide
