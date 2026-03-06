@@ -44,6 +44,7 @@ vim.opt.swapfile = false
 vim.opt.tabstop = 2
 vim.opt.wildignore:append({ ".git", "node_modules" })
 vim.opt.wildmenu = true
+vim.opt.undofile = true
 vim.opt.writebackup = false
 vim.opt.signcolumn = "yes"
 vim.opt.title = true
