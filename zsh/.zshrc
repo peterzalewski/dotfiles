@@ -53,7 +53,6 @@ alias gl5='git hist -5'
 alias gl10='git hist -10'
 alias grep='grep --color=auto'
 alias gs='git st'
-alias ll='ls -alg'
 alias map='xargs -n 1'
 alias tpout='tput'
 alias venv='python3 -m venv'
@@ -119,13 +118,15 @@ export HISTTIMEFORMAT='%Y-%m-%dT%H:%M:%S%z '
 
 # Colorize ls/eza
 if command -v eza &>/dev/null; then
-  alias ls='eza'
-  alias tree='eza -T'
+  alias ls='eza --group-directories-first --icons'
+  alias ll='eza --long --all --group --git --group-directories-first --icons --color-scale=size'
+  alias tree='eza --tree --icons'
 else
   case "$(uname)" in
     Darwin) alias ls="ls -hG" ;;
     *) alias ls='ls --group-directories-first --color -h' ;;
   esac
+  alias ll='ls -alg'
 fi
 
 if [[ -n "$(command -v grc)" ]]; then
@@ -337,8 +338,13 @@ for config_file in "${ZDOTDIR}"/autoload/*; do
   _try_load "${config_file}"
 done
 
+# Replace zsh's tab-completion menu to one powered by fzf
 _try_load "${ZDOTDIR}/autoload/fzf-tab/fzf-tab.plugin.zsh"
+
+# Syntax highlighting for CLI: command names, string literals, etc.
 _try_load "${ZDOTDIR}/autoload/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# Host-specific functions and env vars
 _try_load "${HOME}/.zshrc.user"
 _try_load "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
