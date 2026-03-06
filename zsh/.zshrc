@@ -235,17 +235,17 @@ $(_prompt_virtualenv)\
 %(1j. %{${PROMPT_JOBS}%} %j%{${COLOR_OFF}%}.)\
 $(_prompt_exit_symbol) '
 
-# Terminal title: show git repo root + cwd when idle, command when running
+# Terminal title: show git repo root (or cwd) with ~ for $HOME when idle, command when running
 function _title_precmd {
-  local repo
-  repo="$(git rev-parse --show-toplevel 2>/dev/null)" && repo="${repo:t}" || repo="${PWD:t}"
-  print -Pn "\e]0;${repo}\a"
+  local path
+  path="$(git rev-parse --show-toplevel 2>/dev/null)" || path="${PWD}"
+  print -Pn "\e]0;${path/#$HOME/~}\a"
 }
 
 function _title_preexec {
-  local repo
-  repo="$(git rev-parse --show-toplevel 2>/dev/null)" && repo="${repo:t}" || repo="${PWD:t}"
-  print -Pn "\e]0;${1%% *} ${repo}\a"
+  local path
+  path="$(git rev-parse --show-toplevel 2>/dev/null)" || path="${PWD}"
+  print -Pn "\e]0;${1%% *} ${path/#$HOME/~}\a"
 }
 
 precmd_functions+=(_title_precmd)
