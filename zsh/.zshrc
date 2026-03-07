@@ -175,7 +175,7 @@ function _prompt_host_gradient {
   else
     return
   fi
-  printf '%%{\e[38;2;%sm%%}░▒▓%%{\e[0m%%} ' "$color"
+  printf '%%{\e[38;2;%sm%%}░▒▓\ue0b4%%{\e[0m%%} ' "$color"
 }
 
 # Show current directory with ~ for $HOME.
