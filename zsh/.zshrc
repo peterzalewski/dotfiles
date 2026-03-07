@@ -1,9 +1,4 @@
 # vim: set foldmethod=marker foldlevel=0 nomodeline:
-# ############################################################################
-# Description: focus on start up speed, colors, and shortcuts. not too wild.
-# Author: Peter Zalewski <peter@zalewski.com>
-# Source: https://github.com/peterzalewski/dotfiles/blob/master/bashrc
-# ############################################################################
 
 typeset -U fpath
 fpath=( "/opt/local/share/zsh/site-functions" $fpath )
@@ -15,7 +10,6 @@ zmodload zsh/parameter
 autoload -Uz zrecompile
 autoload -Uz compinit
 export ZSH_COMPDUMP="${XDG_CACHE_HOME}/zcompdump"
-export INPUTRC="${ZDOTDIR}/inputrc"
 # Only regenerate compdump once a day
 () {
   setopt localoptions extendedglob
@@ -26,6 +20,12 @@ export INPUTRC="${ZDOTDIR}/inputrc"
   fi
 }
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+# Case-insensitive completion, treating hyphens and underscores as equivalent
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}'
+# Append / to symlinked directories in completions
+setopt MARK_DIRS
+# Show all completions immediately when ambiguous
+setopt NO_LIST_AMBIGUOUS
 
 # Colors
 autoload -U colors
@@ -63,7 +63,7 @@ fi
 # Let me swear at the command prompt to sudo the previous command
 declare -a fun_words
 fun_words=(shit damnit fuck please)
-for word in "${fun_words[@]}"; do
+for word in $fun_words; do
   # shellcheck disable=SC2139
   alias "${word}"='sudo $(fc -ln -1)'
 done
@@ -109,8 +109,6 @@ export HISTSIZE=1000000
 # Ignore common drudgery
 export HISTORY_IGNORE='(ls|ll|bg|fg|history|clear|jobs|exit|gd|gs|reset)'
 
-# Use ISO8601 for history timestamps
-export HISTTIMEFORMAT='%Y-%m-%dT%H:%M:%S%z '
 
 
 # Colors and appearance 
@@ -128,10 +126,10 @@ else
   alias ll='ls -alg'
 fi
 
-if [[ -n "$(command -v grc)" ]]; then
+if command -v grc &>/dev/null; then
   alias colorify="grc -es --colour=auto"
-  for app in {ps,du,df,lsof,ifconfig,ping,traceroute,dig}; do
-    alias "${app}"="colorify "${app}""
+  for app in ps du df lsof ifconfig ping traceroute dig; do
+    alias "${app}"="colorify ${app}"
   done
 fi
 
@@ -308,7 +306,7 @@ function check_connectivity {
   fi
 }
 
-function print_colors() {
+function print_colors {
   for i in {0..255} ; do
     printf "\x1b[48;5;%sm%3d\e[0m " "$i" "$i"
     if (( i == 15 )) || (( i > 15 )) && (( (i-15) % 6 == 0 )); then

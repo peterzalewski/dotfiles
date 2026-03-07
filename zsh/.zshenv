@@ -63,6 +63,7 @@ declare -r less_options
 export LESS="${less_options[*]}"
 export LESSHISTFILE='-'
 export PAGER='less'
+export INPUTRC="${ZDOTDIR}/inputrc"
 export RIPGREP_CONFIG_PATH="${XDG_CONFIG_HOME}/ripgrep/config"
 
 if command -v nvim &>/dev/null; then
