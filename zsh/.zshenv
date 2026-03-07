@@ -14,23 +14,16 @@ if [[ -x /usr/libexec/path_helper ]]; then
   eval "$(/usr/libexec/path_helper -s)"
 fi
 
-declare -a extra_paths
-extra_paths=(
+typeset -U path
+path=(
   "${HOME}/.local/bin"
   "${GOROOT}/bin"
   "${HOME}/go/bin"
   "${CARGO_HOME}/bin"
   "/opt/local/bin"
   "${HOME}/.local/share/npm/bin"
+  $path
 )
-declare -r extra_paths
-
-for p in "${extra_paths[@]}"; do
-  if [[ -d "${p}" ]]; then
-    PATH="${p}:${PATH}"
-  fi
-done
-export PATH
 
 if command -v nvim &>/dev/null; then
   export EDITOR='nvim'

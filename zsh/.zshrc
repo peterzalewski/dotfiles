@@ -5,9 +5,8 @@
 # Source: https://github.com/peterzalewski/dotfiles/blob/master/bashrc
 # ############################################################################
 
-if [[ -d "/opt/local/share/zsh/site-functions" ]]; then
-  fpath=( "/opt/local/share/zsh/site-functions" $fpath )
-fi
+typeset -U fpath
+fpath=( "/opt/local/share/zsh/site-functions" $fpath )
 
 # https://zsh.sourceforge.io/Doc/Release/Zsh-Modules.html#The-zsh_002fparameter-Module
 zmodload zsh/parameter
@@ -293,7 +292,7 @@ function cdf {
 
 # list path components
 function path_parts {
-  echo "${PATH}" | tr ':' '\n' | nl
+  print -l $path | nl
 }
 
 function check_connectivity {
