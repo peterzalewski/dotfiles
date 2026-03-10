@@ -224,13 +224,13 @@ function _prompt_virtualenv {
   fi
 }
 
-export PROMPT='\
-$(_prompt_host_gradient)\
-$(_prompt_pwd)\
-$(_prompt_rcs_status)\
-$(_prompt_virtualenv)\
-%(1j. %{${PROMPT_JOBS}%} %j%{${COLOR_OFF}%}.)\
-$(_prompt_exit_symbol) '
+PROMPT='$(_prompt_host_gradient)'
+PROMPT+='$(_prompt_pwd)'
+PROMPT+='$(_prompt_rcs_status)'
+PROMPT+='$(_prompt_virtualenv)'
+PROMPT+='%(1j. %{${PROMPT_JOBS}%} %j%{${COLOR_OFF}%}.)'
+PROMPT+='$(_prompt_exit_symbol) '
+export PROMPT
 
 # Terminal title: show git repo root (or cwd) with ~ for $HOME when idle, command when running
 function _title_precmd {
