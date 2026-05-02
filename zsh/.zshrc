@@ -354,7 +354,6 @@ _try_load "${ZDOTDIR}/autoload/zsh-syntax-highlighting/zsh-syntax-highlighting.z
 
 # Host-specific functions and env vars
 _try_load "${HOME}/.zshrc.user"
-_try_load "${HOME}/.nix-profile/etc/profile.d/nix.sh"
 
 # Cache eval output from slow init commands. Regenerate when the binary changes.
 function _cached_eval {

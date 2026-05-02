@@ -20,6 +20,10 @@ path=(
   "${GOROOT}/bin"
   "${HOME}/go/bin"
   "${CARGO_HOME}/bin"
+  "${HOME}/.nix-profile/bin"
+  "/etc/profiles/per-user/${USER}/bin"
+  "/run/current-system/sw/bin"
+  "/nix/var/nix/profiles/default/bin"
   "/opt/local/bin"
   "${HOME}/.local/share/npm/bin"
   $path

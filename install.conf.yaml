@@ -13,24 +13,5 @@
     ~/.local/share/nvim/site:
       recursive: true
 
-- shell:
-    - [git submodule update --init --recursive, Cloning dependencies]
-    - [tic -x terminfo/ghostty.terminfo]
-    - [command -v port >/dev/null && xargs sudo port -N install < macports/Portfile.txt, Installing MacPorts packages]
-    - [command -v mise >/dev/null || curl -sSf https://mise.jdx.dev/install.sh | sh, Installing mise]
-
 - create:
     ~/bin: {}
-
-- link:
-    ~/.config/atuin: atuin/
-    ~/.config/bat: bat/
-    ~/.config/ghostty: ghostty/
-    ~/.config/git: git/
-    ~/.config/npm: npm/
-    ~/.config/nvim: nvim/
-    ~/.config/psql: psql/
-    ~/.config/ripgrep: ripgrep/
-    ~/.config/tmux: tmux/
-    ~/.config/zsh: zsh/ 
-    ~/.zshenv: zshenv
