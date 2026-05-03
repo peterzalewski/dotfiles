@@ -26,7 +26,7 @@
               Г                     DOTFILES (C) Peter Zalewski 2026                       Г
               РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
               кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФТФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП
-              Г  Supplier(s) : peterZalewski         Г  Release Date : 2026-05-02          Г
+              Г  Supplier(s) : peterZalewski         Г  Release Date : 2026-05-03          Г
               Г  Cracker(s)  : ^pZaLeWsKi^           Г  Protection   : CD CHECKS           Г
               Г  Packager(s) : git hub (dot) com     Г  Repo Genre   : CONFIGURATION !     Г
               Г  File Format : .git                  Г  # of Files   : 41                  Г
