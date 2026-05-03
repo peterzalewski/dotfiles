@@ -58,6 +58,7 @@ alias venv='python3 -m venv'
 
 if [[ "$(uname)" == "Darwin" ]]; then
   alias ghostty="/Applications/Ghostty.app/Contents/MacOS/ghostty"
+  alias drs='sudo /run/current-system/sw/bin/darwin-rebuild switch --flake ~/dotfiles'
 fi
 
 # Let me swear at the command prompt to sudo the previous command

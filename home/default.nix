@@ -5,6 +5,7 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    atuin
     bat
     difftastic
     eza
@@ -18,6 +19,7 @@
     ripgrep
     stylua
     uv
+    zoxide
     zsh
   ];
 
